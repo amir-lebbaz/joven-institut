@@ -2867,18 +2867,19 @@
       bottom: 14px;
       left: 14px;
       right: 14px;
-      z-index: 3;
+      z-index: 5;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      background: rgba(22, 12, 16, 0.72);
+      background: rgba(22, 12, 16, 0.78);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       padding: 8px 12px;
       border-radius: 22px;
-      border: 1px solid rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+      pointer-events: auto;
     }
 
     .hero-sound-btn {
@@ -2929,26 +2930,27 @@
       transform: scale(1.08);
     }
 
-    /* Floating Stat Box */
+    /* Floating Stat Box / Social Proof Badge - Positioned Cleanly Below Video (Zero Overlap) */
     .hero-floating-stat {
-      position: absolute;
-      bottom: -18px;
-      right: -16px;
+      position: relative;
+      margin: 16px auto 0;
+      width: 100%;
+      max-width: 340px;
       z-index: 4;
       background: #FFFFFF;
-      padding: 12px 18px;
-      border-radius: 18px;
-      box-shadow: 0 15px 35px rgba(148, 64, 87, 0.16);
+      padding: 11px 18px;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(148, 64, 87, 0.12);
       border: 1px solid rgba(194, 147, 85, 0.25);
       display: flex;
       align-items: center;
-      gap: 10px;
-      animation: floatSubtle 3.5s ease-in-out infinite alternate;
+      justify-content: center;
+      gap: 12px;
+      animation: floatSubtle 4s ease-in-out infinite alternate;
     }
 
     html[dir="rtl"] .hero-floating-stat {
-      right: auto;
-      left: -16px;
+      margin: 16px auto 0;
     }
 
     @keyframes floatSubtle {
@@ -3048,14 +3050,20 @@
         aspect-ratio: 9 / 14;
       }
       .hero-floating-stat {
-        bottom: -14px;
-        right: 50%;
-        transform: translateX(50%);
+        position: relative;
+        margin: 14px auto 0;
+        bottom: auto;
+        right: auto;
+        left: auto;
+        transform: none;
+        max-width: 360px;
+        width: 100%;
       }
       html[dir="rtl"] .hero-floating-stat {
         right: auto;
-        left: 50%;
-        transform: translateX(-50%);
+        left: auto;
+        transform: none;
+        margin: 14px auto 0;
       }
     }
 
@@ -3104,21 +3112,24 @@
         font-size: 0.75rem;
       }
       .hero-floating-stat {
-        bottom: -14px;
-        left: 50% !important;
+        position: relative;
+        bottom: auto !important;
+        left: auto !important;
         right: auto !important;
-        transform: translateX(-50%) !important;
+        transform: none !important;
+        margin: 12px auto 0 !important;
         padding: 8px 14px;
-        border-radius: 14px;
-        width: 86%;
-        max-width: 280px;
+        border-radius: 16px;
+        width: 100%;
+        max-width: 320px;
         justify-content: center;
         text-align: center;
       }
       html[dir="rtl"] .hero-floating-stat {
-        left: 50% !important;
+        left: auto !important;
         right: auto !important;
-        transform: translateX(-50%) !important;
+        transform: none !important;
+        margin: 12px auto 0 !important;
       }
     }
 
@@ -4527,6 +4538,7 @@
     };
 
     let supabaseApp = null;
+    let supabaseClient = null;
     window.DYNAMIC_SERVICES = [];
     window.DYNAMIC_OFFERS = [];
     window.DYNAMIC_GALLERY = [];
@@ -4534,6 +4546,9 @@
     try {
       if (window.supabase) {
         supabaseApp = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+        supabaseClient = supabaseApp;
+        window.supabaseApp = supabaseApp;
+        window.supabaseClient = supabaseApp;
       }
     } catch (e) {
       console.warn('Supabase initialization failed, running with static fallback:', e);
@@ -4719,6 +4734,12 @@
           .on('postgres_changes', { event: '*', schema: 'public', table: 'services' }, () => syncDataFromSupabase())
           .on('postgres_changes', { event: '*', schema: 'public', table: 'offers' }, () => syncDataFromSupabase())
           .on('postgres_changes', { event: '*', schema: 'public', table: 'gallery_images' }, () => syncDataFromSupabase())
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'comparisons' }, () => {
+            if (typeof syncSalonConfigLive === 'function') syncSalonConfigLive();
+          })
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'admin_config' }, () => {
+            if (typeof syncSalonConfigLive === 'function') syncSalonConfigLive();
+          })
           .subscribe();
       } catch (e) {
         console.warn('Realtime listener failed:', e);
@@ -4771,10 +4792,19 @@
     /* ==========================================================
        BEFORE / AFTER COMPARISON SLIDER LOGIC
     ========================================================== */
+    function resolveSafeImagePath(src) {
+      if (!src) return '';
+      src = String(src).trim();
+      if (src.startsWith('http://') || src.startsWith('https://') || src.startsWith('data:') || src.startsWith('blob:')) {
+        return src;
+      }
+      return src.replace(/^\/+/, '');
+    }
+
     const TREATMENTS_DATA = {
       callus: {
-        beforeImg: '/media/comparison/callus_before.jpg',
-        afterImg: '/media/comparison/callus_after.jpg',
+        beforeImg: 'media/comparison/callus_before.jpg',
+        afterImg: 'media/comparison/callus_after.jpg',
         prices: { fr: '6 000 DA', ar: '6000 دج', en: '6,000 DA' },
         duration: { fr: '⏱ 2 heures (120 min)', ar: '⏱ ساعتان (120 دقيقة)', en: '⏱ 2 hours (120 min)' },
         badgeKey: 'ba_card_callus_badge',
@@ -4788,8 +4818,8 @@
         }
       },
       cils: {
-        beforeImg: '/media/comparison/cils_before.jpg',
-        afterImg: '/media/comparison/cils_after.jpg',
+        beforeImg: 'media/comparison/cils_before.jpg',
+        afterImg: 'media/comparison/cils_after.jpg',
         prices: { fr: '6 000 DA', ar: '6000 دج', en: '6,000 DA' },
         duration: { fr: '⏱ 60 min', ar: '⏱ 60 دقيقة (ساعة)', en: '⏱ 60 min' },
         badgeKey: 'ba_card_cils_badge',
@@ -4803,8 +4833,8 @@
         }
       },
       hydra: {
-        beforeImg: '/media/comparison/hydra_before.jpg',
-        afterImg: '/media/comparison/hydra_after.jpg',
+        beforeImg: 'media/comparison/hydra_before.jpg',
+        afterImg: 'media/comparison/hydra_after.jpg',
         prices: { fr: '8 500 DA', ar: '8500 دج', en: '8,500 DA' },
         duration: { fr: '⏱ 90 min (1h30)', ar: '⏱ 90 دقيقة (ساعة ونصف)', en: '⏱ 90 min (1h30)' },
         badgeKey: 'ba_card_hydra_badge',
@@ -4835,9 +4865,32 @@
       const imgBefore = document.getElementById('baImgBefore');
       const imgAfter = document.getElementById('baImgAfter');
 
-      // Update images
-      imgBefore.src = data.beforeImg;
-      imgAfter.src = data.afterImg;
+      // Update images safely with relative paths
+      if (imgBefore && imgAfter) {
+        imgBefore.src = resolveSafeImagePath(data.beforeImg);
+        imgAfter.src = resolveSafeImagePath(data.afterImg);
+
+        imgBefore.onerror = function() {
+          if (!this.dataset.triedFallback) {
+            this.dataset.triedFallback = '1';
+            if (this.src.includes('media/comparison/')) {
+              this.src = this.src.replace('media/comparison/', 'media/');
+            } else if (this.src.includes('media/')) {
+              this.src = this.src.replace('media/', 'media/comparison/');
+            }
+          }
+        };
+        imgAfter.onerror = function() {
+          if (!this.dataset.triedFallback) {
+            this.dataset.triedFallback = '1';
+            if (this.src.includes('media/comparison/')) {
+              this.src = this.src.replace('media/comparison/', 'media/');
+            } else if (this.src.includes('media/')) {
+              this.src = this.src.replace('media/', 'media/comparison/');
+            }
+          }
+        };
+      }
 
       // Reset split to 50%
       updateSliderPosition(50);
@@ -5381,41 +5434,42 @@
 
     // Live Sync Salon Config (Hero video, Phone, Address, etc.) from Supabase
     async function syncSalonConfigLive() {
-      if (typeof supabaseClient === 'undefined' || !supabaseClient) return;
+      const client = (typeof supabaseClient !== 'undefined' && supabaseClient) ? supabaseClient : (typeof supabaseApp !== 'undefined' ? supabaseApp : window.supabaseClient);
+      if (!client) return;
       try {
-        const { data, error } = await supabaseClient.from('admin_config').select('*');
-        if (error || !data) return;
+        const { data, error } = await client.from('admin_config').select('*');
+        if (!error && data) {
+          const configMap = {};
+          data.forEach(item => { configMap[item.key] = item.value; });
 
-        const configMap = {};
-        data.forEach(item => { configMap[item.key] = item.value; });
+          // Update Hero Video if changed
+          if (configMap.hero_video_url) {
+            const heroVid = document.getElementById('heroSalonVideo');
+            if (heroVid && heroVid.src !== configMap.hero_video_url) {
+              heroVid.src = configMap.hero_video_url;
+              if (configMap.hero_poster_url) heroVid.poster = configMap.hero_poster_url;
+            }
+          }
 
-        // Update Hero Video if changed
-        if (configMap.hero_video_url) {
-          const heroVid = document.getElementById('heroSalonVideo');
-          if (heroVid && heroVid.src !== configMap.hero_video_url) {
-            heroVid.src = configMap.hero_video_url;
-            if (configMap.hero_poster_url) heroVid.poster = configMap.hero_poster_url;
+          // Update WhatsApp links
+          if (configMap.whatsapp_number) {
+            const waNum = configMap.whatsapp_number.replace(/[^0-9]/g, '');
+            window.SALON_WHATSAPP = waNum;
+            document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+              const currentHref = link.getAttribute('href');
+              link.setAttribute('href', currentHref.replace(/wa\.me\/\d+/, 'wa.me/' + waNum));
+            });
           }
         }
 
-        // Update WhatsApp links
-        if (configMap.whatsapp_number) {
-          const waNum = configMap.whatsapp_number.replace(/[^0-9]/g, '');
-          window.SALON_WHATSAPP = waNum;
-          document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
-            const currentHref = link.getAttribute('href');
-            link.setAttribute('href', currentHref.replace(/wa\.me\/\d+/, 'wa.me/' + waNum));
-          });
-        }
-
-        // Sync Comparisons from Supabase
-        const { data: compRows } = await supabaseClient.from('comparisons').select('*');
+        // Sync Comparisons from Supabase with safe relative paths
+        const { data: compRows } = await client.from('comparisons').select('*');
         if (compRows && compRows.length > 0) {
           compRows.forEach(c => {
             const key = c.service_key === 'hydrafacial' ? 'hydra' : c.service_key;
             if (typeof TREATMENTS_DATA !== 'undefined' && TREATMENTS_DATA[key]) {
-              if (c.before_image) TREATMENTS_DATA[key].beforeImg = c.before_image;
-              if (c.after_image) TREATMENTS_DATA[key].afterImg = c.after_image;
+              if (c.before_image) TREATMENTS_DATA[key].beforeImg = resolveSafeImagePath(c.before_image);
+              if (c.after_image) TREATMENTS_DATA[key].afterImg = resolveSafeImagePath(c.after_image);
             }
           });
           if (typeof setComparisonTreatment === 'function' && typeof activeTreatment !== 'undefined') {
