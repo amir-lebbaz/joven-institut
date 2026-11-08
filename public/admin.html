@@ -1083,7 +1083,7 @@
       }
 
       container.innerHTML = servicesData.map(s => `
-        <div class="data-card">
+        <div class="data-card" id="service-card-${s.id}">
           <div class="card-thumb">
             <img src="${s.image_url || 'media/hydra_after.jpg'}" alt="${s.title}" onerror="this.src='media/hydra_after.jpg'">
             <span class="card-badge">${s.category || 'Soin'}</span>
@@ -1137,6 +1137,10 @@
 
     async function saveService(e) {
       e.preventDefault();
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const origText = submitBtn ? submitBtn.innerText : 'Enregistrer';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.innerText = 'Enregistrement en cours...'; }
+
       const id = document.getElementById('serviceId').value;
       const title = document.getElementById('serviceTitle').value.trim();
       const title_ar = document.getElementById('serviceTitleAr').value.trim();
@@ -1150,14 +1154,14 @@
 
       const payload = {
         title,
-        title_ar,
+        title_ar: title_ar || title,
         category,
         duration,
         price,
         display_order,
         image_url,
         description,
-        description_ar,
+        description_ar: description_ar || description,
         is_active: true
       };
 
@@ -1165,29 +1169,45 @@
         if (id) {
           const { error } = await supabaseClient.from('services').update(payload).eq('id', id);
           if (error) throw error;
-          showToast('Soin mis à jour avec succès !');
+          showToast('Soin mis à jour avec succès ! / تم تعديل الخدمة بنجاح');
         } else {
           const { error } = await supabaseClient.from('services').insert([payload]);
           if (error) throw error;
-          showToast('Nouveau soin ajouté au catalogue !');
+          showToast('Nouveau soin ajouté au catalogue ! / تمت إضافة الخدمة بنجاح');
         }
         closeServiceModal();
-        loadServices();
+        await loadServices();
       } catch (err) {
         alert('Erreur: ' + err.message);
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.innerText = origText; }
       }
     }
 
     async function deleteService(id, title) {
-      if (!confirm(`Voulez-vous vraiment supprimer "${title}" ?\nهل أنتِ متأكدة من حذف هذه الخدمة نهائياً؟`)) return;
+      if (!confirm(`Voulez-vous vraiment supprimer définitivement "${title}" ?\nهل أنتِ متأكدة من حذف هذه الخدمة نهائياً من الموقع وقاعدة البيانات؟`)) return;
+
+      const card = document.getElementById('service-card-' + id);
+      if (card) {
+        card.style.transition = 'opacity 0.3s, transform 0.3s';
+        card.style.opacity = '0.3';
+        card.style.transform = 'scale(0.95)';
+        card.style.pointerEvents = 'none';
+      }
+
+      showToast('Suppression en cours... / جاري الحذف...', '⏳');
 
       try {
-        const { error } = await supabaseClient.from('services').delete().eq('id', id);
-        if (error) throw error;
-        showToast('Soin supprimé !', '🗑️');
-        loadServices();
+        const { error, count } = await supabaseClient.from('services').delete().eq('id', id);
+        if (error) {
+          if (card) { card.style.opacity = '1'; card.style.transform = 'none'; card.style.pointerEvents = 'auto'; }
+          throw error;
+        }
+        if (card) card.remove();
+        showToast('Soin supprimé définitivement ! / تم حذف الخدمة بنجاح', '🗑️');
+        await loadServices();
       } catch (err) {
-        alert('Erreur: ' + err.message);
+        alert('Erreur lors de la suppression: ' + err.message);
       }
     }
 
@@ -1213,7 +1233,7 @@
       }
 
       container.innerHTML = offersData.map(o => `
-        <div class="data-card">
+        <div class="data-card" id="offer-card-${o.id}">
           <div class="card-thumb">
             <img src="${o.image_url || 'media/hydra_after.jpg'}" alt="${o.title}" onerror="this.src='media/hydra_after.jpg'">
             ${o.badge ? `<span class="card-badge">${o.badge}</span>` : ''}
@@ -1269,6 +1289,10 @@
 
     async function saveOffer(e) {
       e.preventDefault();
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const origText = submitBtn ? submitBtn.innerText : 'Enregistrer';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.innerText = 'Enregistrement en cours...'; }
+
       const id = document.getElementById('offerId').value;
       const title = document.getElementById('offerTitle').value.trim();
       const title_ar = document.getElementById('offerTitleAr').value.trim();
@@ -1282,14 +1306,14 @@
 
       const payload = {
         title,
-        title_ar,
-        badge,
-        badge_ar,
-        old_price,
+        title_ar: title_ar || title,
+        badge: badge || '-20% Promo',
+        badge_ar: badge_ar || (badge ? badge : 'عرض خاص'),
+        old_price: old_price || null,
         new_price,
         image_url,
         description,
-        description_ar,
+        description_ar: description_ar || description,
         is_active: true
       };
 
@@ -1297,27 +1321,43 @@
         if (id) {
           const { error } = await supabaseClient.from('offers').update(payload).eq('id', id);
           if (error) throw error;
-          showToast('Offre mise à jour avec succès !');
+          showToast('Offre mise à jour avec succès ! / تم تعديل العرض بنجاح');
         } else {
           const { error } = await supabaseClient.from('offers').insert([payload]);
           if (error) throw error;
-          showToast('Nouvelle offre publiée !');
+          showToast('Nouvelle offre publiée avec succès ! / تم نشر العرض بنجاح');
         }
         closeOfferModal();
-        loadOffers();
+        await loadOffers();
       } catch (err) {
         alert('Erreur: ' + err.message);
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.innerText = origText; }
       }
     }
 
     async function deleteOffer(id, title) {
-      if (!confirm(`Supprimer l'offre "${title}" ?\nهل أنتِ متأكدة من حذف هذا العرض الترويجي؟`)) return;
+      if (!confirm(`Supprimer l'offre "${title}" ?\nهل أنتِ متأكدة من حذف هذا العرض الترويجي نهائياً من الموقع؟`)) return;
+
+      const card = document.getElementById('offer-card-' + id);
+      if (card) {
+        card.style.transition = 'opacity 0.3s, transform 0.3s';
+        card.style.opacity = '0.3';
+        card.style.transform = 'scale(0.95)';
+        card.style.pointerEvents = 'none';
+      }
+
+      showToast('Suppression de l\'offre... / جاري حذف العرض...', '⏳');
 
       try {
         const { error } = await supabaseClient.from('offers').delete().eq('id', id);
-        if (error) throw error;
-        showToast('Offre supprimée !', '🗑️');
-        loadOffers();
+        if (error) {
+          if (card) { card.style.opacity = '1'; card.style.transform = 'none'; card.style.pointerEvents = 'auto'; }
+          throw error;
+        }
+        if (card) card.remove();
+        showToast('Offre supprimée définitivement ! / تم حذف العرض بنجاح', '🗑️');
+        await loadOffers();
       } catch (err) {
         alert('Erreur: ' + err.message);
       }
@@ -1345,7 +1385,7 @@
       }
 
       container.innerHTML = galleryData.map(g => `
-        <div class="gallery-card">
+        <div class="gallery-card" id="gallery-card-${g.id}">
           <div class="gallery-thumb">
             <img src="${g.image_url}" alt="${g.title || 'Photo JOVEN'}" onerror="this.src='media/salon_real_reception.jpg'">
           </div>
@@ -1368,6 +1408,10 @@
 
     async function saveGallery(e) {
       e.preventDefault();
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const origText = submitBtn ? submitBtn.innerText : 'Publier';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.innerText = 'Publication en cours...'; }
+
       const title = document.getElementById('galTitle').value.trim();
       const category = document.getElementById('galCategory').value;
       const image_url = document.getElementById('galImageUrl').value.trim();
@@ -1379,22 +1423,38 @@
           image_url
         }]);
         if (error) throw error;
-        showToast('Photo ajoutée à la galerie !');
+        showToast('Photo ajoutée à la galerie ! / تمت إضافة الصورة بنجاح');
         closeGalleryModal();
-        loadGallery();
+        await loadGallery();
       } catch (err) {
         alert('Erreur: ' + err.message);
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.innerText = origText; }
       }
     }
 
     async function deleteGalleryItem(id) {
-      if (!confirm('Supprimer cette photo de la galerie ?\nهل تريدين حذف هذه الصورة؟')) return;
+      if (!confirm('Supprimer cette photo de la galerie ?\nهل تريدين حذف هذه الصورة نهائياً من الموقع؟')) return;
+
+      const card = document.getElementById('gallery-card-' + id);
+      if (card) {
+        card.style.transition = 'opacity 0.3s, transform 0.3s';
+        card.style.opacity = '0.3';
+        card.style.transform = 'scale(0.95)';
+        card.style.pointerEvents = 'none';
+      }
+
+      showToast('Suppression de la photo... / جاري حذف الصورة...', '⏳');
 
       try {
         const { error } = await supabaseClient.from('gallery_images').delete().eq('id', id);
-        if (error) throw error;
-        showToast('Photo supprimée !', '🗑️');
-        loadGallery();
+        if (error) {
+          if (card) { card.style.opacity = '1'; card.style.transform = 'none'; card.style.pointerEvents = 'auto'; }
+          throw error;
+        }
+        if (card) card.remove();
+        showToast('Photo supprimée avec succès ! / تم حذف الصورة نهائياً', '🗑️');
+        await loadGallery();
       } catch (err) {
         alert('Erreur: ' + err.message);
       }

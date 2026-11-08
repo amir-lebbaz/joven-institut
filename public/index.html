@@ -4137,6 +4137,7 @@
     let supabaseApp = null;
     window.DYNAMIC_SERVICES = [];
     window.DYNAMIC_OFFERS = [];
+    window.DYNAMIC_GALLERY = [];
 
     try {
       if (window.supabase) {
@@ -4146,25 +4147,31 @@
       console.warn('Supabase initialization failed, running with static fallback:', e);
     }
 
-    // Fetch and sync services & offers from Supabase
+    // Fetch and sync services, offers & gallery from Supabase
     async function syncDataFromSupabase() {
       if (!supabaseApp) return;
 
       try {
-        const [servicesRes, offersRes] = await Promise.all([
+        const [servicesRes, offersRes, galleryRes] = await Promise.all([
           supabaseApp.from('services').select('*').eq('is_active', true).order('display_order', { ascending: true }),
-          supabaseApp.from('offers').select('*').eq('is_active', true).order('created_at', { ascending: false })
+          supabaseApp.from('offers').select('*').eq('is_active', true).order('created_at', { ascending: false }),
+          supabaseApp.from('gallery_images').select('*').order('created_at', { ascending: false })
         ]);
 
-        if (!servicesRes.error && servicesRes.data && servicesRes.data.length > 0) {
+        if (!servicesRes.error && Array.isArray(servicesRes.data)) {
           window.DYNAMIC_SERVICES = servicesRes.data;
           renderSupabaseServices();
           updateServiceDropdown();
         }
 
-        if (!offersRes.error && offersRes.data && offersRes.data.length > 0) {
+        if (!offersRes.error && Array.isArray(offersRes.data)) {
           window.DYNAMIC_OFFERS = offersRes.data;
           renderSupabaseOffers();
+        }
+
+        if (!galleryRes.error && Array.isArray(galleryRes.data) && galleryRes.data.length > 0) {
+          window.DYNAMIC_GALLERY = galleryRes.data;
+          renderSupabaseGallery();
         }
       } catch (err) {
         console.warn('Could not sync with Supabase (using static fallback):', err);
@@ -4172,9 +4179,13 @@
     }
 
     function renderSupabaseServices(categoryFilter = 'all') {
-      if (!window.DYNAMIC_SERVICES || window.DYNAMIC_SERVICES.length === 0) return;
       const carousel = document.getElementById('soinsCarousel');
       if (!carousel) return;
+
+      if (!window.DYNAMIC_SERVICES || window.DYNAMIC_SERVICES.length === 0) {
+        // Retain static catalog if Supabase returned 0 items
+        return;
+      }
 
       const isAr = (currentLang === 'ar');
       const isEn = (currentLang === 'en');
@@ -4190,7 +4201,10 @@
             return true;
           });
 
-      if (filtered.length === 0) return;
+      if (filtered.length === 0) {
+        carousel.innerHTML = '<p style="padding: 20px; color: var(--text-muted);">' + (isAr ? 'لا توجد خدمات في هذا القسم حالياً.' : 'Aucun soin disponible dans cette catégorie pour le moment.') + '</p>';
+        return;
+      }
 
       carousel.innerHTML = filtered.map(s => {
         const title = isAr && s.title_ar ? s.title_ar : s.title;
@@ -4227,9 +4241,17 @@
     }
 
     function renderSupabaseOffers() {
-      if (!window.DYNAMIC_OFFERS || window.DYNAMIC_OFFERS.length === 0) return;
       const container = document.getElementById('offersGridContainer');
+      const wrap = document.getElementById('offresSpecialesWrap');
       if (!container) return;
+
+      if (!window.DYNAMIC_OFFERS || window.DYNAMIC_OFFERS.length === 0) {
+        if (wrap) wrap.style.display = 'none';
+        container.innerHTML = '';
+        return;
+      }
+
+      if (wrap) wrap.style.display = 'block';
 
       const isAr = (currentLang === 'ar');
       const isEn = (currentLang === 'en');
@@ -4269,6 +4291,23 @@
       }).join('');
     }
 
+    function renderSupabaseGallery() {
+      if (!window.DYNAMIC_GALLERY || window.DYNAMIC_GALLERY.length === 0) return;
+      const grid = document.querySelector('.galerie-grid');
+      if (!grid) return;
+
+      const isAr = (currentLang === 'ar');
+      grid.innerHTML = window.DYNAMIC_GALLERY.map(g => `
+        <div class="galerie-item" onclick="openImageModal('${g.image_url}', '${(g.title || 'Photo JOVEN').replace(/'/g, "\\'")}')">
+          <img src="${g.image_url}" alt="${g.title || 'Photo JOVEN Institut'}" onerror="this.src='media/salon_real_reception.jpg'">
+          <div class="galerie-overlay">
+            <strong>${g.title || 'JOVEN Institut'}</strong>
+            <span>${g.category === 'salon' ? (isAr ? 'أجواء ومرافق الصالون' : 'Espace Institut') : (isAr ? 'نتائج حقيقية' : 'Résultat Soin')}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
     function updateServiceDropdown() {
       const select = document.getElementById('serviceSelect');
       if (!select || !window.DYNAMIC_SERVICES || window.DYNAMIC_SERVICES.length === 0) return;
@@ -4280,9 +4319,24 @@
       }).join('') + '<option value="Consultation sur place">Consultation sur place</option>';
     }
 
+    // Setup Realtime Sync Listener
+    function setupRealtimeListener() {
+      if (!supabaseApp) return;
+      try {
+        supabaseApp.channel('public:db_changes')
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'services' }, () => syncDataFromSupabase())
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'offers' }, () => syncDataFromSupabase())
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'gallery_images' }, () => syncDataFromSupabase())
+          .subscribe();
+      } catch (e) {
+        console.warn('Realtime listener failed:', e);
+      }
+    }
+
     // Call sync on page load
     window.addEventListener('DOMContentLoaded', () => {
       syncDataFromSupabase();
+      setupRealtimeListener();
     });
 
 
