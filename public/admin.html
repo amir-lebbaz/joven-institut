@@ -308,6 +308,90 @@
       flex: 1;
     }
 
+    /* Owner Welcome Banner */
+    .owner-welcome-card {
+      background: linear-gradient(135deg, #FFFFFF 0%, #FFF5F7 100%);
+      border: 1px solid rgba(198, 107, 135, 0.25);
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin-bottom: 26px;
+      box-shadow: 0 4px 20px rgba(148, 64, 87, 0.06);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .welcome-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .welcome-header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .welcome-avatar {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #F2D8E3, #FCE7F3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(198, 107, 135, 0.15);
+    }
+
+    .welcome-title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 3px;
+    }
+
+    .welcome-desc {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .quick-tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px dashed rgba(198, 107, 135, 0.2);
+    }
+
+    .tip-pill {
+      background: #FFFFFF;
+      border: 1px solid rgba(220, 185, 198, 0.4);
+      border-radius: 10px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.82rem;
+      color: var(--text-main);
+      line-height: 1.4;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+
+    .tip-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
     .tab-pane {
       display: none;
     }
@@ -772,7 +856,7 @@
       <span class="brand-badge">Studio Manager</span>
     </div>
     <div class="header-actions">
-      <a href="/" target="_blank" class="btn btn-secondary btn-sm">
+      <a href="index.html" target="_blank" class="btn btn-secondary btn-sm">
         <span>🌐</span> Voir le site en direct
       </a>
       <button onclick="handleLogout()" class="btn btn-danger btn-sm">
@@ -802,6 +886,40 @@
 
   <!-- MAIN CONTENT -->
   <main class="main-content">
+
+    <!-- OWNER WELCOME & QUICK GUIDE BANNER -->
+    <div class="owner-welcome-card" id="ownerWelcomeCard">
+      <div class="welcome-header">
+        <div class="welcome-header-left">
+          <div class="welcome-avatar">🌸</div>
+          <div>
+            <h3 class="welcome-title">Bienvenue dans votre Espace de Gestion • مرحباً بكِ في لوحة تحكم صالون JOVEN</h3>
+            <p class="welcome-desc">تحكمي بشكل فوري وسهل في كافة أسعار الخدمات، العروض الترويجية، صور المعرض، ومقارنات قبل وبعد مع تحديث رقم الواتساب وكلمة السر بضغطة واحدة.</p>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="toggleOwnerTips()" id="toggleTipsBtn" style="white-space: nowrap;">
+          <span>💡</span> دليل الاستخدام
+        </button>
+      </div>
+      <div class="quick-tips-grid" id="quickTipsGrid">
+        <div class="tip-pill">
+          <span class="tip-icon">💆‍♀️</span>
+          <div><strong>الخدمات والأسعار:</strong> أضيفي أو عدّلي أي علاج وسعره بالدينار وصورته مباشرة لتظهر لزبوناتكِ فوراً.</div>
+        </div>
+        <div class="tip-pill">
+          <span class="tip-icon">🎁</span>
+          <div><strong>العروض الترويجية:</strong> أطلقي باقات العرائس وتخفيضات المواسم مع إمكانية إبرازها كـ "عرض مميز".</div>
+        </div>
+        <div class="tip-pill">
+          <span class="tip-icon">🔄</span>
+          <div><strong>مقارنات قبل وبعد:</strong> استعرضي صور نتائج زبوناتكِ مع شريط سحب تفاعلي جذاب يبني ثقة عالية.</div>
+        </div>
+        <div class="tip-pill">
+          <span class="tip-icon">⚙️</span>
+          <div><strong>إعدادات الصالون:</strong> حدّثي مواعيد العمل، رقم واتساب الحجز، رابط إنستغرام، أو كلمة سر الدخول.</div>
+        </div>
+      </div>
+    </div>
 
     <!-- TAB 1: SERVICES -->
     <section id="pane-services" class="tab-pane active">
@@ -1356,6 +1474,16 @@
         sessionStorage.removeItem('joven_admin_auth');
         window.location.reload();
       }
+    }
+
+    function toggleOwnerTips() {
+      const grid = document.getElementById('quickTipsGrid');
+      const btn = document.getElementById('toggleTipsBtn');
+      if (!grid) return;
+      const isHidden = (grid.style.display === 'none');
+      grid.style.display = isHidden ? 'grid' : 'none';
+      if (btn) btn.innerHTML = isHidden ? '<span>💡</span> إخفاء الدليل' : '<span>💡</span> دليل الاستخدام';
+      localStorage.setItem('joven_hide_tips', isHidden ? '0' : '1');
     }
 
     function switchTab(tab, btnEl) {
