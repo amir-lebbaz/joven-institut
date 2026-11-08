@@ -1,0 +1,15 @@
+{
+  "name": "joven-institut-beaute",
+  "version": "1.0.0",
+  "description": "JOVEN Institut de Beauté et Soins (Hydra, Alger) - Full Stack Web App & SQLite CMS",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
+  },
+  "dependencies": {
+    "express": "^4.22.3",
+    "multer": "^2.5.0",
+    "puppeteer-core": "^25.16.0"
+  }
+}

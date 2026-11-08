@@ -1,0 +1,4518 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>JOVEN • Institut de Beauté & Soins — Hydra, Alger</title>
+  <meta name="description" content="JOVEN Institut à Hydra, Alger. Soins experts authentiques : Hydrafacial, Callus Peeling, Soins Sothys, Manucure Russe, Rehaussement de Cils dans un cadre 100% féminin et serein.">
+  <meta name="theme-color" content="#CE7591">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+
+  <!-- Fonts: Cormorant Garamond (Latin/French/English), Tajawal (Arabic), Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       DESIGN SYSTEM & FEMININE LUXURY TOKENS
+    ============================================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg-page: #FAF5F6;
+      --bg-card: #FFFFFF;
+      --bg-accent-light: #F7EAEF;
+      --bg-pill: #F2D8E3;
+
+      --rose-primary: #C66B87;
+      --rose-dark: #A94E6A;
+      --rose-light: #E7A5B9;
+      --rose-btn: #CE7591;
+      --rose-btn-hover: #BF627F;
+      --rose-icon-badge: #EAAEC1;
+      --rose-glow: rgba(206, 117, 145, 0.25);
+
+      --text-main: #1D1D24;
+      --text-muted: #6C6B75;
+      --text-light: #8E8D98;
+
+      --wa-green: #25D366;
+      --gold-star: #F5A623;
+
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-ar: 'Tajawal', 'Plus Jakarta Sans', sans-serif;
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      --radius-pill: 9999px;
+
+      --shadow-soft: 0 4px 20px rgba(198, 107, 135, 0.08);
+      --shadow-card: 0 6px 24px rgba(29, 29, 36, 0.05);
+      --shadow-btn: 0 4px 16px rgba(206, 117, 145, 0.3);
+      --shadow-float: 0 10px 30px rgba(0, 0, 0, 0.12);
+
+      --nav-height: 76px;
+      --max-width: 1140px;
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* RTL Support for Arabic */
+    html[dir="rtl"] {
+      font-family: var(--font-ar);
+    }
+    html[dir="rtl"] .hero-title,
+    html[dir="rtl"] .section-title,
+    html[dir="rtl"] .brand-name,
+    html[dir="rtl"] .about-title,
+    html[dir="rtl"] .modal-title {
+      font-family: var(--font-ar);
+      font-weight: 800;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    img, video {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ============================================================
+       PETAL CANVAS ANIMATION (Feminine Romantic Falling Petals)
+    ============================================================ */
+    #petalCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0.8;
+    }
+
+    /* ============================================================
+       HEADER & NAVIGATION
+    ============================================================ */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      background: rgba(250, 245, 246, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(220, 185, 198, 0.25);
+      transition: var(--transition);
+    }
+
+    .header.scrolled {
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 4px 20px rgba(198, 107, 135, 0.1);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      gap: 16px;
+    }
+
+    /* Logo */
+    .brand-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .brand-name {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--rose-primary);
+      text-transform: uppercase;
+      transition: var(--transition);
+    }
+
+    .brand-logo:hover .brand-name {
+      color: var(--rose-dark);
+      transform: scale(1.02);
+    }
+
+    .brand-tagline {
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 3px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-tagline::before,
+    .brand-tagline::after {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 1px;
+      background: rgba(108, 107, 117, 0.4);
+    }
+
+    /* Navigation links */
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      list-style: none;
+    }
+
+    .nav-item a {
+      display: inline-block;
+      padding: 8px 14px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-main);
+      border-radius: var(--radius-pill);
+      transition: var(--transition);
+    }
+
+    .nav-item.active a {
+      background: var(--bg-pill);
+      color: var(--rose-primary);
+      font-weight: 600;
+    }
+
+    .nav-item a:hover:not(.active a) {
+      color: var(--rose-primary);
+      background: rgba(242, 216, 227, 0.4);
+    }
+
+    /* Language Switcher */
+    .lang-switcher {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(220, 185, 198, 0.4);
+      border-radius: var(--radius-pill);
+      padding: 3px;
+      gap: 2px;
+    }
+
+    .lang-btn {
+      padding: 4px 9px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      border-radius: var(--radius-pill);
+      color: var(--text-muted);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .lang-btn.active {
+      background: var(--rose-primary);
+      color: #FFFFFF;
+      box-shadow: 0 2px 6px rgba(198, 107, 135, 0.3);
+    }
+
+    .lang-btn:hover:not(.active) {
+      color: var(--rose-primary);
+    }
+
+    /* Header Button */
+    .header-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--rose-btn);
+      color: #FFFFFF;
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: var(--radius-pill);
+      box-shadow: var(--shadow-btn);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .header-btn:hover {
+      background: var(--rose-btn-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(206, 117, 145, 0.4);
+    }
+
+    /* Mobile Hamburger */
+    .hamburger-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .hamburger-btn span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text-main);
+      border-radius: 2px;
+      transition: var(--transition);
+      margin: 0 auto;
+    }
+
+    .hamburger-btn.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-btn.active span:nth-child(2) { opacity: 0; }
+    .hamburger-btn.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile Menu Drawer */
+    .mobile-drawer {
+      position: fixed;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      background: #FFFFFF;
+      border-bottom: 1px solid rgba(220, 185, 198, 0.3);
+      padding: 24px 20px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transform: translateY(-120%);
+      transition: transform 0.35s ease;
+      z-index: 999;
+    }
+
+    .mobile-drawer.open {
+      transform: translateY(0);
+    }
+
+    .mobile-drawer a {
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mobile-drawer a.active {
+      background: var(--bg-pill);
+      color: var(--rose-primary);
+      font-weight: 600;
+    }
+
+    .mobile-drawer .drawer-btn {
+      margin-top: 10px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* ============================================================
+       BOTANICAL LEAF SVGS
+    ============================================================ */
+    .leaf-decor-left {
+      position: absolute;
+      top: 90px;
+      left: -5px;
+      width: 72px;
+      height: 220px;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.85;
+    }
+
+    .leaf-decor-right {
+      position: absolute;
+      bottom: 20px;
+      right: -5px;
+      width: 76px;
+      height: 220px;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.85;
+    }
+
+    html[dir="rtl"] .leaf-decor-left {
+      left: auto;
+      right: -5px;
+      transform: scaleX(-1);
+    }
+    html[dir="rtl"] .leaf-decor-right {
+      right: auto;
+      left: -5px;
+      transform: scaleX(-1);
+    }
+
+    /* ============================================================
+       HERO SECTION
+    ============================================================ */
+    .hero-section {
+      padding-top: calc(var(--nav-height) + 24px);
+      padding-bottom: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1.15fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-badge-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-pill);
+      color: var(--rose-primary);
+      padding: 5px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(198, 107, 135, 0.2);
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 4.6vw, 3.8rem);
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.15;
+      margin-bottom: 18px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-title .cursive {
+      font-style: italic;
+      color: var(--rose-primary);
+      font-weight: 600;
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero-title .cursive::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--rose-light), transparent);
+      border-radius: 2px;
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 30px;
+      max-width: 440px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--rose-btn);
+      color: #FFFFFF;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 13px 28px;
+      border-radius: var(--radius-pill);
+      box-shadow: var(--shadow-btn);
+      transition: var(--transition);
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: 0.6s;
+    }
+
+    .hero-cta:hover::before {
+      left: 100%;
+    }
+
+    .hero-cta:hover {
+      background: var(--rose-btn-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(206, 117, 145, 0.4);
+    }
+
+    .hero-cta svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* 3 Value propositions row */
+    .hero-features {
+      display: flex;
+      align-items: flex-start;
+      gap: 28px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(220, 185, 198, 0.25);
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .feature-icon-box {
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--rose-primary);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .feature-icon-box svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      fill: none;
+    }
+
+    .feature-text strong {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.25;
+    }
+
+    .feature-text span {
+      display: block;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      line-height: 1.25;
+    }
+
+    /* Hero Right Visual: Authentic Salon Media with subtle video button */
+    .hero-media {
+      position: relative;
+    }
+
+    .hero-image-card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(198, 107, 135, 0.15);
+      aspect-ratio: 16/11;
+      background: #FFFFFF;
+      transition: var(--transition);
+    }
+
+    .hero-image-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(198, 107, 135, 0.22);
+    }
+
+    .hero-image-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      transition: transform 0.6s ease;
+    }
+
+    .hero-image-card:hover img {
+      transform: scale(1.03);
+    }
+
+    /* Floating Real Salon Badge */
+    .authentic-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--rose-primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      z-index: 3;
+    }
+
+    .authentic-badge::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #25D366;
+      box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.25);
+    }
+
+    /* Play Video Tour Trigger */
+    .hero-video-trigger {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius-pill);
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-soft);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: var(--transition);
+      z-index: 3;
+    }
+
+    .hero-video-trigger:hover {
+      background: var(--rose-primary);
+      color: #FFFFFF;
+      transform: translateY(-2px);
+    }
+
+    .hero-video-trigger .play-circle {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--rose-btn);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+    }
+
+    .hero-video-trigger:hover .play-circle {
+      background: #FFFFFF;
+      color: var(--rose-primary);
+    }
+
+    /* ============================================================
+       SECTION: NOS SOINS (Full Catalog & Filters)
+    ============================================================ */
+    .soins-section {
+      padding: 70px 0 80px;
+      position: relative;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.8vw, 2.7rem);
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* Category Filter Tabs */
+    .soins-filters {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: #FFFFFF;
+      border: 1px solid rgba(220, 185, 198, 0.35);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .filter-btn:hover {
+      color: var(--rose-primary);
+      border-color: var(--rose-primary);
+    }
+
+    .filter-btn.active {
+      background: var(--rose-btn);
+      color: #FFFFFF;
+      border-color: var(--rose-btn);
+      box-shadow: 0 4px 12px rgba(206, 117, 145, 0.28);
+    }
+
+    /* 4 Cards Grid (Desktop) */
+    .soins-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+
+    .soin-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(220, 185, 198, 0.2);
+      position: relative;
+    }
+
+    .soin-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 36px rgba(198, 107, 135, 0.16);
+      border-color: rgba(198, 107, 135, 0.4);
+    }
+
+    .soin-media {
+      position: relative;
+      aspect-ratio: 16/10;
+      background: var(--bg-accent-light);
+      overflow: visible;
+    }
+
+    .soin-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      border-top-left-radius: var(--radius-lg);
+      border-top-right-radius: var(--radius-lg);
+    }
+
+    .soin-card:hover .soin-media img {
+      transform: scale(1.05);
+    }
+
+    /* Floating Circle Icon in Card */
+    .soin-floating-icon {
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--rose-icon-badge);
+      border: 3px solid #FFFFFF;
+      box-shadow: 0 4px 12px rgba(198, 107, 135, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      color: #FFFFFF;
+    }
+
+    .soin-floating-icon svg {
+      width: 19px;
+      height: 19px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .soin-info {
+      padding: 26px 16px 20px;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: #FFFFFF;
+    }
+
+    .soin-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .soin-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    .soin-meta {
+      direction: ltr;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      font-size: 0.82rem;
+    }
+
+    .soin-price {
+      font-weight: 700;
+      color: var(--rose-primary);
+      background: var(--bg-pill);
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+    }
+
+    .soin-duration {
+      color: var(--text-light);
+    }
+
+    .soin-book-btn {
+      width: 100%;
+      padding: 8px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--rose-btn);
+      color: var(--rose-btn);
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .soin-card:hover .soin-book-btn {
+      background: var(--rose-btn);
+      color: #FFFFFF;
+    }
+
+    /* Carousel navigation on mobile */
+    .carousel-arrows {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .arrow-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      font-size: 1.3rem;
+      font-weight: bold;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .arrow-btn:hover,
+    .arrow-btn:active {
+      background: var(--bg-pill);
+      color: var(--rose-primary);
+    }
+
+    
+    /* ============================================================
+       SECTION: AVANT / APRÈS (Interactive Comparison Slider)
+    ============================================================ */
+    .comparison-section {
+      padding: 85px 0 95px;
+      background: linear-gradient(180deg, #FFFFFF 0%, rgba(250, 243, 245, 0.85) 50%, #FFFFFF 100%);
+      position: relative;
+    }
+
+    .comparison-badge-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: #FFFFFF;
+      border: 1px solid rgba(220, 185, 198, 0.6);
+      border-radius: var(--radius-pill);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--rose-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+      box-shadow: 0 3px 12px rgba(198, 107, 135, 0.09);
+    }
+
+    /* Treatment Switcher Tabs */
+    .ba-tabs {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 28px auto 38px;
+      flex-wrap: wrap;
+      max-width: 860px;
+    }
+
+    .ba-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 22px;
+      background: #FFFFFF;
+      border: 1.5px solid rgba(220, 185, 198, 0.45);
+      border-radius: var(--radius-pill);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 3px 12px rgba(0,0,0,0.03);
+    }
+
+    .ba-tab:hover {
+      border-color: var(--rose-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(198, 107, 135, 0.15);
+    }
+
+    .ba-tab.active {
+      background: var(--rose-btn);
+      border-color: var(--rose-btn);
+      color: #FFFFFF;
+      box-shadow: var(--shadow-btn);
+    }
+
+    .ba-tab-icon {
+      font-size: 1.15rem;
+    }
+
+    .ba-tab-price {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      background: rgba(198, 107, 135, 0.12);
+      color: var(--rose-primary);
+      transition: var(--transition);
+    }
+
+    .ba-tab.active .ba-tab-price {
+      background: rgba(255, 255, 255, 0.25);
+      color: #FFFFFF;
+    }
+
+    /* Main Container Layout: 2 Columns (Slider + Info) */
+    .ba-container-layout {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 40px;
+      align-items: center;
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    /* Comparison Viewer Box */
+    .ba-viewer-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .ba-slider-stage {
+      --split: 50%;
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      max-width: 540px;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 16px 45px rgba(198, 107, 135, 0.18);
+      background: #E8DCDD;
+      cursor: ew-resize;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: pan-y;
+      border: 4px solid #FFFFFF;
+    }
+
+    .ba-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+
+    .ba-img-after {
+      z-index: 1;
+    }
+
+    .ba-img-before {
+      z-index: 2;
+      clip-path: inset(0 calc(100% - var(--split, 50%)) 0 0);
+      will-change: clip-path;
+    }
+
+    html[dir="rtl"] .ba-img-before {
+      clip-path: inset(0 0 0 calc(100% - var(--split, 50%)));
+    }
+
+    /* Floating Labels on Images */
+    .ba-tag {
+      position: absolute;
+      top: 18px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      z-index: 5;
+      pointer-events: none;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    }
+
+    .ba-tag-before {
+      left: 18px;
+      background: rgba(23, 22, 26, 0.78);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    html[dir="rtl"] .ba-tag-before {
+      left: auto;
+      right: 18px;
+    }
+
+    .ba-tag-after {
+      right: 18px;
+      background: rgba(198, 107, 135, 0.92);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    html[dir="rtl"] .ba-tag-after {
+      right: auto;
+      left: 18px;
+    }
+
+    /* Split Handle & Glowing Knob */
+    .ba-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: var(--split, 50%);
+      width: 2px;
+      z-index: 6;
+      pointer-events: none;
+      transform: translateX(-50%);
+    }
+
+    html[dir="rtl"] .ba-handle {
+      left: auto;
+      right: var(--split, 50%);
+      transform: translateX(50%);
+    }
+
+    .ba-handle-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2.5px;
+      transform: translateX(-50%);
+      background: #FFFFFF;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .ba-handle-knob {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: 0 4px 20px rgba(198, 107, 135, 0.45), 0 0 0 3px rgba(255, 255, 255, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--rose-primary);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .ba-slider-stage:hover .ba-handle-knob,
+    .ba-slider-stage:active .ba-handle-knob {
+      transform: translate(-50%, -50%) scale(1.1);
+      box-shadow: 0 6px 26px rgba(198, 107, 135, 0.65), 0 0 0 4px rgba(255, 255, 255, 1);
+    }
+
+    .ba-handle-arrows {
+      width: 20px;
+      height: 20px;
+    }
+
+    .ba-range-input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      margin: 0;
+      cursor: ew-resize;
+      z-index: 10;
+    }
+
+    .ba-drag-hint {
+      margin-top: 14px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ba-drag-hint span:not([data-i18n]) {
+      color: var(--rose-primary);
+      font-weight: bold;
+      animation: pulseArrows 1.8s infinite alternate;
+    }
+
+    /* Treatment Details & Booking Card */
+    .ba-info-card {
+      background: #FFFFFF;
+      border-radius: var(--radius-xl);
+      padding: 36px 32px;
+      box-shadow: 0 10px 35px rgba(198, 107, 135, 0.1);
+      border: 1px solid rgba(220, 185, 198, 0.35);
+      position: relative;
+    }
+
+    .ba-info-badges {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .ba-pill-service {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--rose-primary);
+      background: var(--bg-pill);
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .ba-pill-verified {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #2E7D32;
+      background: #E8F5E9;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+    }
+
+    .ba-info-title {
+      font-family: var(--font-serif);
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+
+    .ba-info-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+
+    .ba-pricing-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: rgba(250, 243, 245, 0.7);
+      border-radius: var(--radius-md);
+      margin-bottom: 22px;
+      border: 1px dashed rgba(220, 185, 198, 0.6);
+      direction: ltr;
+    }
+
+    html[dir="rtl"] .ba-pricing-box {
+      direction: rtl;
+    }
+
+    .ba-price-group, .ba-duration-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ba-price-label, .ba-duration-label {
+      font-size: 0.7rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+    }
+
+    .ba-price-amount {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--rose-primary);
+    }
+
+    .ba-duration-val {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .ba-protocol-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 26px;
+    }
+
+    .ba-protocol-points li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.86rem;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    .ba-protocol-points .check-icon {
+      color: var(--rose-primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .ba-whatsapp-btn {
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: var(--radius-pill);
+      background: var(--rose-btn);
+      color: #FFFFFF;
+      font-size: 0.95rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-btn);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .ba-whatsapp-btn:hover {
+      background: var(--rose-btn-hover);
+      box-shadow: 0 8px 24px rgba(206, 117, 145, 0.45);
+      transform: translateY(-2px);
+      color: #FFFFFF;
+    }
+
+    .ba-whatsapp-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    .ba-guarantee-note {
+      margin-top: 14px;
+      font-size: 0.72rem;
+      color: var(--text-light);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    @media (max-width: 992px) {
+      .ba-container-layout {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      .ba-slider-stage {
+        max-width: 100%;
+      }
+      .ba-info-card {
+        padding: 26px 20px;
+      }
+    }
+
+    /* ============================================================
+       SECTION: À PROPOS DE JOVEN (Authentic Story & Space)
+    ============================================================ */
+    .about-section {
+      padding: 70px 0 80px;
+      position: relative;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .about-media-stack {
+      position: relative;
+    }
+
+    .about-media-main {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 10px 32px rgba(198, 107, 135, 0.12);
+      aspect-ratio: 16/11;
+      background: #FFFFFF;
+    }
+
+    .about-media-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .about-media-corner {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 150px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+      border: 3px solid #FFFFFF;
+    }
+
+    html[dir="rtl"] .about-media-corner {
+      right: auto;
+      left: -20px;
+    }
+
+    .about-media-corner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .about-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .about-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.6vw, 2.6rem);
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 16px;
+    }
+
+    .about-text {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 22px;
+      max-width: 480px;
+    }
+
+    .about-highlights {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .highlight-pill {
+      background: #FFFFFF;
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(220, 185, 198, 0.25);
+    }
+
+    .highlight-pill span {
+      color: var(--rose-primary);
+    }
+
+    .about-actions-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .about-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 24px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid var(--rose-btn);
+      color: var(--rose-primary);
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .about-btn:hover {
+      background: var(--rose-btn);
+      color: #FFFFFF;
+      box-shadow: var(--shadow-btn);
+    }
+
+    /* Trust indicators: Laurel + Google */
+    .about-stats {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .laurel-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #8D775F;
+    }
+
+    .laurel-icon {
+      width: 32px;
+      height: 40px;
+      flex-shrink: 0;
+    }
+
+    .laurel-text strong {
+      display: block;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.1;
+    }
+
+    .laurel-text span {
+      display: block;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      line-height: 1.1;
+    }
+
+    .google-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #FFFFFF;
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(220, 185, 198, 0.2);
+    }
+
+    .google-g-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .google-badge-info strong {
+      display: block;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.1;
+    }
+
+    .google-stars {
+      color: var(--gold-star);
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    /* ============================================================
+       SECTION: GALERIE & REELS (Authentic Videos & Results)
+    ============================================================ */
+    .galerie-section {
+      padding: 70px 0 80px;
+      background: #FFFFFF;
+      border-top: 1px solid rgba(220, 185, 198, 0.2);
+    }
+
+    .galerie-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 32px;
+    }
+
+    .galerie-item {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      aspect-ratio: 1;
+      box-shadow: var(--shadow-card);
+      cursor: pointer;
+      transition: var(--transition);
+      background: var(--bg-accent-light);
+    }
+
+    .galerie-item:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(198, 107, 135, 0.2);
+    }
+
+    .galerie-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .galerie-item:hover img {
+      transform: scale(1.08);
+    }
+
+    .galerie-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(29, 29, 36, 0.75) 0%, transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 16px;
+      color: #FFFFFF;
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .galerie-item:hover .galerie-overlay {
+      opacity: 1;
+    }
+
+    .galerie-overlay strong {
+      font-size: 0.88rem;
+      display: block;
+    }
+
+    .galerie-overlay span {
+      font-size: 0.72rem;
+      color: var(--rose-light);
+    }
+
+    /* Video Reel Card */
+    .video-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      aspect-ratio: 9/16;
+      background: #000;
+      box-shadow: var(--shadow-card);
+    }
+
+    .video-card video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ============================================================
+       SECTION: NOS CLIENTES EN PARLENT (Avis & WhatsApp Proof)
+    ============================================================ */
+    .reviews-section {
+      padding: 70px 0 90px;
+      background: var(--bg-page);
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 36px;
+    }
+
+    .review-card {
+      background: #FFFFFF;
+      border-radius: var(--radius-lg);
+      padding: 26px 22px;
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(220, 185, 198, 0.22);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .review-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-soft);
+      border-color: rgba(198, 107, 135, 0.4);
+    }
+
+    .review-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .review-stars {
+      color: var(--gold-star);
+      font-size: 0.88rem;
+      letter-spacing: 2px;
+    }
+
+    .review-verified-badge {
+      font-size: 0.68rem;
+      color: #25D366;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+    }
+
+    .review-quote {
+      font-size: 0.88rem;
+      color: var(--text-main);
+      line-height: 1.6;
+      font-style: italic;
+      margin-bottom: 18px;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(220, 185, 198, 0.2);
+    }
+
+    .review-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--bg-pill);
+      color: var(--rose-primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .review-author-info strong {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .review-author-info span {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-light);
+    }
+
+    /* WhatsApp Verified Chat Card */
+    .wa-chat-preview {
+      margin-top: 36px;
+      background: #FFFFFF;
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(220, 185, 198, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .wa-chat-text strong {
+      font-size: 1.1rem;
+      color: var(--text-main);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .wa-chat-text p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .wa-chat-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #25D366;
+      color: #FFFFFF;
+      padding: 10px 22px;
+      border-radius: var(--radius-pill);
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+    }
+
+    .wa-chat-cta:hover {
+      background: #20BD5A;
+      transform: translateY(-2px);
+    }
+
+    /* ============================================================
+       SECTION: CONTACT & LOCALISATION
+    ============================================================ */
+    .contact-section {
+      padding: 70px 0 90px;
+      background: #FFFFFF;
+      border-top: 1px solid rgba(220, 185, 198, 0.2);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .contact-card {
+      background: var(--bg-page);
+      border-radius: var(--radius-xl);
+      padding: 32px 28px;
+      border: 1px solid rgba(220, 185, 198, 0.25);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .contact-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg-pill);
+      color: var(--rose-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-detail strong {
+      display: block;
+      font-size: 0.92rem;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+
+    .contact-detail span, .contact-detail a {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Working Hours Table */
+    .hours-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 0.82rem;
+    }
+
+    .hours-table tr {
+      border-bottom: 1px solid rgba(220, 185, 198, 0.2);
+    }
+
+    .hours-table td {
+      padding: 6px 0;
+      color: var(--text-muted);
+    }
+
+    .hours-table td:last-child {
+      text-align: right;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    html[dir="rtl"] .hours-table td:last-child {
+      text-align: left;
+    }
+
+    /* Facade Image Card */
+    .facade-card {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      position: relative;
+    }
+
+    .facade-card img {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 16/11;
+      object-fit: cover;
+    }
+
+    .facade-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(29, 29, 36, 0.8) 0%, transparent 100%);
+      color: #FFFFFF;
+      padding: 20px 24px;
+    }
+
+    .facade-caption strong {
+      display: block;
+      font-size: 1rem;
+    }
+
+    .facade-caption span {
+      font-size: 0.8rem;
+      color: var(--rose-light);
+    }
+
+    /* ============================================================
+       FLOATING ELEMENTS (DESKTOP & MOBILE)
+    ============================================================ */
+    .floating-wa-desktop {
+      position: fixed;
+      bottom: 26px;
+      right: 26px;
+      z-index: 998;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #25D366 0%, #15934D 100%);
+      color: #FFFFFF;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 11px 22px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    html[dir="rtl"] .floating-wa-desktop {
+      right: auto;
+      left: 26px;
+    }
+
+    .floating-wa-desktop:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 28px rgba(37, 211, 102, 0.55);
+    }
+
+    .floating-wa-desktop svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .mobile-floating-bar {
+      display: none;
+      position: fixed;
+      bottom: 18px;
+      left: 16px;
+      right: 16px;
+      z-index: 998;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .mobile-floating-bar > * {
+      pointer-events: auto;
+    }
+
+    .mobile-google-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(220, 185, 198, 0.3);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .mobile-google-pill .google-g-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .mobile-wa-fab {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #25D366;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      transition: var(--transition);
+    }
+
+    .mobile-wa-fab:active {
+      transform: scale(0.92);
+    }
+
+    .mobile-wa-fab svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+
+    /* ============================================================
+       VIDEO MODAL & BOOKING MODAL
+    ============================================================ */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(29, 29, 36, 0.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1010;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-window {
+      background: #FFFFFF;
+      border-radius: var(--radius-xl);
+      max-width: 460px;
+      width: 100%;
+      padding: 32px 28px;
+      box-shadow: var(--shadow-float);
+      position: relative;
+      transform: translateY(20px) scale(0.97);
+      transition: var(--transition);
+    }
+
+    .modal-backdrop.open .modal-window {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-page);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    html[dir="rtl"] .modal-close {
+      right: auto;
+      left: 18px;
+    }
+
+    .modal-close:hover {
+      background: var(--bg-pill);
+      color: var(--rose-primary);
+    }
+
+    .modal-title {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .modal-sub {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+
+    .modal-form-group {
+      margin-bottom: 16px;
+    }
+
+    .modal-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .modal-select,
+    .modal-input {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid rgba(220, 185, 198, 0.4);
+      background: var(--bg-page);
+      font-family: inherit;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .modal-select:focus,
+    .modal-input:focus {
+      border-color: var(--rose-primary);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(198, 107, 135, 0.12);
+    }
+
+    .modal-submit-btn {
+      width: 100%;
+      padding: 13px;
+      border-radius: var(--radius-pill);
+      background: var(--rose-btn);
+      color: #FFFFFF;
+      font-size: 0.95rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-btn);
+      margin-top: 10px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .modal-submit-btn:hover {
+      background: var(--rose-btn-hover);
+      box-shadow: 0 6px 20px rgba(206, 117, 145, 0.4);
+    }
+
+    /* Video player modal */
+    .video-modal-window {
+      max-width: 680px;
+      padding: 16px;
+      background: #000000;
+    }
+
+    .video-modal-window video {
+      width: 100%;
+      border-radius: var(--radius-md);
+      display: block;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      background: #17161A;
+      color: #FFFFFF;
+      padding: 60px 0 30px;
+      position: relative;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+      gap: 36px;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand .brand-name {
+      color: var(--rose-light);
+      margin-bottom: 6px;
+    }
+
+    .footer-brand p {
+      font-size: 0.84rem;
+      color: #A09FA8;
+      line-height: 1.6;
+      margin-top: 12px;
+      max-width: 300px;
+    }
+
+    .footer-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      font-size: 0.84rem;
+      color: #A09FA8;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--rose-light);
+      padding-left: 4px;
+    }
+
+    html[dir="rtl"] .footer-links a:hover {
+      padding-left: 0;
+      padding-right: 4px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: #7A7982;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* ============================================================
+       RESPONSIVENESS
+    ============================================================ */
+    @media (max-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .hero-content {
+        order: 2;
+        text-align: left;
+      }
+      html[dir="rtl"] .hero-content {
+        text-align: right;
+      }
+
+      .hero-media {
+        order: 1;
+      }
+
+      .soins-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .galerie-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .reviews-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --nav-height: 64px;
+      }
+
+      .nav-menu,
+      .header-btn,
+      .floating-wa-desktop {
+        display: none !important;
+      }
+
+      .hamburger-btn {
+        display: flex;
+      }
+
+      .mobile-floating-bar {
+        display: flex;
+      }
+
+      .hero-section {
+        padding-top: calc(var(--nav-height) + 12px);
+        padding-bottom: 40px;
+      }
+
+      .hero-title {
+        font-size: 2.15rem;
+      }
+
+      .hero-desc {
+        font-size: 0.95rem;
+        margin-bottom: 24px;
+      }
+
+      .hero-cta {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 28px;
+      }
+
+      .hero-features {
+        gap: 14px;
+        justify-content: space-between;
+      }
+
+      .feature-item {
+        gap: 6px;
+      }
+
+      .feature-icon-box {
+        width: 22px;
+        height: 22px;
+      }
+
+      .feature-icon-box svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .feature-text strong {
+        font-size: 0.74rem;
+      }
+
+      .feature-text span {
+        font-size: 0.68rem;
+      }
+
+      /* Mobile Carousel for "Nos Soins" (shows 2 cards side by side with swipe) */
+      .soins-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        gap: 14px;
+        padding-bottom: 10px;
+        scrollbar-width: none;
+      }
+
+      .soins-grid::-webkit-scrollbar {
+        display: none;
+      }
+
+      .soin-card {
+        flex: 0 0 calc(50% - 7px);
+        min-width: calc(50% - 7px);
+        scroll-snap-align: start;
+      }
+
+      .soin-info {
+        padding: 22px 10px 16px;
+      }
+
+      .soin-name {
+        font-size: 0.88rem;
+      }
+
+      .soin-desc {
+        font-size: 0.72rem;
+      }
+
+      .carousel-arrows {
+        display: flex;
+      }
+
+      .about-media-main {
+        aspect-ratio: 16/10;
+      }
+
+      .about-title {
+        font-size: 1.85rem;
+      }
+
+      .about-stats {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 16px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  
+    /* ==========================================================
+       SUPABASE REAL-TIME OFFERS & PROMOTIONS SECTION
+    ========================================================== */
+    .offers-section {
+      margin-top: 48px;
+      background: linear-gradient(135deg, #FFF9F8 0%, #FFF0F2 100%);
+      border-radius: 24px;
+      padding: 40px 30px;
+      border: 1px solid rgba(194, 147, 85, 0.25);
+      box-shadow: 0 10px 35px rgba(148, 64, 87, 0.05);
+    }
+    .offers-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .offers-badge-pill {
+      display: inline-block;
+      background: #FBEFF2;
+      color: #944057;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(148, 64, 87, 0.2);
+    }
+    .offers-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.8rem;
+      color: #2A1D20;
+      margin-bottom: 8px;
+    }
+    [dir="rtl"] .offers-title {
+      font-family: 'Cairo', sans-serif;
+    }
+    .offers-subtitle {
+      font-size: 0.95rem;
+      color: #6E5C62;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .offers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 24px;
+    }
+    .offer-card {
+      background: #FFFFFF;
+      border-radius: 18px;
+      border: 1px solid #EEDCD9;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(148, 64, 87, 0.04);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+    .offer-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(148, 64, 87, 0.12);
+    }
+    .offer-thumb {
+      height: 190px;
+      position: relative;
+      overflow: hidden;
+      background: #F6ECE9;
+    }
+    .offer-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .offer-card:hover .offer-thumb img {
+      transform: scale(1.05);
+    }
+    .offer-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: linear-gradient(135deg, #944057, #6C2237);
+      color: #FFF;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 10px rgba(148, 64, 87, 0.3);
+    }
+    [dir="rtl"] .offer-badge {
+      right: auto;
+      left: 12px;
+    }
+    .offer-content {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .offer-card-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #2A1D20;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    [dir="rtl"] .offer-card-title {
+      font-family: 'Cairo', sans-serif;
+    }
+    .offer-card-desc {
+      font-size: 0.88rem;
+      color: #6E5C62;
+      line-height: 1.5;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+    .offer-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-top: 10px;
+      border-top: 1px dashed #EEDCD9;
+    }
+    .offer-old-price {
+      font-size: 0.95rem;
+      text-decoration: line-through;
+      color: #A08C92;
+    }
+    .offer-new-price {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #944057;
+    }
+    .offer-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: #FFF;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
+    }
+    .offer-btn:hover {
+      filter: brightness(1.08);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(37, 211, 102, 0.35);
+    }
+
+  </style>
+  <!-- Supabase Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- Floating Romantic Falling Petals Canvas -->
+  <canvas id="petalCanvas"></canvas>
+
+  <!-- ============================================================
+       HEADER
+  ============================================================ -->
+  <header class="header" id="mainHeader">
+    <div class="container header-inner">
+
+      <!-- Logo -->
+      <a href="#accueil" class="brand-logo" aria-label="JOVEN Accueil">
+        <span class="brand-name">JOVEN</span>
+        <span class="brand-tagline">BEAUTÉ • SOINS</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav aria-label="Navigation principale">
+        <ul class="nav-menu">
+          <li class="nav-item active"><a href="#accueil" data-i18n="nav_home">Accueil</a></li>
+          <li class="nav-item"><a href="#soins" data-i18n="nav_services">Nos Soins</a></li>
+          <li class="nav-item"><a href="#avant-apres" data-i18n="nav_before_after">Avant / Après</a></li>
+          <li class="nav-item"><a href="#apropos" data-i18n="nav_about">À propos</a></li>
+          <li class="nav-item"><a href="#galerie" data-i18n="nav_gallery">Galerie</a></li>
+          <li class="nav-item"><a href="#avis" data-i18n="nav_reviews">Avis</a></li>
+          <li class="nav-item"><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Language Switcher (FR / AR / EN) -->
+      <div class="lang-switcher" aria-label="Sélecteur de langue">
+        <button type="button" class="lang-btn active" onclick="switchLanguage('fr')">FR</button>
+        <button type="button" class="lang-btn" onclick="switchLanguage('ar')">عربي</button>
+        <button type="button" class="lang-btn" onclick="switchLanguage('en')">EN</button>
+      </div>
+
+      <!-- Desktop CTA -->
+      <button type="button" class="header-btn" onclick="openBookingModal()">
+        <span>📅</span> <span data-i18n="btn_book_care">Réserver un soin</span>
+      </button>
+
+      <!-- Mobile Hamburger -->
+      <button type="button" class="hamburger-btn" id="hamburgerBtn" aria-label="Menu mobile" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <a href="#accueil" class="active" onclick="closeDrawer()" data-i18n="nav_home">Accueil</a>
+    <a href="#soins" onclick="closeDrawer()" data-i18n="nav_services">Nos Soins</a>
+    <a href="#avant-apres" onclick="closeDrawer()" data-i18n="nav_before_after">Avant / Après</a>
+    <a href="#apropos" onclick="closeDrawer()" data-i18n="nav_about">À propos</a>
+    <a href="#galerie" onclick="closeDrawer()" data-i18n="nav_gallery">Galerie</a>
+    <a href="#avis" onclick="closeDrawer()" data-i18n="nav_reviews">Avis</a>
+    <a href="#contact" onclick="closeDrawer()" data-i18n="nav_contact">Contact</a>
+    <button type="button" class="header-btn drawer-btn" onclick="closeDrawer(); openBookingModal();">
+      <span>📅</span> <span data-i18n="btn_book_care">Réserver un soin</span>
+    </button>
+  </div>
+
+  <!-- ============================================================
+       HERO SECTION
+  ============================================================ -->
+  <section class="hero-section" id="accueil">
+    <!-- Clean botanical eucalyptus branch SVG on left -->
+    <svg class="leaf-decor-left" viewBox="0 0 100 300" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M10 20C20 80 40 180 50 300" stroke="#7A8B7B" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      <path d="M22 45C35 30 65 35 70 50C70 65 40 70 24 50Z" fill="#8FA68F" opacity="0.75"/>
+      <path d="M28 85C45 75 75 80 82 98C82 115 50 115 30 92Z" fill="#758B75" opacity="0.7"/>
+      <path d="M34 130C55 120 85 130 90 148C88 165 60 162 38 138Z" fill="#8FA68F" opacity="0.75"/>
+      <path d="M40 180C65 175 92 188 95 205C90 220 65 215 44 190Z" fill="#758B75" opacity="0.7"/>
+      <path d="M46 235C70 230 92 245 92 260C85 275 60 270 48 245Z" fill="#8FA68F" opacity="0.65"/>
+    </svg>
+
+    <div class="container">
+      <div class="hero-grid">
+
+        <!-- Left Content -->
+        <div class="hero-content">
+          <div class="hero-badge-tag">
+            <span>✨</span> <span data-i18n="hero_badge">Sanctuaire de Beauté Féminin • Hydra</span>
+          </div>
+
+          <h1 class="hero-title" data-i18n="hero_title_html">
+            Révélez votre<br>
+            <span class="cursive">beauté</span> naturelle
+          </h1>
+
+          <p class="hero-desc" data-i18n="hero_desc_html">
+            Soins experts, résultats visibles,<br>
+            dans un cadre élégant et apaisant.
+          </p>
+
+          <a href="https://wa.me/213781088061?text=Bonjour%20JOVEN%2C%20je%20souhaite%20r%C3%A9server%20un%20soin."
+             target="_blank" rel="noopener noreferrer" class="hero-cta" id="heroCtaBtn">
+            <svg viewBox="0 0 24 24"><path d="M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.893c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652c1.746.943 3.71 1.44 5.71 1.44h.004c6.584 0 11.942-5.334 11.945-11.893 0-3.182-1.24-6.17-3.474-8.446zM12.045 21.785h-.003c-1.774 0-3.513-.476-5.031-1.37l-.361-.214-3.741.976.999-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.887 9.882zm5.425-7.403c-.297-.149-1.758-.867-2.03-.967-.272-.099-.47-.149-.669.148-.198.298-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.019-.458.13-.606.134-.133.297-.347.446-.521.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.077 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.123-.272-.198-.57-.347z"/></svg>
+            <span data-i18n="hero_whatsapp_btn">Réserver sur WhatsApp →</span>
+          </a>
+
+          <!-- 3 Features Row -->
+          <div class="hero-features">
+            <!-- Feature 1: Expertise -->
+            <div class="feature-item">
+              <div class="feature-icon-box">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 4c1.5 3 2.5 6 2.5 9 0 3-1 5-2.5 7-1.5-2-2.5-4-2.5-7 0-3 1-6 2.5-9z"/>
+                  <path d="M12 13c-2.8 0-5.5-1.5-7-4 2 4 4.5 7 8 8"/>
+                  <path d="M12 13c2.8 0 5.5-1.5 7-4-2 4-4.5 7-8 8"/>
+                </svg>
+              </div>
+              <div class="feature-text">
+                <strong data-i18n="feat_expertise_title">Expertise</strong>
+                <span data-i18n="feat_expertise_sub">+5 ans</span>
+              </div>
+            </div>
+
+            <!-- Feature 2: Hygiène -->
+            <div class="feature-item">
+              <div class="feature-icon-box">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="M9 12l2 2 4-4"/>
+                </svg>
+              </div>
+              <div class="feature-text">
+                <strong data-i18n="feat_hygiene_title">Hygiène</strong>
+                <span data-i18n="feat_hygiene_sub">irréprochable</span>
+              </div>
+            </div>
+
+            <!-- Feature 3: Beauté -->
+            <div class="feature-item">
+              <div class="feature-icon-box">
+                <svg viewBox="0 0 24 24">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </div>
+              <div class="feature-text">
+                <strong data-i18n="feat_beauty_title">Votre beauté,</strong>
+                <span data-i18n="feat_beauty_sub">notre priorité</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Visual: Authentic Salon Interior with Video Tour Trigger -->
+        <div class="hero-media">
+          <div class="hero-image-card">
+            <!-- Authentic Salon Interior Photo -->
+            <img src="/media/authentic/hero_interior.jpg" alt="JOVEN Institut — Intérieur authentique du salon à Hydra">
+
+            <!-- Authentic Verified Pill -->
+            <div class="authentic-badge">
+              <span data-i18n="badge_authentic">Institut JOVEN • Hydra, Alger</span>
+            </div>
+
+            <!-- Play Video Tour Button -->
+            <div class="hero-video-trigger" onclick="openVideoModal('/media/authentic/video_welcome.mp4')">
+              <div class="play-circle">▶</div>
+              <span data-i18n="btn_video_tour">Voir la visite vidéo</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION: NOS SOINS (Full Catalog & Filters)
+  ============================================================ */
+  <section class="soins-section" id="soins">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title" data-i18n="soins_title">Nos Soins</h2>
+        <p class="section-subtitle" data-i18n="soins_subtitle">Une gamme complète pour prendre soin de vous</p>
+      </div>
+
+      <!-- Categories Filter Tabs -->
+      <div class="soins-filters">
+        <button type="button" class="filter-btn active" onclick="filterServices('all')" data-i18n="cat_all">Tous les soins</button>
+        <button type="button" class="filter-btn" onclick="filterServices('visage')" data-i18n="cat_visage">Visage & Hydrafacial</button>
+        <button type="button" class="filter-btn" onclick="filterServices('pieds')" data-i18n="cat_pieds">Pieds & Callus Peeling</button>
+        <button type="button" class="filter-btn" onclick="filterServices('ongles')" data-i18n="cat_ongles">Onglerie & Cils</button>
+        <button type="button" class="filter-btn" onclick="filterServices('cheveux')" data-i18n="cat_cheveux">Cheveux & Sothys</button>
+      </div>
+
+      <!-- Cards Grid / Slider (Featuring Authentic Salon Photos) -->
+      <div class="soins-grid" id="soinsCarousel">
+
+        <!-- Card 1: Hydrafacial Prestige (Authentic Skin Devices) -->
+        <article class="soin-card" data-category="visage" onclick="bookSpecificService('Hydrafacial Prestige')">
+          <div class="soin-media">
+            <img src="/media/authentic/hydrafacial_treatment.jpg" alt="Appareils Hydrafacial à JOVEN Institut">
+            <div class="soin-floating-icon" title="Hydrafacial">
+              <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            </div>
+          </div>
+          <div class="soin-info">
+            <div>
+              <h3 class="soin-name" data-i18n="card_1_title">Hydrafacial Prestige</h3>
+              <p class="soin-desc" data-i18n="card_1_desc">Nettoyage profond en 6 étapes, extraction des impuretés et éclat immédiat.</p>
+            </div>
+            <div class="soin-meta">
+              <span class="soin-price">8 500 DA</span>
+              <span class="soin-duration">⏱ 90 min</span>
+            </div>
+            <div class="soin-book-btn">
+              <span>💬</span> <span data-i18n="btn_book_now">Réserver</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: Manucure Russe & Pédicure (Authentic Nail Colors) -->
+        <article class="soin-card" data-category="ongles" onclick="bookSpecificService('Manucure Russe & Gel BIAB')">
+          <div class="soin-media">
+            <img src="/media/gmaps_sample/Photo_11.jpg" alt="Pose d'ongles et manucure russe de précision à JOVEN Institut">
+            <div class="soin-floating-icon" title="Manucure & Pédicure">
+              <svg viewBox="0 0 24 24"><path d="M9 4h6v4H9zM8 8h8v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V8zM11 2h2v2h-2z"/></svg>
+            </div>
+          </div>
+          <div class="soin-info">
+            <div>
+              <h3 class="soin-name" data-i18n="card_2_title">Manucure & Pédicure BIAB</h3>
+              <p class="soin-desc" data-i18n="card_2_desc">Technique russe ultra-précise avec renforcement BIAB tenue 4+ semaines.</p>
+            </div>
+            <div class="soin-meta">
+              <span class="soin-price">4 500 DA</span>
+              <span class="soin-duration">⏱ 75 min</span>
+            </div>
+            <div class="soin-book-btn">
+              <span>💬</span> <span data-i18n="btn_book_now">Réserver</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3: Callus Peeling & Pédicure Profonde (Authentic Foot Result) -->
+        <article class="soin-card" data-category="pieds" onclick="bookSpecificService('Callus Peeling — Pédicure Profonde')">
+          <div class="soin-media">
+            <img src="/media/comparison/callus_after.jpg" alt="Résultat réel Callus Peeling pieds doux à JOVEN Institut">
+            <div class="soin-floating-icon" title="Callus Peeling">
+              <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-6h2zm0-8h-2V7h2z"/></svg>
+            </div>
+          </div>
+          <div class="soin-info">
+            <div>
+              <h3 class="soin-name" data-i18n="card_3_title">Callus Peeling — Pédicure Profonde</h3>
+              <p class="soin-desc" data-i18n="card_3_desc">Soin complet de 2h : élimination intégrale des callosités et fissures, douceur absolue.</p>
+            </div>
+            <div class="soin-meta">
+              <span class="soin-price">6 000 DA</span>
+              <span class="soin-duration">⏱ 2h (120 min)</span>
+            </div>
+            <div class="soin-book-btn">
+              <span>💬</span> <span data-i18n="btn_book_now">Réserver</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4: Soin Sothys Paris & Capillaires (Authentic Luxury Products) -->
+        <article class="soin-card" data-category="cheveux" onclick="bookSpecificService('Soin Sothys & Head Spa')">
+          <div class="soin-media">
+            <img src="/media/authentic/shiny_hair.jpg" alt="Gamme de soins Sothys et capillaire à JOVEN">
+            <div class="soin-floating-icon" title="Soins Capillaires">
+              <svg viewBox="0 0 24 24"><path d="M7 4c-1 3-1 6 1 8s1 5-1 8M12 4c-1 3-1 6 1 8s1 5-1 8M17 4c-1 3-1 6 1 8s1 5-1 8"/></svg>
+            </div>
+          </div>
+          <div class="soin-info">
+            <div>
+              <h3 class="soin-name" data-i18n="card_4_title">Soin Sothys & Head Spa</h3>
+              <p class="soin-desc" data-i18n="card_4_desc">Rituel relaxant d'exception, détox cuir chevelu et jeunesse du visage.</p>
+            </div>
+            <div class="soin-meta">
+              <span class="soin-price">7 000 DA</span>
+              <span class="soin-duration">⏱ 75 min</span>
+            </div>
+            <div class="soin-book-btn">
+              <span>💬</span> <span data-i18n="btn_book_now">Réserver</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Mobile Carousel Navigation Arrows -->
+      
+      <!-- Dynamic Offers Container from Supabase -->
+      <div class="offers-section" id="offresSpecialesWrap">
+        <div class="offers-header">
+          <span class="offers-badge-pill" data-i18n="offers_pill">Édition Limitée • لفترة محدودة</span>
+          <h3 class="offers-title" data-i18n="offers_title">Forfaits & Offres Spéciales</h3>
+          <p class="offers-subtitle" data-i18n="offers_subtitle">Profitez de nos formules signatures combinant soins d'exception et tarifs avantageux.</p>
+        </div>
+        <div class="offers-grid" id="offersGridContainer">
+          <!-- Dynamic cards populated from Supabase -->
+        </div>
+      </div>
+
+      <div class="carousel-arrows">
+        <button type="button" class="arrow-btn" onclick="scrollCarousel(-1)" aria-label="Carte précédente">‹</button>
+        <button type="button" class="arrow-btn" onclick="scrollCarousel(1)" aria-label="Carte suivante">›</button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SECTION: AVANT / APRÈS (Interactive Comparison Slider)
+  ============================================================ -->
+  <section class="comparison-section" id="avant-apres">
+    <div class="container">
+      <div class="section-header text-center">
+        <div class="comparison-badge-tag">
+          <span>✨</span> <span data-i18n="ba_badge">Résultats Visibles & Authentiques</span>
+        </div>
+        <h2 class="section-title" data-i18n="ba_title">Avant / Après • La Preuve en Image</h2>
+        <p class="section-subtitle" data-i18n="ba_subtitle">Glissez le curseur interactif pour constater l'efficacité réelle de nos soins sur nos clientes</p>
+      </div>
+
+      <!-- Treatment Switcher Tabs -->
+      <div class="ba-tabs" role="tablist">
+        <button type="button" class="ba-tab active" data-treatment="callus" onclick="setComparisonTreatment('callus')">
+          <span class="ba-tab-icon">🦶</span>
+          <span class="ba-tab-title" data-i18n="ba_tab_callus">Callus Peeling</span>
+          <span class="ba-tab-price" id="baTabCallusPrice">6 000 DA</span>
+        </button>
+
+        <button type="button" class="ba-tab" data-treatment="cils" onclick="setComparisonTreatment('cils')">
+          <span class="ba-tab-icon">👁️</span>
+          <span class="ba-tab-title" data-i18n="ba_tab_cils">Rehaussement Cils</span>
+          <span class="ba-tab-price" id="baTabCilsPrice">6 000 DA</span>
+        </button>
+
+        <button type="button" class="ba-tab" data-treatment="hydra" onclick="setComparisonTreatment('hydra')">
+          <span class="ba-tab-icon">✨</span>
+          <span class="ba-tab-title" data-i18n="ba_tab_hydra">Hydrafacial Prestige</span>
+          <span class="ba-tab-price" id="baTabHydraPrice">8 500 DA</span>
+        </button>
+      </div>
+
+      <!-- Slider & Treatment Details Card Layout -->
+      <div class="ba-container-layout">
+        <!-- The Interactive Comparison Viewer -->
+        <div class="ba-viewer-wrap" id="baViewer">
+          <div class="ba-slider-stage" id="baStage" aria-label="Comparateur Avant Après">
+            <!-- After Image (Background layer) -->
+            <img src="/media/comparison/callus_after.jpg" id="baImgAfter" class="ba-img ba-img-after" alt="Après le soin" draggable="false">
+
+            <!-- Before Image (Clipped layer) -->
+            <img src="/media/comparison/callus_before.jpg" id="baImgBefore" class="ba-img ba-img-before" alt="Avant le soin" draggable="false">
+
+            <!-- Floating Badges on Images -->
+            <span class="ba-tag ba-tag-before" data-i18n="ba_label_before">Avant</span>
+            <span class="ba-tag ba-tag-after" data-i18n="ba_label_after">Après</span>
+
+            <!-- Draggable Divider Line & Knob Handle -->
+            <div class="ba-handle" id="baHandle">
+              <div class="ba-handle-line"></div>
+              <div class="ba-handle-knob" aria-hidden="true">
+                <svg viewBox="0 0 24 24" class="ba-handle-arrows">
+                  <path d="M8 7l-5 5 5 5M16 7l5 5-5 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Range input for seamless touch & keyboard accessibility -->
+            <input type="range" min="0" max="100" value="50" class="ba-range-input" id="baRangeInput" aria-label="Curseur de comparaison avant après">
+          </div>
+          <p class="ba-drag-hint">
+            <span>⟵</span> <span data-i18n="ba_hint">Glissez le séparateur pour comparer</span> <span>⟶</span>
+          </p>
+        </div>
+
+        <!-- Treatment Details & Booking Card -->
+        <aside class="ba-info-card" id="baInfoCard">
+          <div class="ba-info-header">
+            <div class="ba-info-badges">
+              <span class="ba-pill-service" id="baCardBadge" data-i18n="ba_card_callus_badge">Pédicure Médicale Russe</span>
+              <span class="ba-pill-verified" title="Résultat authentique vérifié">✓ 100% Réel</span>
+            </div>
+            <h3 class="ba-info-title" id="baCardTitle" data-i18n="ba_card_callus_title">Callus Peeling — Pédicure Profonde</h3>
+            <p class="ba-info-desc" id="baCardDesc" data-i18n="ba_card_callus_desc">
+              Soin signature complet de 2h : bain relaxant bouillonnant, traitement kératolytique sans lames, ponceuse russe de haute précision et bain de paraffine nutritive pour des pieds doux comme ceux d'un nouveau-né dès la 1ère séance.
+            </p>
+          </div>
+
+          <div class="ba-pricing-box">
+            <div class="ba-price-group">
+              <span class="ba-price-label" data-i18n="ba_tarif_label">Tarif officiel</span>
+              <span class="ba-price-amount" id="baCardPrice">6 000 DA</span>
+            </div>
+            <div class="ba-duration-group">
+              <span class="ba-duration-label" data-i18n="ba_duration_label">Durée de la séance</span>
+              <span class="ba-duration-val" id="baCardDuration">⏱ 2 heures (120 min)</span>
+            </div>
+          </div>
+
+          <ul class="ba-protocol-points" id="baCardPoints">
+            <li><span class="check-icon">✓</span> <span data-i18n="ba_callus_pt1">100% indolore et sans bistouri (sécurité maximale)</span></li>
+            <li><span class="check-icon">✓</span> <span data-i18n="ba_callus_pt2">Élimination des callosités, crevasses et rugosités</span></li>
+            <li><span class="check-icon">✓</span> <span data-i18n="ba_callus_pt3">Ponceuse russe & hydratation intense longue durée</span></li>
+            <li><span class="check-icon">✓</span> <span data-i18n="ba_callus_pt4">Résultat spectaculaire visible immédiatement</span></li>
+          </ul>
+
+          <a href="https://wa.me/213781088061?text=Bonjour%20JOVEN%2C%20je%20souhaite%20r%C3%A9server%20le%20soin%20Callus%20Peeling%20(6000%20DA)%20vu%20sur%20le%20site." 
+             target="_blank" rel="noopener noreferrer" class="ba-whatsapp-btn" id="baWhatsAppBtn">
+            <svg viewBox="0 0 24 24"><path d="M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.893c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652c1.746.943 3.71 1.44 5.71 1.44h.004c6.584 0 11.942-5.334 11.945-11.893 0-3.182-1.24-6.17-3.474-8.446zM12.045 21.785h-.003c-1.774 0-3.513-.476-5.031-1.37l-.361-.214-3.741.976.999-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.887 9.882zm5.425-7.403c-.297-.149-1.758-.867-2.03-.967-.272-.099-.47-.149-.669.148-.198.298-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.019-.458.13-.606.134-.133.297-.347.446-.521.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.077 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.123-.272-.198-.57-.347z"/></svg>
+            <span id="baCtaBtnText" data-i18n="ba_btn_book_result">Réserver ce résultat (6 000 DA)</span>
+          </a>
+
+          <div class="ba-guarantee-note">
+            <span class="lock-icon">🔒</span> <span data-i18n="ba_guarantee_text">100% Réservé aux femmes • Institut privé à Hydra • Sur RDV</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION: À PROPOS DE JOVEN (Authentic Story & Space)
+  ============================================================ -->
+  <section class="about-section" id="apropos">
+    <!-- Right Leaf Decoration -->
+    <svg class="leaf-decor-right" viewBox="0 0 100 300" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M90 20C80 80 60 180 50 300" stroke="#7A8B7B" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      <path d="M78 45C65 30 35 35 30 50C30 65 60 70 76 50Z" fill="#8FA68F" opacity="0.75"/>
+      <path d="M72 85C55 75 25 80 18 98C18 115 50 115 70 92Z" fill="#758B75" opacity="0.7"/>
+      <path d="M66 130C45 120 15 130 10 148C12 165 40 162 62 138Z" fill="#8FA68F" opacity="0.75"/>
+      <path d="M60 180C35 175 8 188 5 205C10 220 35 215 56 190Z" fill="#758B75" opacity="0.7"/>
+      <path d="M54 235C30 230 8 245 8 260C15 275 40 270 52 245Z" fill="#8FA68F" opacity="0.65"/>
+    </svg>
+
+    <div class="container">
+      <div class="about-grid">
+
+        <!-- Left Image Stack: Real Reception & Facade -->
+        <div class="about-media-stack">
+          <div class="about-media-main">
+            <!-- Authentic Salon Reception Photo -->
+            <img src="/media/authentic/salon_lounge_interior.jpg" alt="Réception réelle de l'Institut JOVEN à Hydra">
+          </div>
+          <div class="about-media-corner">
+            <img src="/media/authentic/facade_exterior.jpg" alt="Façade extérieure de JOVEN à Chemin de la Madeleine">
+          </div>
+        </div>
+
+        <!-- Right Content -->
+        <div class="about-content">
+          <h2 class="about-title" data-i18n="about_title">À propos de JOVEN</h2>
+
+          <p class="about-text" data-i18n="about_desc">
+            Niché au cœur du prestigieux quartier de Hydra à Alger, l'Institut JOVEN est un havre d'élégance 100% féminin. Avec plus de 5 ans d'expérience passionnée, nous allions protocoles médicaux stricts et cosmétiques de renommée mondiale pour révéler votre éclat naturel en toute intimité.
+          </p>
+
+          <div class="about-highlights">
+            <div class="highlight-pill"><span>✓</span> <strong data-i18n="hl_1">100% Féminin & Intime</strong></div>
+            <div class="highlight-pill"><span>✓</span> <strong data-i18n="hl_2">Sur Rendez-vous Exclusif</strong></div>
+            <div class="highlight-pill"><span>✓</span> <strong data-i18n="hl_3">Protocoles Sothys Paris</strong></div>
+            <div class="highlight-pill"><span>✓</span> <strong data-i18n="hl_4">Hygiène Médicale Certifiée</strong></div>
+          </div>
+
+          <div class="about-actions-row">
+            <a href="https://wa.me/213781088061?text=Bonjour%20JOVEN%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20soins."
+               target="_blank" rel="noopener noreferrer" class="about-btn" data-i18n="btn_learn_more">
+              En savoir plus →
+            </a>
+
+            <!-- Stats -->
+            <div class="about-stats">
+              <!-- Laurel Wreath Badge -->
+              <div class="laurel-badge">
+                <svg class="laurel-icon" viewBox="0 0 50 60" fill="none" stroke="#9A8567" stroke-width="2.5">
+                  <path d="M12 48C4 35 4 18 16 8M38 48C46 35 46 18 34 8"/>
+                  <path d="M6 38c3-4 8-4 10 0M44 38c-3-4-8-4-10 0"/>
+                  <path d="M8 26c4-3 9-2 10 2M42 26c-4-3-9-2-10 2"/>
+                  <path d="M14 16c4-2 8 0 9 4M36 16c-4-2-8 0-9 4"/>
+                </svg>
+                <div class="laurel-text">
+                  <strong>+5</strong>
+                  <span data-i18n="stat_exp">Ans<br>d'expérience</span>
+                </div>
+              </div>
+
+              <!-- Google Rating Badge -->
+              <div class="google-badge">
+                <svg class="google-g-icon" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.65v3h3.86c2.26-2.09 3.685-5.17 3.685-9.09z"/>
+                  <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.37 24 12 24z"/>
+                  <path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.13-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/>
+                  <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.37 0 3.26 2.7 1.29 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/>
+                </svg>
+                <div class="google-badge-info">
+                  <strong>4.9/5</strong>
+                  <span style="font-size:0.68rem; color:#6C6B75; display:block;" data-i18n="stat_reviews_count">262+ avis Google</span>
+                  <div class="google-stars">★★★★★</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION: GALERIE & REELS (Real Authentic Work)
+  ============================================================ -->
+  <section class="galerie-section" id="galerie">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title" data-i18n="gallery_title">Galerie & Résultats Réels</h2>
+        <p class="section-subtitle" data-i18n="gallery_subtitle">Découvrez les résultats authentiques réalisés au sein de notre institut</p>
+      </div>
+
+      <div class="galerie-grid">
+        <!-- Item 1: Real Lash Lift Before & After -->
+        <div class="galerie-item" onclick="openImageModal('/media/authentic/lash_lift.jpg', 'Rehaussement de Cils Naturels (Lash Lift)')">
+          <img src="/media/authentic/lash_lift_before_after.jpg" alt="Résultats Rehaussement de Cils Lash Lift">
+          <div class="galerie-overlay">
+            <strong data-i18n="gal_1_title">Rehaussement de Cils (Lash Lift)</strong>
+            <span data-i18n="gal_1_sub">Résultat naturel avant/après</span>
+          </div>
+        </div>
+
+        <!-- Item 2: Real Pedicure Suite -->
+        <div class="galerie-item" onclick="openImageModal('/media/authentic/pedicure_station.jpg', 'Espace Pédicure Spa & Callus Peeling')">
+          <img src="/media/authentic/pedicure_chair.jpg" alt="Espace Pédicure et Callus Peeling JOVEN">
+          <div class="galerie-overlay">
+            <strong data-i18n="gal_2_title">Pédicure Spa Médicale</strong>
+            <span data-i18n="gal_2_sub">Confort absolu et hygiène clinique</span>
+          </div>
+        </div>
+
+        <!-- Item 3: Real Luxury Skin Line -->
+        <div class="galerie-item" onclick="openImageModal('/media/authentic/sothys_products.jpg', 'Gamme de soins Sothys Paris')">
+          <img src="/media/authentic/skin_products.jpg" alt="Produits Sothys Paris à JOVEN">
+          <div class="galerie-overlay">
+            <strong data-i18n="gal_3_title">Protocoles Sothys Paris</strong>
+            <span data-i18n="gal_3_sub">Produits certifiés d'exception</span>
+          </div>
+        </div>
+
+        <!-- Item 4: Real Salon Treatment Room -->
+        <div class="galerie-item" onclick="openImageModal('/media/authentic/insta_work_1.jpg', 'Salle de soin esthétique intime')">
+          <img src="/media/authentic/salon_interior_3.jpg" alt="Cabine de soin JOVEN Hydra">
+          <div class="galerie-overlay">
+            <strong data-i18n="gal_4_title">Cabine de Soin Privative</strong>
+            <span data-i18n="gal_4_sub">Espace calme et 100% sécurisé</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION: NOS CLIENTES EN PARLENT (Avis & Social Proof)
+  ============================================================ -->
+  <section class="reviews-section" id="avis">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title" data-i18n="reviews_title">Nos clientes en parlent</h2>
+        <p class="section-subtitle" data-i18n="reviews_subtitle">Une confiance partagée, une beauté révélée ♥</p>
+      </div>
+
+      <div class="reviews-grid">
+
+        <!-- Review 1: Naziha Zennadi (Real Google Review) -->
+        <div class="review-card">
+          <div class="review-top">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-verified-badge">✓ Google Maps</div>
+          </div>
+          <p class="review-quote" data-i18n="rev_1_text">
+            "Un accueil très chaleureux, une équipe professionnelle et aux petits soins. Le soin Hydrafacial est juste incroyable, ma peau respire enfin ! Je recommande les yeux fermés."
+          </p>
+          <div class="review-author">
+            <div class="review-avatar">N</div>
+            <div class="review-author-info">
+              <strong>Naziha Zennadi</strong>
+              <span data-i18n="rev_verified_client">Cliente vérifiée Google</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2: Asma Attalah (Real Google Review) -->
+        <div class="review-card">
+          <div class="review-top">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-verified-badge">✓ Google Maps</div>
+          </div>
+          <p class="review-quote" data-i18n="rev_2_text">
+            "Le meilleur institut à Hydra sans hésitation. La propriétaire est d'une douceur et d'une gentillesse rares. Le Callus Peeling a transformé mes pieds en douceur de bébé."
+          </p>
+          <div class="review-author">
+            <div class="review-avatar">A</div>
+            <div class="review-author-info">
+              <strong>Asma Attalah</strong>
+              <span data-i18n="rev_verified_client">Cliente vérifiée Google</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3: Sabrina K. (Real Regular Customer) -->
+        <div class="review-card">
+          <div class="review-top">
+            <div class="review-stars">★★★★★</div>
+            <div class="review-verified-badge">✓ Google Maps</div>
+          </div>
+          <p class="review-quote" data-i18n="rev_3_text">
+            "Cadre magnifique, propre et calme. L'épilation et la manucure russe sont exécutées à la perfection avec du matériel stérilisé devant vous. Bravo JOVEN !"
+          </p>
+          <div class="review-author">
+            <div class="review-avatar">S</div>
+            <div class="review-author-info">
+              <strong>Sabrina K.</strong>
+              <span data-i18n="rev_regular_client">Cliente régulière • Hydra</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Real WhatsApp Feedback Bar -->
+      <div class="wa-chat-preview">
+        <div class="wa-chat-text">
+          <strong data-i18n="wa_box_title">Des centaines de retours chaleureux au quotidien !</strong>
+          <p data-i18n="wa_box_sub">Envoyez-nous un message sur WhatsApp pour consulter nos disponibilités de la semaine.</p>
+        </div>
+        <a href="https://wa.me/213781088061?text=Bonjour%20JOVEN%2C%20je%20souhaite%20consulter%20les%20disponibilit%C3%A9s."
+           target="_blank" rel="noopener noreferrer" class="wa-chat-cta">
+          <span>💬</span> <span data-i18n="wa_box_btn">Écrire sur WhatsApp (0781 08 80 61)</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION: CONTACT & ACCÈS (Hydra Location & Hours)
+  ============================================================ -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title" data-i18n="contact_title">Nous trouver & Réserver</h2>
+        <p class="section-subtitle" data-i18n="contact_subtitle">À votre écoute pour préparer votre moment de bien-être</p>
+      </div>
+
+      <div class="contact-grid">
+
+        <!-- Info & Working Hours -->
+        <div class="contact-card">
+          <!-- Address -->
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div class="contact-detail">
+              <strong data-i18n="contact_addr_title">Adresse du salon</strong>
+              <span data-i18n="contact_addr_val">Chemin de la Madeleine, 27, Hydra, Alger, Algérie</span>
+              <div style="margin-top:4px;">
+                <a href="https://maps.google.com/?q=P2XC+X7+Hydra" target="_blank" rel="noopener noreferrer" style="color:var(--rose-primary); font-weight:600;" data-i18n="contact_view_maps">
+                  Ouvrir sur Google Maps (Plus Code: P2XC+X7) →
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone & WhatsApp -->
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div class="contact-detail">
+              <strong data-i18n="contact_phone_title">Téléphone & WhatsApp</strong>
+              <a href="tel:0781088061" style="font-weight:600; color:var(--text-main);">0781 08 80 61</a>
+              <span style="display:block;">(International: +213 781 08 80 61)</span>
+            </div>
+          </div>
+
+          <!-- Policy -->
+          <div class="contact-item">
+            <div class="contact-icon">🔒</div>
+            <div class="contact-detail">
+              <strong data-i18n="contact_policy_title">Politique d'accueil</strong>
+              <span data-i18n="contact_policy_val">Sur rendez-vous uniquement. Espace 100% féminin dédié à la tranquillité de nos clientes.</span>
+            </div>
+          </div>
+
+          <!-- Working Hours Table -->
+          <div style="margin-top:20px; padding-top:16px; border-top:1px solid rgba(220,185,198,0.25);">
+            <strong style="display:block; font-size:0.92rem; color:var(--text-main); margin-bottom:8px;" data-i18n="contact_hours_title">
+              Horaires d'ouverture
+            </strong>
+            <table class="hours-table">
+              <tr><td data-i18n="day_mon">Lundi</td><td>09:00 - 17:00</td></tr>
+              <tr><td data-i18n="day_tue">Mardi</td><td>09:00 - 17:00</td></tr>
+              <tr><td data-i18n="day_wed">Mercredi</td><td>09:00 - 17:00</td></tr>
+              <tr><td data-i18n="day_thu">Jeudi</td><td>09:00 - 17:00</td></tr>
+              <tr><td data-i18n="day_fri">Vendredi</td><td>09:00 - 17:00</td></tr>
+              <tr><td data-i18n="day_sat">Samedi</td><td>09:00 - 17:00</td></tr>
+              <tr><td data-i18n="day_sun">Dimanche</td><td style="color:#C66B87;" data-i18n="day_closed">Fermé (Repos)</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Facade & Direct Quick Booking -->
+        <div>
+          <div class="facade-card">
+            <img src="/media/authentic/street_hydra.jpg" alt="Façade extérieure de l'Institut JOVEN à Hydra">
+            <div class="facade-caption">
+              <strong data-i18n="facade_title">Chemin de la Madeleine, Hydra</strong>
+              <span data-i18n="facade_sub">Un quartier résidentiel calme, discret et sécurisé</span>
+            </div>
+          </div>
+
+          <div style="margin-top:20px; text-align:center;">
+            <button type="button" class="hero-cta" style="width:100%; justify-content:center; margin-bottom:0;" onclick="openBookingModal()">
+              <span>📅</span> <span data-i18n="btn_book_appointment">Prendre un rendez-vous maintenant</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+          <div class="brand-name">JOVEN</div>
+          <div class="brand-tagline">BEAUTÉ • SOINS</div>
+          <p data-i18n="footer_about">
+            Institut de beauté et de soins exclusifs pour femmes à Hydra, Alger. Expertise clinique, bien-être absolu et écoute bienveillante.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title" data-i18n="footer_nav">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#accueil" data-i18n="nav_home">Accueil</a></li>
+            <li><a href="#soins" data-i18n="nav_services">Nos Soins</a></li>
+            <li><a href="#apropos" data-i18n="nav_about">À propos</a></li>
+            <li><a href="#galerie" data-i18n="nav_gallery">Galerie</a></li>
+            <li><a href="#avis" data-i18n="nav_reviews">Avis</a></li>
+            <li><a href="/admin" style="opacity: 0.5; font-size: 0.78rem;" title="Espace Propriétaire">🔒 Espace Pro (Admin)</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title" data-i18n="footer_services">Soins Phares</h4>
+          <ul class="footer-links">
+            <li><a href="#soins">Hydrafacial Prestige</a></li>
+            <li><a href="#soins">Callus Peeling</a></li>
+            <li><a href="#soins">Manucure Russe BIAB</a></li>
+            <li><a href="#soins">Soin Sothys Paris</a></li>
+            <li><a href="#soins">Rehaussement Cils</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title" data-i18n="footer_contact">Contact Direct</h4>
+          <p style="font-size:0.84rem; color:#A09FA8; line-height:1.6; margin-bottom:10px;">
+            Chemin de la Madeleine, 27, Hydra, Alger
+          </p>
+          <a href="tel:0781088061" style="display:block; font-size:1.05rem; font-weight:700; color:var(--rose-light); margin-bottom:12px;">
+            📞 0781 08 80 61
+          </a>
+          <a href="https://wa.me/213781088061" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:6px; color:#25D366; font-size:0.84rem; font-weight:600;">
+            💬 WhatsApp Officiel
+          </a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 JOVEN Institut. <span data-i18n="footer_rights">Tous droits réservés.</span></div>
+        <div>Hydra, Alger • <span data-i18n="footer_sub">Espace 100% féminin sur rendez-vous</span></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       DESKTOP FLOATING WHATSAPP PILL
+  ============================================================ -->
+  <a href="https://wa.me/213781088061?text=Bonjour%20JOVEN%2C%20je%20souhaite%20r%C3%A9server%20un%20rendez-vous."
+     target="_blank" rel="noopener noreferrer" class="floating-wa-desktop" aria-label="Contactez-nous sur WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.893c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652c1.746.943 3.71 1.44 5.71 1.44h.004c6.584 0 11.942-5.334 11.945-11.893 0-3.182-1.24-6.17-3.474-8.446zM12.045 21.785h-.003c-1.774 0-3.513-.476-5.031-1.37l-.361-.214-3.741.976.999-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.887 9.882zm5.425-7.403c-.297-.149-1.758-.867-2.03-.967-.272-.099-.47-.149-.669.148-.198.298-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.019-.458.13-.606.134-.133.297-.347.446-.521.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.077 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.123-.272-.198-.57-.347z"/></svg>
+    <span data-i18n="btn_write_us">Nous écrire</span>
+  </a>
+
+  <!-- ============================================================
+       MOBILE FLOATING BAR (Google Pill + WhatsApp Circle)
+  ============================================================ -->
+  <aside class="mobile-floating-bar" aria-label="Raccourcis mobiles">
+    <!-- Google Pill -->
+    <div class="mobile-google-pill">
+      <svg class="google-g-icon" viewBox="0 0 24 24">
+        <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.65v3h3.86c2.26-2.09 3.685-5.17 3.685-9.09z"/>
+        <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09C3.26 21.3 7.37 24 12 24z"/>
+        <path fill="#FBBC05" d="M5.27 14.29c-.25-.72-.38-1.49-.38-2.29s.13-1.57.38-2.29V6.62H1.29C.47 8.24 0 10.06 0 12s.47 3.76 1.29 5.38l3.98-3.09z"/>
+        <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.37 0 3.26 2.7 1.29 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/>
+      </svg>
+      <div>
+        <span>4.9/5 sur Google</span>
+        <span style="color:#F5A623; margin-left:4px;">★★★★★</span>
+      </div>
+    </div>
+
+    <!-- WhatsApp Circle FAB -->
+    <a href="https://wa.me/213781088061?text=Bonjour%20JOVEN%2C%20je%20souhaite%20r%C3%A9server%20un%20soin."
+       target="_blank" rel="noopener noreferrer" class="mobile-wa-fab" aria-label="Envoyer un message WhatsApp">
+      <svg viewBox="0 0 24 24"><path d="M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.893c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652c1.746.943 3.71 1.44 5.71 1.44h.004c6.584 0 11.942-5.334 11.945-11.893 0-3.182-1.24-6.17-3.474-8.446zM12.045 21.785h-.003c-1.774 0-3.513-.476-5.031-1.37l-.361-.214-3.741.976.999-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.887 9.882zm5.425-7.403c-.297-.149-1.758-.867-2.03-.967-.272-.099-.47-.149-.669.148-.198.298-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.019-.458.13-.606.134-.133.297-.347.446-.521.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.077 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.123-.272-.198-.57-.347z"/></svg>
+    </a>
+  </aside>
+
+  <!-- ============================================================
+       BOOKING MODAL
+  ============================================================ -->
+  <div class="modal-backdrop" id="bookingModal" onclick="handleBackdropClick(event)">
+    <div class="modal-window">
+      <button type="button" class="modal-close" onclick="closeBookingModal()" aria-label="Fermer">✕</button>
+
+      <h3 class="modal-title" data-i18n="modal_booking_title">Réserver votre soin</h3>
+      <p class="modal-sub" data-i18n="modal_booking_sub">Sélectionnez le soin de votre choix pour finaliser sur WhatsApp en 1 clic.</p>
+
+      <form id="bookingForm" onsubmit="submitBooking(event)">
+        <div class="modal-form-group">
+          <label class="modal-label" for="clientName" data-i18n="modal_label_name">Votre Nom & Prénom</label>
+          <input type="text" id="clientName" class="modal-input" placeholder="Ex: Sarah M." required>
+        </div>
+
+        <div class="modal-form-group">
+          <label class="modal-label" for="selectedService" data-i18n="modal_label_service">Choix du soin</label>
+          <select id="selectedService" class="modal-select">
+            <option value="Hydrafacial Prestige">Hydrafacial Prestige (8 500 DA)</option>
+            <option value="Callus Peeling Signature">Callus Peeling Signature (5 000 DA)</option>
+            <option value="Manucure Russe & Gel BIAB">Manucure Russe & Gel BIAB (4 500 DA)</option>
+            <option value="Soin Sothys & Head Spa">Soin Sothys & Head Spa (7 000 DA)</option>
+            <option value="Rehaussement de Cils (Lash Lift)">Rehaussement de Cils (Lash Lift) (6 000 DA)</option>
+            <option value="Pack Reine Mariée VIP">Pack Reine Mariée VIP (25 000 DA)</option>
+            <option value="Consultation sur place">Consultation & Bilan de peau</option>
+          </select>
+        </div>
+
+        <div class="modal-form-group">
+          <label class="modal-label" for="bookingDate" data-i18n="modal_label_date">Date souhaitée (indicative)</label>
+          <input type="date" id="bookingDate" class="modal-input">
+        </div>
+
+        <button type="submit" class="modal-submit-btn">
+          <span>💬</span> <span data-i18n="modal_btn_confirm">Confirmer via WhatsApp</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       VIDEO TOUR MODAL
+  ============================================================ -->
+  <div class="modal-backdrop" id="videoModal" onclick="handleVideoBackdropClick(event)">
+    <div class="modal-window video-modal-window">
+      <button type="button" class="modal-close" style="background:#fff; color:#000;" onclick="closeVideoModal()">✕</button>
+      <video id="modalVideoPlayer" controls playsinline>
+        <source src="" type="video/mp4">
+      </video>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       IMAGE VIEWER MODAL
+  ============================================================ -->
+  <div class="modal-backdrop" id="imageModal" onclick="handleImageBackdropClick(event)">
+    <div class="modal-window" style="max-width:600px; padding:16px;">
+      <button type="button" class="modal-close" onclick="closeImageModal()">✕</button>
+      <img id="modalImageViewer" src="" alt="" style="width:100%; border-radius:var(--radius-md);">
+      <h4 id="modalImageCaption" style="margin-top:12px; font-size:0.95rem; text-align:center; color:var(--text-main);"></h4>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       JAVASCRIPT LOGIC (Translations, Petals, Filters, Modals)
+  ============================================================ -->
+  <script>
+    'use strict';
+
+    /* ==========================================================
+       1. MULTILINGUAL DICTIONARY (FR / AR / EN)
+    ========================================================== */
+    const I18N = {
+      fr: {
+        offers_pill: "Édition Limitée",
+        offers_title: "Forfaits & Offres Spéciales",
+        offers_subtitle: "Profitez de nos formules signatures combinant soins d'exception et tarifs avantageux.",
+        btn_book_offer: "Réserver cette offre sur WhatsApp",
+        nav_home: "Accueil",
+        nav_services: "Nos Soins",
+        nav_about: "À propos",
+        nav_gallery: "Galerie",
+        nav_reviews: "Avis",
+        nav_contact: "Contact",
+        btn_book_care: "Réserver un soin",
+        hero_badge: "Sanctuaire de Beauté Féminin • Hydra",
+        hero_title_html: "Révélez votre<br><span class=\"cursive\">beauté</span> naturelle",
+        hero_desc_html: "Soins experts, résultats visibles,<br>dans un cadre élégant et apaisant.",
+        hero_whatsapp_btn: "Réserver sur WhatsApp →",
+        feat_expertise_title: "Expertise",
+        feat_expertise_sub: "+5 ans",
+        feat_hygiene_title: "Hygiène",
+        feat_hygiene_sub: "irréprochable",
+        feat_beauty_title: "Votre beauté,",
+        feat_beauty_sub: "notre priorité",
+        badge_authentic: "Institut JOVEN • Hydra, Alger",
+        btn_video_tour: "Voir la visite vidéo",
+        soins_title: "Nos Soins",
+        soins_subtitle: "Une gamme complète pour prendre soin de vous",
+        cat_all: "Tous les soins",
+        cat_visage: "Visage & Hydrafacial",
+        cat_pieds: "Pieds & Callus Peeling",
+        cat_ongles: "Onglerie & Cils",
+        cat_cheveux: "Cheveux & Sothys",
+        card_1_title: "Hydrafacial Prestige",
+        card_1_desc: "Nettoyage profond en 6 étapes, extraction des impuretés et éclat immédiat.",
+        card_2_title: "Manucure & Pédicure BIAB",
+        card_2_desc: "Technique russe ultra-précise avec renforcement BIAB tenue 4+ semaines.",
+        card_3_title: "Callus Peeling Signature",
+        card_3_desc: "Élimination intégrale des callosités pour une douceur absolue de bébé.",
+        card_4_title: "Soin Sothys & Head Spa",
+        card_4_desc: "Rituel relaxant d'exception, détox cuir chevelu et jeunesse du visage.",
+        btn_book_now: "Réserver",
+        about_title: "À propos de JOVEN",
+        about_desc: "Niché au cœur du prestigieux quartier de Hydra à Alger, l'Institut JOVEN est un havre d'élégance 100% féminin. Avec plus de 5 ans d'expérience passionnée, nous allions protocoles médicaux stricts et cosmétiques de renommée mondiale pour révéler votre éclat naturel en toute intimité.",
+        hl_1: "100% Féminin & Intime",
+        hl_2: "Sur Rendez-vous Exclusif",
+        hl_3: "Protocoles Sothys Paris",
+        hl_4: "Hygiène Médicale Certifiée",
+        btn_learn_more: "En savoir plus →",
+        stat_exp: "Ans<br>d'expérience",
+        stat_reviews_count: "262+ avis Google",
+        gallery_title: "Galerie & Résultats Réels",
+        gallery_subtitle: "Découvrez les résultats authentiques réalisés au sein de notre institut",
+        gal_1_title: "Rehaussement de Cils (Lash Lift)",
+        gal_1_sub: "Résultat naturel avant/après",
+        gal_2_title: "Pédicure Spa Médicale",
+        gal_2_sub: "Confort absolu et hygiène clinique",
+        gal_3_title: "Protocoles Sothys Paris",
+        gal_3_sub: "Produits certifiés d'exception",
+        gal_4_title: "Cabine de Soin Privative",
+        gal_4_sub: "Espace calme et 100% sécurisé",
+        reviews_title: "Nos clientes en parlent",
+        reviews_subtitle: "Une confiance partagée, une beauté révélée ♥",
+        rev_1_text: "\"Un accueil très chaleureux, une équipe professionnelle et aux petits soins. Le soin Hydrafacial est juste incroyable, ma peau respire enfin ! Je recommande les yeux fermés.\"",
+        rev_2_text: "\"Le meilleur institut à Hydra sans hésitation. La propriétaire est d'une douceur et d'une gentillesse rares. Le Callus Peeling a transformé mes pieds en douceur de bébé.\"",
+        rev_3_text: "\"Cadre magnifique, propre et calme. L'épilation et la manucure russe sont exécutées à la perfection avec du matériel stérilisé devant vous. Bravo JOVEN !\"",
+        rev_verified_client: "Cliente vérifiée Google",
+        rev_regular_client: "Cliente régulière • Hydra",
+        wa_box_title: "Des centaines de retours chaleureux au quotidien !",
+        wa_box_sub: "Envoyez-nous un message sur WhatsApp pour consulter nos disponibilités de la semaine.",
+        wa_box_btn: "Écrire sur WhatsApp (0781 08 80 61)",
+        contact_title: "Nous trouver & Réserver",
+        contact_subtitle: "À votre écoute pour préparer votre moment de bien-être",
+        contact_addr_title: "Adresse du salon",
+        contact_addr_val: "Chemin de la Madeleine, 27, Hydra, Alger, Algérie",
+        contact_view_maps: "Ouvrir sur Google Maps (Plus Code: P2XC+X7) →",
+        contact_phone_title: "Téléphone & WhatsApp",
+        contact_policy_title: "Politique d'accueil",
+        contact_policy_val: "Sur rendez-vous uniquement. Espace 100% féminin dédié à la tranquillité de nos clientes.",
+        contact_hours_title: "Horaires d'ouverture",
+        day_mon: "Lundi",
+        day_tue: "Mardi",
+        day_wed: "Mercredi",
+        day_thu: "Jeudi",
+        day_fri: "Vendredi",
+        day_sat: "Samedi",
+        day_sun: "Dimanche",
+        day_closed: "Fermé (Repos)",
+        facade_title: "Chemin de la Madeleine, Hydra",
+        facade_sub: "Un quartier résidentiel calme, discret et sécurisé",
+        btn_book_appointment: "Prendre un rendez-vous maintenant",
+        footer_about: "Institut de beauté et de soins exclusifs pour femmes à Hydra, Alger. Expertise clinique, bien-être absolu et écoute bienveillante.",
+        footer_nav: "Navigation",
+        footer_services: "Soins Phares",
+        footer_contact: "Contact Direct",
+        footer_rights: "Tous droits réservés.",
+        footer_sub: "Espace 100% féminin sur rendez-vous",
+        btn_write_us: "Nous écrire",
+        modal_booking_title: "Réserver votre soin",
+        modal_booking_sub: "Sélectionnez le soin de votre choix pour finaliser sur WhatsApp en 1 clic.",
+        modal_label_name: "Votre Nom & Prénom",
+        modal_label_service: "Choix du soin",
+        modal_label_date: "Date souhaitée (indicative)",
+        modal_btn_confirm: "Confirmer via WhatsApp",
+        nav_before_after: "Avant / Après",
+        ba_badge: "Résultats Visibles & Authentiques",
+        ba_title: "Avant / Après • La Preuve en Image",
+        ba_subtitle: "Glissez le curseur interactif pour constater l'efficacité réelle de nos soins sur nos clientes",
+        ba_tab_callus: "Callus Peeling",
+        ba_tab_cils: "Rehaussement Cils",
+        ba_tab_hydra: "Hydrafacial Prestige",
+        ba_label_before: "Avant",
+        ba_label_after: "Après",
+        ba_hint: "Glissez le séparateur pour comparer",
+        ba_tarif_label: "Tarif officiel",
+        ba_duration_label: "Durée de la séance",
+        ba_btn_book_result: "Réserver ce résultat",
+        ba_guarantee_text: "100% Réservé aux femmes • Institut privé à Hydra • Sur RDV",
+        ba_card_callus_badge: "Pédicure Médicale Russe",
+        ba_card_callus_title: "Callus Peeling — Pédicure Profonde",
+        ba_card_callus_desc: "Soin signature complet de 2h : bain relaxant bouillonnant, traitement kératolytique sans lames, ponceuse russe de haute précision et bain de paraffine nutritive pour des pieds doux comme ceux d'un nouveau-né dès la 1ère séance.",
+        ba_callus_pt1: "100% indolore et sans bistouri (sécurité maximale)",
+        ba_callus_pt2: "Élimination des callosités, crevasses et rugosités",
+        ba_callus_pt3: "Ponceuse russe & hydratation intense longue durée",
+        ba_callus_pt4: "Résultat spectaculaire visible immédiatement",
+        ba_card_cils_badge: "Regard & Cils Naturels",
+        ba_card_cils_title: "Rehaussement de Cils & Kératine",
+        ba_card_cils_desc: "Sublimez la courbure de vos cils naturels sans faux-cils. Vos cils sont recourbés, gainés d'un soin à la kératine et intensifiés en noir pour un regard ouvert et radieux 24h/24.",
+        ba_cils_pt1: "Regard agrandi et lumineux sans maquillage",
+        ba_cils_pt2: "Tenue exceptionnelle de 6 à 8 semaines",
+        ba_cils_pt3: "Soin fortifiant à la kératine pure",
+        ba_cils_pt4: "Résiste à l'eau, à la douche et au sport",
+        ba_card_hydra_badge: "Soin Visage Médical",
+        ba_card_hydra_title: "Hydrafacial Prestige & Extraction",
+        ba_card_hydra_desc: "Protocole médico-esthétique en 6 étapes : nettoyage vortex, peeling doux aux acides de fruits, extraction minutieuse des comédons/sébum et infusion d'antioxydants et d'acide hyaluronique pour un teint de verre éclatant.",
+        ba_hydra_pt1: "Extraction indolore des points noirs et impuretés",
+        ba_hydra_pt2: "Pores immédiatement resserrés et peau lissée",
+        ba_hydra_pt3: "Infusion profonde d'acide hyaluronique & vitamines",
+        ba_hydra_pt4: "Effet peau neuve éclatante dès la sortie de cabine",
+
+      },
+
+      ar: {
+      offers_pill: "لفترة محدودة",
+      offers_title: "باقات وعروض حصرية",
+      offers_subtitle: "استمتعي بباقاتنا المتكاملة التي تجمع بين جلسات العناية الفاخرة وأسعار تفضيلية.",
+      btn_book_offer: "حجز هذا العرض عبر واتساب",
+        nav_home: "الرئيسية",
+        nav_services: "علاجاتنا",
+        nav_about: "عن المعهد",
+        nav_gallery: "المعرض",
+        nav_reviews: "آراء الزبائن",
+        nav_contact: "التواصل",
+        btn_book_care: "حجز موعد",
+        hero_badge: "ملاذ الجمال الأنثوي الحصري • حيدرة",
+        hero_title_html: "اكتشفي سر<br><span class=\"cursive\">جمالكِ</span> الطبيعي",
+        hero_desc_html: "عناية متخصصة، نتائج فورية ملموسة،<br>في أجواء راقية وخصوصية تامة.",
+        hero_whatsapp_btn: "احجزي عبر الواتساب ←",
+        feat_expertise_title: "خبرة متخصصة",
+        feat_expertise_sub: "+5 سنوات",
+        feat_hygiene_title: "نظافة وتعقيم",
+        feat_hygiene_sub: "بمعايير طبية",
+        feat_beauty_title: "جمالكِ وراحتكِ",
+        feat_beauty_sub: "أولويتنا الأولى",
+        badge_authentic: "معهد جوفن الرسمي • حيدرة، الجزائر",
+        btn_video_tour: "مشاهدة جولة الفيديو",
+        soins_title: "باقة علاجاتنا وخدماتنا",
+        soins_subtitle: "مجموعة متكاملة مصممة خصيصاً للعناية الشاملة بجمالكِ",
+        cat_all: "جميع الخدمات",
+        cat_visage: "البشرة و الهيدرافيشل",
+        cat_pieds: "القدمين والـ Callus",
+        cat_ongles: "الأظافر والرموش",
+        cat_cheveux: "الشعر وعلاجات سوتيس",
+        card_1_title: "هيدرافيشل بريستيج (Hydrafacial)",
+        card_1_desc: "تنظيف عميق بـ 6 مراحل متتالية، شفط الرؤوس السوداء ونضارة فورية تدوم.",
+        card_2_title: "مانيكير روسي وتدعيم BIAB",
+        card_2_desc: "دقة روسية متناهية مع طبقة تقوية بياب لحماية الأظافر لأكثر من 4 أسابيع.",
+        card_3_title: "تقشير القدمين الحصري (Callus)",
+        card_3_desc: "إزالة كاملة للجلد الميت والتشققات لاستعادة نعومة بشرة الأطفال.",
+        card_4_title: "جلسة سوتيس باريس & سبا الشعر",
+        card_4_desc: "طقوس استرخاء يابانية فاخرة، ديتوكس فروة الرأس ومكافحة علامات التقدم.",
+        btn_book_now: "حجز الجلسة",
+        about_title: "عن معهد JOVEN",
+        about_desc: "يقع معهد JOVEN في قلب أرقى أحياء العاصمة (حيدرة)، وهو مساحة نسائية مغلقة 100% تجمع بين الراحة والهدوء. بخبرة تفوق 5 سنوات من الشغف والاحتراف، نعتمد أدق البروتوكولات السريرية ومنتجات سوتيس الباريسية العالمية لمنحكِ النتائج التي تحلمين بها في سرية وراحة تامة.",
+        hl_1: "نسائي 100% وبخصوصية تامة",
+        hl_2: "الحجز المسبق إجباري (Sur RDV)",
+        hl_3: "مستحضرات Sothys Paris الأصلية",
+        hl_4: "تعقيم طبي صارم لكل زبونة",
+        btn_learn_more: "تعرفي علينا أكثر ←",
+        stat_exp: "سنوات<br>من الخبرة",
+        stat_reviews_count: "+262 تقييماً معتمداً",
+        gallery_title: "معرض الصور والنتائج الحقيقية",
+        gallery_subtitle: "شاهدي صوراً وفيديوهات حقيقية من داخل معهدنا بحيدرة",
+        gal_1_title: "رفع وتغذية الرموش الطبيعية (Lash Lift)",
+        gal_1_sub: "نتائج حقيقية قبل وبعد الجلسة",
+        gal_2_title: "جناح البديكير الطبي الفاخر",
+        gal_2_sub: "أقصى درجات الراحة والتعقيم",
+        gal_3_title: "بروتوكولات ماركة Sothys Paris",
+        gal_3_sub: "مستحضرات طبية أصلية مضمونة",
+        gal_4_title: "غرف العلاج الفردية الخاصة",
+        gal_4_sub: "هدوء وسكينة واستقلالية تامة",
+        reviews_title: "ماذا تقول زبوناتنا عنا؟",
+        reviews_subtitle: "ثقة متبادلة، وجمال حقيقي يتحدث عن نفسه ♥",
+        rev_1_text: "\"استقبال في غاية الدفء والترحاب، وفريق عمل يتميز بالاحترافية العالية. جلسة الهيدرافيشل كانت مذهلة بحق، شعرت أن بشرتي تتنفس أخيراً من جديد! أنصح به وعيني مغمضة.\"",
+        rev_2_text: "\"أفضل معهد تجميل في حيدرة بلا أدنى تردد. صاحبة الصالون تتسم بلطف وهدوء نادرين. جلسة تقشير القدمين (Callus Peeling) حولت قدمي إلى نعومة بشرة الأطفال.\"",
+        rev_3_text: "\"المكان نظيف، هادئ ومريح جداً للأعصاب. تقنية المانيكير الروسي رائعة ويتم تعقيم كل الأدوات أمام عينيك قبل البدء. برافو جوفن!\"",
+        rev_verified_client: "زبونة موثقة عبر Google Maps",
+        rev_regular_client: "زبونة دائمة • حيدرة",
+        wa_box_title: "مئات الرسائل وكلمات الشكر اليومية من عميلاتنا!",
+        wa_box_sub: "تفضلي بمراسلتنا على الواتساب للاطلاع على المواعيد المتاحة لهذا الأسبوع.",
+        wa_box_btn: "تحدثي معنا عبر الواتساب (0781 08 80 61)",
+        contact_title: "موقعنا وطريقة الحجز",
+        contact_subtitle: "يسعدنا دائماً استقبال استفساراتكِ ومساعدتكِ في اختيار جلستكِ",
+        contact_addr_title: "عنوان المعهد بالتفصيل",
+        contact_addr_val: "طريق لا مادلين (Chemin de la Madeleine)، 27، حيدرة، الجزائر العاصمة",
+        contact_view_maps: "فتح الموقع على Google Maps (Plus Code: P2XC+X7) ←",
+        contact_phone_title: "الهاتف والواتساب المباشر",
+        contact_policy_title: "شروط الدخول والاستقبال",
+        contact_policy_val: "الحجز مسبقاً إجباري. المعهد مخصص للسيدات بنسبة 100% حرصاً على راحتكن وخصوصيتكن التامة.",
+        contact_hours_title: "أوقات العمل الرسمية",
+        day_mon: "الإثنين",
+        day_tue: "الثلاثاء",
+        day_wed: "الأربعاء",
+        day_thu: "الخميس",
+        day_fri: "الجمعة",
+        day_sat: "السبت",
+        day_sun: "الأحد",
+        day_closed: "مغلق (عطلة أسبوعية)",
+        facade_title: "شارع لا مادلين، حيدرة",
+        facade_sub: "حي سكني هادئ، راقٍ وآمن مع سهولة ركن السيارات",
+        btn_book_appointment: "تأكيد حجز موعدكِ الآن",
+        footer_about: "معهد متخصص في العناية الطبية والتجميلية الحصرية للسيدات في حيدرة، الجزائر العاصمة. خبرة، نظافة وخصوصية لا تضاهى.",
+        footer_nav: "روابط سريعة",
+        footer_services: "أشهر الخدمات",
+        footer_contact: "تواصل مباشر",
+        footer_rights: "جميع الحقوق محفوظة لمعهد JOVEN.",
+        footer_sub: "معهد نسائي 100% • الحجز مسبقاً",
+        btn_write_us: "راسلنا واتساب",
+        modal_booking_title: "تأكيد حجز جلستكِ",
+        modal_booking_sub: "اختاري الخدمة المناسبة وسيتم نقلكِ مباشرة للواتساب لتثبيت التوقيت.",
+        modal_label_name: "الاسم واللقب",
+        modal_label_service: "الخدمة المطلوبة",
+        modal_label_date: "التاريخ المقترح (اختياري)",
+        modal_btn_confirm: "إرسال الحجز عبر الواتساب",
+        nav_before_after: "قبل وبعد",
+        ba_badge: "نتائج حقيقية ملموسة من أول جلسة",
+        ba_title: "قبل وبعد • الدليل بالصورة الحقيقية",
+        ba_subtitle: "اسحبي المؤشر التفاعلي لمشاهدة الفرق المذهل والنتائج الحقيقية لزبوناتنا في الصالون",
+        ba_tab_callus: "تقشير القدمين (Callus)",
+        ba_tab_cils: "رفع الرموش (Lash Lift)",
+        ba_tab_hydra: "هيدرافيشل بريستيج",
+        ba_label_before: "قبل",
+        ba_label_after: "بعد",
+        ba_hint: "اسحبي الفاصل يميناً ويساراً للمقارنة",
+        ba_tarif_label: "السعر الرسمي المعتمد",
+        ba_duration_label: "مدة الجلسة الكاملة",
+        ba_btn_book_result: "حجز هذه النتيجة المؤكدة",
+        ba_guarantee_text: "100% نسائي بالكامل • معهد خاص بحيدرة • الحجز مسبقاً",
+        ba_card_callus_badge: "بديكير طبي روسي فاخر",
+        ba_card_callus_title: "تقشير القدمين الحصري • Callus Peeling",
+        ba_card_callus_desc: "جلسة توقيعية كاملة لمدة ساعتين (2h) تشمل: حمام فقاعات استرخائي، تركيبة تقشير كيراتينية بدون شفرات، صقل مجهري بجهاز البوديكير الروسي وترطيب مكثف بالبرافين لاستعادة نعومة أقدام الأطفال من أول جلسة.",
+        ba_callus_pt1: "بدون ألم وبدون شفرات حادة (أمان طبي 100%)",
+        ba_callus_pt2: "تخلص نهائي من التشققات والجلد الخشن المتراكم",
+        ba_callus_pt3: "صقل روسي متقن وترطيب علاجي عميق يدوم طويلاً",
+        ba_callus_pt4: "نتيجة فورية ملموسة ومبهرة من أول زيارة",
+        ba_card_cils_badge: "جمال وسحر العيون",
+        ba_card_cils_title: "رفع وتغذية الرموش بالكيراتين (Lash Lift)",
+        ba_card_cils_desc: "إبراز طول وكثافة رموشكِ الطبيعية دون الحاجة لرموش اصطناعية أو ماسكارا. رفع وتقويس جذاب مع صبغ أسود مكثف وحمام كيراتين معالج لعيون ساحرة ومفتوحة طوال اليوم.",
+        ba_cils_pt1: "عيون واسعة وجذابة بدون الحاجة لماسكارا يومية",
+        ba_cils_pt2: "ثبات طويل الأمد يدوم من 6 إلى 8 أسابيع",
+        ba_cils_pt3: "تغذية علاجية مكثفة بألياف الكيراتين النقي",
+        ba_cils_pt4: "مقاوم للماء والاستحمام ولا يضر الرموش الطبيعية",
+        ba_card_hydra_badge: "علاج طبي متقدم للبشرة",
+        ba_card_hydra_title: "جلسة الهيدرافيشل بريستيج وتنقية المسام",
+        ba_card_hydra_desc: "بروتوكول تجميلي طبيعي متكامل في 6 مراحل: تقشير بالدوامة المائية، تنظيف لطيف بأحماض الفواكه، شفط عميق للرؤوس السوداء والبيضاء والدهون، وحقن سيرومات حمض الهيالورونيك ومضادات الأكسدة لنضارة زجاجية فورية.",
+        ba_hydra_pt1: "شفط عميق وغير مؤلم للرؤوس السوداء والدهون المتراكمة",
+        ba_hydra_pt2: "تضييق فوري للمسام وتنعيم متكامل لملمس البشرة",
+        ba_hydra_pt3: "تغذية عميقة بمضادات الأكسدة وحمض الهيالورونيك",
+        ba_hydra_pt4: "نضارة وإشراقة زجاجية فورية تلاحظينها عند الخروج",
+
+      },
+
+      en: {
+      offers_pill: "Limited Edition",
+      offers_title: "Special Packages & Offers",
+      offers_subtitle: "Experience our signature packages combining expert treatments with preferential rates.",
+      btn_book_offer: "Book this offer on WhatsApp",
+        nav_home: "Home",
+        nav_services: "Our Care",
+        nav_about: "About Us",
+        nav_gallery: "Gallery",
+        nav_reviews: "Reviews",
+        nav_contact: "Contact",
+        btn_book_care: "Book Treatment",
+        hero_badge: "Exclusive Women Beauty Sanctuary • Hydra",
+        hero_title_html: "Reveal your<br><span class=\"cursive\">natural</span> beauty",
+        hero_desc_html: "Expert care, visible results,<br>in an elegant and soothing sanctuary.",
+        hero_whatsapp_btn: "Book on WhatsApp →",
+        feat_expertise_title: "Expertise",
+        feat_expertise_sub: "+5 years",
+        feat_hygiene_title: "Hygiene",
+        feat_hygiene_sub: "flawless",
+        feat_beauty_title: "Your beauty,",
+        feat_beauty_sub: "our priority",
+        badge_authentic: "Official JOVEN Sanctuary • Hydra, Algiers",
+        btn_video_tour: "Watch Video Tour",
+        soins_title: "Our Treatments",
+        soins_subtitle: "A comprehensive range designed to elevate your natural glow",
+        cat_all: "All Treatments",
+        cat_visage: "Facial & Hydrafacial",
+        cat_pieds: "Feet & Callus Peeling",
+        cat_ongles: "Nails & Lashes",
+        cat_cheveux: "Hair & Sothys",
+        card_1_title: "Hydrafacial Prestige",
+        card_1_desc: "6-step deep pore cleansing, gentle extraction and instant glass-skin radiance.",
+        card_2_title: "Russian Manicure & BIAB",
+        card_2_desc: "Ultra-precise cuticle care with durable BIAB overlay lasting 4+ weeks.",
+        card_3_title: "Signature Callus Peeling",
+        card_3_desc: "Complete removal of rough skin and cracks for silky baby-soft feet.",
+        card_4_title: "Sothys Paris & Head Spa",
+        card_4_desc: "Luxurious Japanese Head Spa ritual, scalp detox and anti-aging face care.",
+        btn_book_now: "Book Now",
+        about_title: "About JOVEN",
+        about_desc: "Located in the prestigious neighborhood of Hydra, Algiers, JOVEN Institute is a 100% female sanctuary. Backed by 5+ years of dedicated expertise, we unite strict clinical hygiene with world-renowned Sothys Paris skincare to reveal your radiant beauty in absolute privacy.",
+        hl_1: "100% Female & Private",
+        hl_2: "By Appointment Only",
+        hl_3: "Authentic Sothys Paris",
+        hl_4: "Certified Clinical Hygiene",
+        btn_learn_more: "Learn More →",
+        stat_exp: "Years of<br>Experience",
+        stat_reviews_count: "262+ Google Reviews",
+        gallery_title: "Gallery & Real Results",
+        gallery_subtitle: "Explore authentic photos and video reels from our sanctuary in Hydra",
+        gal_1_title: "Natural Lash Lift & Tint",
+        gal_1_sub: "Authentic before and after results",
+        gal_2_title: "Medical Spa Pedicure Suite",
+        gal_2_sub: "Absolute comfort and sterile clinical care",
+        gal_3_title: "Sothys Paris Skincare Protocols",
+        gal_3_sub: "Certified luxury French formulas",
+        gal_4_title: "Private Treatment Cabin",
+        gal_4_sub: "Quiet, peaceful and fully discreet",
+        reviews_title: "What Our Clients Say",
+        reviews_subtitle: "Shared trust, revealed beauty ♥",
+        rev_1_text: "\"A warm welcome and an exceptionally caring team. The Hydrafacial treatment was breathtaking, my skin is finally breathing! Highly recommended.\"",
+        rev_2_text: "\"Hands down the best institute in Hydra. The founder is remarkably gentle. The Callus Peeling turned my feet into pure baby-soft smoothness.\"",
+        rev_3_text: "\"Stunning, spotless and peaceful atmosphere. Russian manicure executed with clinical sterilization. Bravo JOVEN!\"",
+        rev_verified_client: "Verified Google Maps Reviewer",
+        rev_regular_client: "Regular Client • Hydra",
+        wa_box_title: "Hundreds of heartfelt messages received every week!",
+        wa_box_sub: "Feel free to message us on WhatsApp to check this week's open appointment slots.",
+        wa_box_btn: "Message on WhatsApp (0781 08 80 61)",
+        contact_title: "Find Us & Book",
+        contact_subtitle: "We are delighted to assist you in selecting your ideal self-care session",
+        contact_addr_title: "Institute Address",
+        contact_addr_val: "Chemin de la Madeleine, 27, Hydra, Algiers, Algeria",
+        contact_view_maps: "Open in Google Maps (Plus Code: P2XC+X7) →",
+        contact_phone_title: "Phone & WhatsApp",
+        contact_policy_title: "Admission Policy",
+        contact_policy_val: "By appointment only. 100% women-only private sanctuary.",
+        contact_hours_title: "Opening Hours",
+        day_mon: "Monday",
+        day_tue: "Tuesday",
+        day_wed: "Wednesday",
+        day_thu: "Thursday",
+        day_fri: "Friday",
+        day_sat: "Saturday",
+        day_sun: "Sunday",
+        day_closed: "Closed (Rest Day)",
+        facade_title: "Chemin de la Madeleine, Hydra",
+        facade_sub: "A calm, elegant and discreet residential neighborhood",
+        btn_book_appointment: "Book Your Appointment Now",
+        footer_about: "Exclusive women-only beauty & skincare sanctuary in Hydra, Algiers. Clinical expertise, genuine warmth and utmost privacy.",
+        footer_nav: "Navigation",
+        footer_services: "Signature Care",
+        footer_contact: "Direct Contact",
+        footer_rights: "All rights reserved.",
+        footer_sub: "100% women-only • By appointment",
+        btn_write_us: "Message Us",
+        modal_booking_title: "Book Your Treatment",
+        modal_booking_sub: "Choose your desired service to finalize on WhatsApp in one click.",
+        modal_label_name: "Full Name",
+        modal_label_service: "Desired Care",
+        modal_label_date: "Preferred Date (optional)",
+        modal_btn_confirm: "Confirm via WhatsApp",
+        nav_before_after: "Before / After",
+        ba_badge: "Visible & Authentic Results",
+        ba_title: "Before & After • Real Proof in Photos",
+        ba_subtitle: "Drag the interactive slider to experience the authentic transformation of our salon clients",
+        ba_tab_callus: "Callus Peeling",
+        ba_tab_cils: "Lash Lift",
+        ba_tab_hydra: "Hydrafacial Prestige",
+        ba_label_before: "Before",
+        ba_label_after: "After",
+        ba_hint: "Drag the divider to compare",
+        ba_tarif_label: "Official Rate",
+        ba_duration_label: "Session Duration",
+        ba_btn_book_result: "Book This Result",
+        ba_guarantee_text: "100% Women-Only • Private Institute in Hydra • By Appointment",
+        ba_card_callus_badge: "Medical Russian Pedicure",
+        ba_card_callus_title: "Signature Callus Peeling — Deep Pedicure",
+        ba_card_callus_desc: "Comprehensive 2-hour signature ritual: relaxing bubble bath, blade-free keratolytic peeling, high-precision Russian sanding and deep paraffin hydration for pure baby-soft feet from the very first session.",
+        ba_callus_pt1: "100% painless and blade-free (maximum clinical safety)",
+        ba_callus_pt2: "Complete eradication of rough calluses, cracks and dry skin",
+        ba_callus_pt3: "Russian precision milling & long-lasting deep hydration",
+        ba_callus_pt4: "Immediate, visible and breathtaking transformation",
+        ba_card_cils_badge: "Natural Eye Radiance",
+        ba_card_cils_title: "Keratin Lash Lift & Tint",
+        ba_card_cils_desc: "Elevate your natural lashes without extensions. Curled from the root, nourished with pure keratin and tinted in deep rich black for an effortlessly awake and stunning gaze 24/7.",
+        ba_cils_pt1: "Bright, wide-awake gaze with zero daily mascara",
+        ba_cils_pt2: "Long-lasting results holding 6 to 8 weeks",
+        ba_cils_pt3: "Deeply fortifying pure keratin infusion",
+        ba_cils_pt4: "Waterproof, gym-proof and completely gentle on lashes",
+        ba_card_hydra_badge: "Advanced Medical Facial",
+        ba_card_hydra_title: "Hydrafacial Prestige & Deep Extraction",
+        ba_card_hydra_desc: "6-step medical aesthetic protocol: vortex cleansing, gentle fruit acid peeling, painless blackhead and sebum extraction, and deep infusion of hyaluronic acid and antioxidants for an undeniable glass-skin glow.",
+        ba_hydra_pt1: "Painless vacuum extraction of blackheads & impurities",
+        ba_hydra_pt2: "Instantly refined pores and smoothed skin texture",
+        ba_hydra_pt3: "Deep infusion of hyaluronic acid & vital antioxidants",
+        ba_hydra_pt4: "Instant radiant glass skin straight out of the cabin",
+
+      }
+    };
+
+    let currentLang = localStorage.getItem('joven_lang') || 'fr';
+
+    
+    /* ==========================================================
+       SUPABASE REAL-TIME INTEGRATION
+    ========================================================== */
+    const SUPABASE_CONFIG = {
+      url: 'https://mtuhuzmyhbemdfsbyhpf.supabase.co',
+      anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dWh1em15aGJlbWRmc2J5aHBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5MjIxNDAsImV4cCI6MjA5MjQ5ODE0MH0.Pip_Y_FfjJvnOHxnAMNUlHMBLkGefVxH2dVMsXaIQ08'
+    };
+
+    let supabaseApp = null;
+    window.DYNAMIC_SERVICES = [];
+    window.DYNAMIC_OFFERS = [];
+
+    try {
+      if (window.supabase) {
+        supabaseApp = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+      }
+    } catch (e) {
+      console.warn('Supabase initialization failed, running with static fallback:', e);
+    }
+
+    // Fetch and sync services & offers from Supabase
+    async function syncDataFromSupabase() {
+      if (!supabaseApp) return;
+
+      try {
+        const [servicesRes, offersRes] = await Promise.all([
+          supabaseApp.from('services').select('*').eq('is_active', true).order('display_order', { ascending: true }),
+          supabaseApp.from('offers').select('*').eq('is_active', true).order('created_at', { ascending: false })
+        ]);
+
+        if (!servicesRes.error && servicesRes.data && servicesRes.data.length > 0) {
+          window.DYNAMIC_SERVICES = servicesRes.data;
+          renderSupabaseServices();
+          updateServiceDropdown();
+        }
+
+        if (!offersRes.error && offersRes.data && offersRes.data.length > 0) {
+          window.DYNAMIC_OFFERS = offersRes.data;
+          renderSupabaseOffers();
+        }
+      } catch (err) {
+        console.warn('Could not sync with Supabase (using static fallback):', err);
+      }
+    }
+
+    function renderSupabaseServices(categoryFilter = 'all') {
+      if (!window.DYNAMIC_SERVICES || window.DYNAMIC_SERVICES.length === 0) return;
+      const carousel = document.getElementById('soinsCarousel');
+      if (!carousel) return;
+
+      const isAr = (currentLang === 'ar');
+      const isEn = (currentLang === 'en');
+
+      const filtered = (categoryFilter === 'all')
+        ? window.DYNAMIC_SERVICES
+        : window.DYNAMIC_SERVICES.filter(s => {
+            const cat = (s.category || '').toLowerCase();
+            if (categoryFilter === 'visage') return cat.includes('visage');
+            if (categoryFilter === 'pieds') return cat.includes('pied') || cat.includes('callus');
+            if (categoryFilter === 'ongles') return cat.includes('ongle') || cat.includes('main') || cat.includes('cils') || cat.includes('regard');
+            if (categoryFilter === 'cheveux') return cat.includes('cheveu') || cat.includes('capill') || cat.includes('spa');
+            return true;
+          });
+
+      if (filtered.length === 0) return;
+
+      carousel.innerHTML = filtered.map(s => {
+        const title = isAr && s.title_ar ? s.title_ar : s.title;
+        const desc = isAr && s.description_ar ? s.description_ar : (s.description || '');
+        const price = s.price || '';
+        const duration = s.duration || '';
+        const img = s.image_url || 'media/hydra_after.jpg';
+        const bookText = isAr ? 'حجز الآن' : (isEn ? 'Book Now' : 'Réserver');
+
+        return `
+          <article class="soin-card" data-category="${s.category || 'all'}" onclick="bookSpecificService('${title.replace(/'/g, "\\'")}')">
+            <div class="soin-media">
+              <img src="${img}" alt="${title}" onerror="this.src='media/hydra_after.jpg'">
+              <div class="soin-floating-icon" title="${title}">
+                <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+              </div>
+            </div>
+            <div class="soin-info">
+              <div>
+                <h3 class="soin-name">${title}</h3>
+                <p class="soin-desc">${desc}</p>
+              </div>
+              <div class="soin-meta">
+                <span class="soin-price">${price}</span>
+                <span class="soin-duration">⏱ ${duration}</span>
+              </div>
+              <div class="soin-book-btn">
+                <span>💬</span> <span>${bookText}</span>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderSupabaseOffers() {
+      if (!window.DYNAMIC_OFFERS || window.DYNAMIC_OFFERS.length === 0) return;
+      const container = document.getElementById('offersGridContainer');
+      if (!container) return;
+
+      const isAr = (currentLang === 'ar');
+      const isEn = (currentLang === 'en');
+      const btnText = isAr ? 'حجز هذا العرض عبر واتساب' : (isEn ? 'Book this offer on WhatsApp' : 'Réserver cette offre sur WhatsApp');
+
+      container.innerHTML = window.DYNAMIC_OFFERS.map(o => {
+        const title = isAr && o.title_ar ? o.title_ar : o.title;
+        const badge = isAr && o.badge_ar ? o.badge_ar : o.badge;
+        const desc = isAr && o.description_ar ? o.description_ar : (o.description || '');
+        const img = o.image_url || 'media/hydra_after.jpg';
+        const waMsg = encodeURIComponent(
+          isAr 
+            ? `مرحباً صالون جفان (JOVEN)، أود الاستفادة من هذا العرض الخاص: ${title} (${o.new_price})`
+            : `Bonjour JOVEN Institut, je souhaite profiter de votre offre spéciale : ${title} (${o.new_price})`
+        );
+        const waLink = `https://wa.me/213781088061?text=${waMsg}`;
+
+        return `
+          <div class="offer-card">
+            <div class="offer-thumb">
+              <img src="${img}" alt="${title}" onerror="this.src='media/hydra_after.jpg'">
+              ${badge ? `<span class="offer-badge">${badge}</span>` : ''}
+            </div>
+            <div class="offer-content">
+              <h4 class="offer-card-title">${title}</h4>
+              <p class="offer-card-desc">${desc}</p>
+              <div class="offer-price-row">
+                ${o.old_price ? `<span class="offer-old-price">${o.old_price}</span>` : ''}
+                <span class="offer-new-price">${o.new_price}</span>
+              </div>
+              <a href="${waLink}" target="_blank" rel="noopener" class="offer-btn">
+                <span>💬</span> ${btnText}
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateServiceDropdown() {
+      const select = document.getElementById('serviceSelect');
+      if (!select || !window.DYNAMIC_SERVICES || window.DYNAMIC_SERVICES.length === 0) return;
+
+      const isAr = (currentLang === 'ar');
+      select.innerHTML = window.DYNAMIC_SERVICES.map(s => {
+        const title = isAr && s.title_ar ? s.title_ar : s.title;
+        return `<option value="${title}">${title} (${s.price || ''})</option>`;
+      }).join('') + '<option value="Consultation sur place">Consultation sur place</option>';
+    }
+
+    // Call sync on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      syncDataFromSupabase();
+    });
+
+
+    function switchLanguage(lang) {
+      if (!I18N[lang]) return;
+      currentLang = lang;
+      localStorage.setItem('joven_lang', lang);
+
+      // Update HTML attributes
+      document.documentElement.lang = lang;
+      document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+
+      // Update buttons active state
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase().includes(lang) || (lang === 'ar' && btn.textContent.includes('عربي')));
+      });
+
+      // Update comparison card
+      if (typeof updateComparisonCardTexts === "function") updateComparisonCardTexts();
+      // Re-render Supabase items in new language
+      if (typeof renderSupabaseServices === 'function') renderSupabaseServices();
+      if (typeof renderSupabaseOffers === 'function') renderSupabaseOffers();
+      if (typeof updateServiceDropdown === 'function') updateServiceDropdown();
+
+
+      // Update text nodes
+      const dict = I18N[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          if (key.includes('_html')) {
+            el.innerHTML = dict[key];
+          } else {
+            el.textContent = dict[key];
+          }
+        }
+      });
+    }
+
+    /* ==========================================================
+       BEFORE / AFTER COMPARISON SLIDER LOGIC
+    ========================================================== */
+    const TREATMENTS_DATA = {
+      callus: {
+        beforeImg: '/media/comparison/callus_before.jpg',
+        afterImg: '/media/comparison/callus_after.jpg',
+        prices: { fr: '6 000 DA', ar: '6000 دج', en: '6,000 DA' },
+        duration: { fr: '⏱ 2 heures (120 min)', ar: '⏱ ساعتان (120 دقيقة)', en: '⏱ 2 hours (120 min)' },
+        badgeKey: 'ba_card_callus_badge',
+        titleKey: 'ba_card_callus_title',
+        descKey: 'ba_card_callus_desc',
+        points: ['ba_callus_pt1', 'ba_callus_pt2', 'ba_callus_pt3', 'ba_callus_pt4'],
+        waMsg: {
+          fr: 'Bonjour JOVEN, je souhaite réserver le soin Callus Peeling (6 000 DA) pour retrouver des pieds tout doux.',
+          ar: 'مرحبا معهد JOVEN، أود حجز جلسة تقشير القدمين Callus Peeling (6000 دج) لتنعيم القدمين والتخلص من التشققات.',
+          en: 'Hello JOVEN, I would like to book the Callus Peeling treatment (6,000 DA).'
+        }
+      },
+      cils: {
+        beforeImg: '/media/comparison/cils_before.jpg',
+        afterImg: '/media/comparison/cils_after.jpg',
+        prices: { fr: '6 000 DA', ar: '6000 دج', en: '6,000 DA' },
+        duration: { fr: '⏱ 60 min', ar: '⏱ 60 دقيقة (ساعة)', en: '⏱ 60 min' },
+        badgeKey: 'ba_card_cils_badge',
+        titleKey: 'ba_card_cils_title',
+        descKey: 'ba_card_cils_desc',
+        points: ['ba_cils_pt1', 'ba_cils_pt2', 'ba_cils_pt3', 'ba_cils_pt4'],
+        waMsg: {
+          fr: 'Bonjour JOVEN, je souhaite réserver le Rehaussement de Cils & Kératine (6 000 DA).',
+          ar: 'مرحبا معهد JOVEN، أود حجز جلسة رفع الرموش بالكيراتين Lash Lift (6000 دج).',
+          en: 'Hello JOVEN, I would like to book the Keratin Lash Lift treatment (6,000 DA).'
+        }
+      },
+      hydra: {
+        beforeImg: '/media/comparison/hydra_before.jpg',
+        afterImg: '/media/comparison/hydra_after.jpg',
+        prices: { fr: '8 500 DA', ar: '8500 دج', en: '8,500 DA' },
+        duration: { fr: '⏱ 90 min (1h30)', ar: '⏱ 90 دقيقة (ساعة ونصف)', en: '⏱ 90 min (1h30)' },
+        badgeKey: 'ba_card_hydra_badge',
+        titleKey: 'ba_card_hydra_title',
+        descKey: 'ba_card_hydra_desc',
+        points: ['ba_hydra_pt1', 'ba_hydra_pt2', 'ba_hydra_pt3', 'ba_hydra_pt4'],
+        waMsg: {
+          fr: 'Bonjour JOVEN, je souhaite réserver le soin Hydrafacial Prestige (8 500 DA) pour nettoyer et illuminer ma peau.',
+          ar: 'مرحبا معهد JOVEN، أود حجز جلسة الهيدرافيشل بريستيج (8 500 دج) لتنقية البشرة وإزالة الرؤوس السوداء.',
+          en: 'Hello JOVEN, I would like to book the Hydrafacial Prestige treatment (8,500 DA).'
+        }
+      }
+    };
+
+    let activeTreatment = 'callus';
+
+    function setComparisonTreatment(key) {
+      if (!TREATMENTS_DATA[key]) return;
+      activeTreatment = key;
+
+      // Update tabs UI
+      document.querySelectorAll('.ba-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.getAttribute('data-treatment') === key);
+      });
+
+      const data = TREATMENTS_DATA[key];
+      const stage = document.getElementById('baStage');
+      const imgBefore = document.getElementById('baImgBefore');
+      const imgAfter = document.getElementById('baImgAfter');
+
+      // Update images
+      imgBefore.src = data.beforeImg;
+      imgAfter.src = data.afterImg;
+
+      // Reset split to 50%
+      updateSliderPosition(50);
+      const range = document.getElementById('baRangeInput');
+      if (range) range.value = 50;
+
+      // Update Card details
+      updateComparisonCardTexts();
+    }
+
+    function updateComparisonCardTexts() {
+      if (typeof TREATMENTS_DATA === 'undefined') return;
+      const data = TREATMENTS_DATA[activeTreatment];
+      if (!data) return;
+      const dict = I18N[currentLang] || I18N.fr;
+
+      // Update tab prices
+      const tabCallusPrice = document.getElementById('baTabCallusPrice');
+      const tabCilsPrice = document.getElementById('baTabCilsPrice');
+      const tabHydraPrice = document.getElementById('baTabHydraPrice');
+      if (tabCallusPrice) tabCallusPrice.textContent = TREATMENTS_DATA.callus.prices[currentLang] || TREATMENTS_DATA.callus.prices.fr;
+      if (tabCilsPrice) tabCilsPrice.textContent = TREATMENTS_DATA.cils.prices[currentLang] || TREATMENTS_DATA.cils.prices.fr;
+      if (tabHydraPrice) tabHydraPrice.textContent = TREATMENTS_DATA.hydra.prices[currentLang] || TREATMENTS_DATA.hydra.prices.fr;
+
+      const currentPrice = data.prices[currentLang] || data.prices.fr;
+      const badge = document.getElementById('baCardBadge');
+      const title = document.getElementById('baCardTitle');
+      const desc = document.getElementById('baCardDesc');
+      const price = document.getElementById('baCardPrice');
+      const duration = document.getElementById('baCardDuration');
+      const cta = document.getElementById('baCtaBtnText');
+      const btn = document.getElementById('baWhatsAppBtn');
+
+      if (badge && dict[data.badgeKey]) badge.textContent = dict[data.badgeKey];
+      if (title && dict[data.titleKey]) title.textContent = dict[data.titleKey];
+      if (desc && dict[data.descKey]) desc.textContent = dict[data.descKey];
+      if (price) price.textContent = currentPrice;
+      if (duration && data.duration[currentLang]) duration.textContent = data.duration[currentLang];
+      if (cta) cta.textContent = (dict.ba_btn_book_result || 'Réserver ce résultat') + ' (' + currentPrice + ')';
+
+      const pointsContainer = document.getElementById('baCardPoints');
+      if (pointsContainer && data.points) {
+        pointsContainer.innerHTML = data.points.map(ptKey => `
+          <li><span class="check-icon">✓</span> <span>${dict[ptKey] || ''}</span></li>
+        `).join('');
+      }
+
+      if (btn) {
+        const msg = data.waMsg[currentLang] || data.waMsg.fr;
+        btn.href = 'https://wa.me/213781088061?text=' + encodeURIComponent(msg);
+      }
+    }
+
+    // Initialize Language
+    switchLanguage(currentLang);
+
+    // Interactive Drag / Touch Slider Handler
+    function updateSliderPosition(percent) {
+      const stage = document.getElementById('baStage');
+      if (!stage) return;
+      const clamped = Math.max(0, Math.min(100, percent));
+      stage.style.setProperty('--split', clamped + '%');
+    }
+
+    function initComparisonSlider() {
+      const stage = document.getElementById('baStage');
+      const range = document.getElementById('baRangeInput');
+      if (!stage) return;
+
+      let isDragging = false;
+
+      function getPercentageFromEvent(e) {
+        const rect = stage.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const isRtl = document.documentElement.dir === 'rtl';
+
+        let p;
+        if (isRtl) {
+          p = ((rect.right - clientX) / rect.width) * 100;
+        } else {
+          p = ((clientX - rect.left) / rect.width) * 100;
+        }
+        return Math.max(0, Math.min(100, p));
+      }
+
+      function onMove(e) {
+        if (!isDragging) return;
+        const p = getPercentageFromEvent(e);
+        updateSliderPosition(p);
+        if (range) range.value = p;
+      }
+
+      function onEnd() {
+        isDragging = false;
+        window.removeEventListener('mousemove', onMove);
+        window.removeEventListener('mouseup', onEnd);
+        window.removeEventListener('touchmove', onMove);
+        window.removeEventListener('touchend', onEnd);
+      }
+
+      stage.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        const p = getPercentageFromEvent(e);
+        updateSliderPosition(p);
+        if (range) range.value = p;
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('mouseup', onEnd);
+      });
+
+      stage.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        const p = getPercentageFromEvent(e);
+        updateSliderPosition(p);
+        if (range) range.value = p;
+        window.addEventListener('touchmove', onMove, { passive: true });
+        window.addEventListener('touchend', onEnd);
+      }, { passive: true });
+
+      if (range) {
+        range.addEventListener('input', (e) => {
+          updateSliderPosition(parseFloat(e.target.value));
+        });
+      }
+    }
+
+    // Call init on DOM load
+    document.addEventListener('DOMContentLoaded', () => {
+      initComparisonSlider();
+      updateComparisonCardTexts();
+    });
+
+
+    /* ==========================================================
+       2. ROMANTIC FEMININE PETALS ANIMATION
+    ========================================================== */
+    const canvas = document.getElementById('petalCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const petalCount = 22; // subtle, ultra-delicate
+    const petals = [];
+
+    class Petal {
+      constructor() {
+        this.reset(true);
+      }
+      reset(initial = false) {
+        this.x = Math.random() * width;
+        this.y = initial ? Math.random() * height : -20;
+        this.size = Math.random() * 8 + 6;
+        this.speedY = Math.random() * 0.7 + 0.4;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotSpeed = (Math.random() - 0.5) * 0.02;
+        this.opacity = Math.random() * 0.45 + 0.25;
+        this.color = Math.random() > 0.4 ? 'rgba(231, 165, 185, ' : 'rgba(247, 214, 229, ';
+      }
+      update() {
+        this.y += this.speedY;
+        this.x += this.speedX + Math.sin(this.y * 0.01) * 0.3;
+        this.rotation += this.rotSpeed;
+        if (this.y > height + 20 || this.x < -30 || this.x > width + 30) {
+          this.reset();
+        }
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.fillStyle = this.color + this.opacity + ')';
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(this.size / 2, -this.size / 2, this.size, 0, 0, this.size);
+        ctx.bezierCurveTo(-this.size, 0, -this.size / 2, -this.size / 2, 0, 0);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < petalCount; i++) {
+      petals.push(new Petal());
+    }
+
+    function animatePetals() {
+      ctx.clearRect(0, 0, width, height);
+      for (const p of petals) {
+        p.update();
+        p.draw();
+      }
+      requestAnimationFrame(animatePetals);
+    }
+    animatePetals();
+
+    /* ==========================================================
+       3. CATEGORY FILTERS FOR "NOS SOINS"
+    ========================================================== */
+    function filterServices(category) {
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = Array.from(document.querySelectorAll('.filter-btn')).find(b => b.getAttribute('onclick').includes(category));
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const cards = document.querySelectorAll('.soin-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    /* ==========================================================
+       4. MOBILE CAROUSEL & NAVIGATION
+    ========================================================== */
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+
+    hamburgerBtn.addEventListener('click', () => {
+      const isOpen = mobileDrawer.classList.toggle('open');
+      hamburgerBtn.classList.toggle('active', isOpen);
+      hamburgerBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    function closeDrawer() {
+      mobileDrawer.classList.remove('open');
+      hamburgerBtn.classList.remove('active');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    const mainHeader = document.getElementById('mainHeader');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        mainHeader.classList.add('scrolled');
+      } else {
+        mainHeader.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    function scrollCarousel(direction) {
+      const carousel = document.getElementById('soinsCarousel');
+      const cardWidth = carousel.querySelector('.soin-card').offsetWidth + 14;
+      carousel.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+    }
+
+    /* ==========================================================
+       5. MODALS (Booking, Video, Image Preview)
+    ========================================================= */
+    const bookingModal = document.getElementById('bookingModal');
+    const selectedServiceSelect = document.getElementById('selectedService');
+
+    function openBookingModal(serviceName) {
+      if (serviceName) {
+        for (let i = 0; i < selectedServiceSelect.options.length; i++) {
+          if (selectedServiceSelect.options[i].value.includes(serviceName)) {
+            selectedServiceSelect.selectedIndex = i;
+            break;
+          }
+        }
+      }
+      bookingModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeBookingModal() {
+      bookingModal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleBackdropClick(e) {
+      if (e.target === bookingModal) closeBookingModal();
+    }
+
+    function bookSpecificService(name) {
+      openBookingModal(name);
+    }
+
+    function submitBooking(e) {
+      e.preventDefault();
+      const name = document.getElementById('clientName').value.trim();
+      const service = selectedServiceSelect.value;
+      const date = document.getElementById('bookingDate').value;
+
+      let msg = (currentLang === 'ar')
+        ? `السلام عليكم، أنا ${name}، أود حجز جلسة: *${service}*`
+        : `Bonjour JOVEN, je m'appelle ${name} et je souhaite réserver la séance : *${service}*`;
+
+      if (date) {
+        msg += (currentLang === 'ar') ? ` بتاريخ: ${date}` : ` pour le ${date}`;
+      }
+      msg += (currentLang === 'ar') ? `. شكراً لكم.` : `. Merci beaucoup !`;
+
+      const waUrl = `https://wa.me/213781088061?text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+      closeBookingModal();
+    }
+
+    // Video modal
+    const videoModal = document.getElementById('videoModal');
+    const modalVideoPlayer = document.getElementById('modalVideoPlayer');
+
+    function openVideoModal(videoSrc) {
+      modalVideoPlayer.src = videoSrc;
+      videoModal.classList.add('open');
+      modalVideoPlayer.play().catch(() => {});
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeVideoModal() {
+      modalVideoPlayer.pause();
+      modalVideoPlayer.src = '';
+      videoModal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleVideoBackdropClick(e) {
+      if (e.target === videoModal) closeVideoModal();
+    }
+
+    // Image preview modal
+    const imageModal = document.getElementById('imageModal');
+    const modalImageViewer = document.getElementById('modalImageViewer');
+    const modalImageCaption = document.getElementById('modalImageCaption');
+
+    function openImageModal(imgSrc, caption) {
+      modalImageViewer.src = imgSrc;
+      modalImageCaption.textContent = caption || '';
+      imageModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeImageModal() {
+      imageModal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleImageBackdropClick(e) {
+      if (e.target === imageModal) closeImageModal();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeBookingModal();
+        closeVideoModal();
+        closeImageModal();
+      }
+    });
+
+    // 6. Active nav link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navItems = document.querySelectorAll('.nav-menu .nav-item');
+
+    window.addEventListener('scroll', () => {
+      let currentSection = '';
+      const scrollY = window.pageYOffset;
+
+      sections.forEach(sec => {
+        const top = sec.offsetTop - 120;
+        const height = sec.offsetHeight;
+        if (scrollY >= top && scrollY < top + height) {
+          currentSection = sec.getAttribute('id');
+        }
+      });
+
+      navItems.forEach(item => {
+        const link = item.querySelector('a');
+        if (link && link.getAttribute('href') === `#${currentSection}`) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+    }, { passive: true });
+  </script>
+</body>
+</html>

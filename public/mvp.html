@@ -1,0 +1,2162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOVEN — Institut de Beauté & Soins | Hydra, Alger</title>
+  <meta name="description" content="Soins experts, résultats visibles, dans un cadre élégant et apaisant. Réservez sur WhatsApp.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =============================================
+       DESIGN TOKENS & RESET
+    ============================================= */
+    :root {
+      --pink-50: #FFF5F7;
+      --pink-100: #FFE4EC;
+      --pink-200: #FFBCD0;
+      --pink-300: #FF8FAD;
+      --pink-400: #F06292;
+      --pink-500: #E91E8C;
+      --pink-primary: #E8749A;
+      --pink-dark: #C4567A;
+      --pink-light: #FDE8F0;
+      --pink-btn: #D4607E;
+
+      --text-dark: #1A1A2E;
+      --text-body: #4A4A6A;
+      --text-muted: #9090AA;
+      --white: #FFFFFF;
+      --bg-page: #FFF8FA;
+
+      --wa-green: #25D366;
+      --wa-dark: #1FAD52;
+
+      --shadow-sm: 0 2px 8px rgba(232,116,154,0.12);
+      --shadow-md: 0 8px 24px rgba(232,116,154,0.18);
+      --shadow-lg: 0 16px 48px rgba(232,116,154,0.22);
+      --shadow-card: 0 4px 20px rgba(0,0,0,0.08);
+
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --radius-pill: 999px;
+
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --nav-h: 72px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-page);
+      color: var(--text-body);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    /* =============================================
+       SCROLLBAR
+    ============================================= */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--pink-50); }
+    ::-webkit-scrollbar-thumb { background: var(--pink-200); border-radius: 999px; }
+
+    /* =============================================
+       UTILITY CLASSES
+    ============================================= */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--pink-primary);
+      background: var(--pink-100);
+      padding: 4px 14px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      color: var(--text-dark);
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    /* =============================================
+       BUTTONS
+    ============================================= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn-pink {
+      background: var(--pink-primary);
+      color: var(--white);
+      box-shadow: var(--shadow-md);
+    }
+    .btn-pink:hover {
+      background: var(--pink-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-wa {
+      background: var(--wa-green);
+      color: var(--white);
+      box-shadow: 0 4px 16px rgba(37,211,102,0.35);
+    }
+    .btn-wa:hover {
+      background: var(--wa-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37,211,102,0.45);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-dark);
+      border: 1.5px solid var(--pink-200);
+    }
+    .btn-outline:hover {
+      border-color: var(--pink-primary);
+      color: var(--pink-primary);
+      background: var(--pink-50);
+    }
+
+    .btn-sm { padding: 8px 18px; font-size: 0.82rem; }
+    .btn-lg { padding: 15px 32px; font-size: 0.95rem; }
+
+    /* =============================================
+       NAVBAR
+    ============================================= */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      height: var(--nav-h);
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--pink-100);
+      transition: var(--transition);
+    }
+
+    .navbar.scrolled {
+      box-shadow: 0 2px 20px rgba(232,116,154,0.12);
+    }
+
+    .nav-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+    .nav-logo-name {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--pink-primary);
+      letter-spacing: 0.08em;
+    }
+    .nav-logo-sub {
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      padding: 8px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-body);
+      transition: var(--transition);
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: var(--pink-100);
+      color: var(--pink-primary);
+    }
+
+    .nav-links .has-dropdown {
+      position: relative;
+    }
+    .nav-links .has-dropdown > a::after {
+      content: ' ▾';
+      font-size: 0.7em;
+    }
+
+    .nav-cta { display: flex; align-items: center; gap: 10px; }
+
+    /* Hamburger */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      width: 28px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--text-dark);
+      transition: var(--transition);
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0; right: 0;
+      background: var(--white);
+      border-bottom: 1px solid var(--pink-100);
+      box-shadow: var(--shadow-md);
+      padding: 20px 24px;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 998;
+      animation: slideDown 0.25s ease;
+    }
+    .mobile-menu.open { display: flex; }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .mobile-menu a {
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-body);
+      transition: var(--transition);
+    }
+    .mobile-menu a:hover { background: var(--pink-50); color: var(--pink-primary); }
+    .mobile-menu .mobile-cta { margin-top: 12px; }
+    .mobile-menu .btn { width: 100%; justify-content: center; }
+
+    /* =============================================
+       HERO SECTION
+    ============================================= */
+    .hero {
+      min-height: 100vh;
+      padding-top: var(--nav-h);
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #FFF5F8 0%, #FDE8F0 50%, #FFDEE8 100%);
+    }
+
+    /* Decorative blobs */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -150px; right: -100px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(232,116,154,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -150px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(255,142,170,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* Leaf decorations */
+    .hero-leaf {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    .hero-leaf-1 {
+      top: 60px; right: 20px;
+      width: 120px;
+      animation: sway 6s ease-in-out infinite;
+    }
+    .hero-leaf-2 {
+      bottom: 40px; left: 10px;
+      width: 90px;
+      animation: sway 8s ease-in-out infinite reverse;
+    }
+
+    @keyframes sway {
+      0%, 100% { transform: rotate(-3deg) translateY(0); }
+      50% { transform: rotate(3deg) translateY(-8px); }
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      min-height: calc(100vh - var(--nav-h));
+      padding: 48px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content { }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--pink-primary);
+      margin-bottom: 20px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1.5px;
+      background: var(--pink-primary);
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      color: var(--text-dark);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .hero-title .highlight {
+      color: var(--pink-primary);
+      font-style: italic;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--text-body);
+      margin-bottom: 32px;
+      max-width: 440px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    /* Trust badges */
+    .hero-trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding-top: 28px;
+      border-top: 1px solid var(--pink-200);
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .trust-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--pink-100);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .trust-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+    .trust-label span {
+      display: block;
+      font-weight: 400;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* Hero Image */
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-img-wrap {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      aspect-ratio: 4/5;
+      background: var(--pink-200);
+    }
+
+    .hero-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .hero-img-wrap:hover img { transform: scale(1.03); }
+
+    /* Floating badge on image */
+    .hero-float-badge {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: floatUp 3s ease-in-out infinite;
+    }
+
+    @keyframes floatUp {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .float-badge-icon { font-size: 1.5rem; }
+    .float-badge-text strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+    .float-badge-text span {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* Rating card */
+    .hero-rating-card {
+      position: absolute;
+      top: 32px;
+      right: -20px;
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      box-shadow: var(--shadow-md);
+      text-align: center;
+      animation: floatUp 4s 1s ease-in-out infinite;
+    }
+    .rating-stars { color: #FFB800; font-size: 0.8rem; letter-spacing: 2px; }
+    .rating-num {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      display: block;
+    }
+    .rating-label { font-size: 0.7rem; color: var(--text-muted); }
+
+    /* =============================================
+       SERVICES SECTION
+    ============================================= */
+    .services {
+      padding: 96px 0;
+      background: var(--white);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1200px) {
+      .services-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .service-card {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--white);
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .service-img {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: var(--pink-100);
+    }
+
+    .service-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .service-card:hover .service-img img { transform: scale(1.06); }
+
+    .service-icon-badge {
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 40px;
+      background: var(--white);
+      border: 2px solid var(--pink-100);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .service-body {
+      padding: 28px 20px 20px;
+      text-align: center;
+    }
+
+    .service-name {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+
+    .service-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    .service-price {
+      display: inline-block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--pink-primary);
+      background: var(--pink-100);
+      padding: 4px 14px;
+      border-radius: var(--radius-pill);
+    }
+
+    .service-old-price {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+
+    .service-duration {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: #f4f4f8;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+    }
+
+    .service-promo-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #E91E63;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      z-index: 2;
+    }
+
+    /* =============================================
+       ABOUT SECTION
+    ============================================= */
+    .about {
+      padding: 96px 0;
+      background: linear-gradient(135deg, #FFF5F8 0%, #FDE8F0 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about::before {
+      content: 'JOVEN';
+      position: absolute;
+      right: -40px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-serif);
+      font-size: 14rem;
+      color: rgba(232,116,154,0.06);
+      font-weight: 700;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-img-wrap {
+      position: relative;
+    }
+
+    .about-img-main {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      box-shadow: var(--shadow-lg);
+      background: var(--pink-200);
+    }
+    .about-img-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Stats card overlapping the image */
+    .about-stats-card {
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 24px 28px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      gap: 32px;
+    }
+
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--pink-primary);
+      display: block;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .about-content { }
+
+    .about-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--text-dark);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .about-title .highlight {
+      color: var(--pink-primary);
+      font-style: italic;
+    }
+
+    .about-text {
+      font-size: 0.95rem;
+      color: var(--text-body);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    .about-checklist {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .about-checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--text-body);
+    }
+
+    .check-icon {
+      width: 22px;
+      height: 22px;
+      background: var(--pink-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.65rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Google rating */
+    .google-rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 12px 20px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--pink-100);
+    }
+
+    .google-logo {
+      width: 24px;
+      height: 24px;
+    }
+
+    .google-rating-info strong {
+      display: block;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1;
+    }
+    .google-rating-stars {
+      color: #FFB800;
+      font-size: 0.75rem;
+    }
+    .google-rating-count {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* =============================================
+       TESTIMONIALS SECTION
+    ============================================= */
+    .testimonials {
+      padding: 96px 0;
+      background: var(--white);
+    }
+
+    .testimonials-track {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border: 1px solid var(--pink-100);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .testimonial-card:hover {
+      border-color: var(--pink-200);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+
+    .testimonial-quote {
+      font-size: 2.5rem;
+      color: var(--pink-200);
+      line-height: 1;
+      margin-bottom: 12px;
+      font-family: var(--font-serif);
+    }
+
+    .testimonial-text {
+      font-size: 0.9rem;
+      color: var(--text-body);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .testimonial-footer {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .testimonial-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink-200), var(--pink-300));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      color: white;
+      font-weight: 700;
+    }
+
+    .testimonial-info strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    .testimonial-info span {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .testimonial-stars {
+      margin-left: auto;
+      color: #FFB800;
+      font-size: 0.75rem;
+    }
+
+    /* =============================================
+       GALLERY SECTION
+    ============================================= */
+    .gallery {
+      padding: 96px 0;
+      background: var(--bg-page);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 16px;
+    }
+
+    .gallery-item {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .gallery-item:first-child {
+      grid-row: span 2;
+    }
+
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-item:first-child .gallery-img {
+      aspect-ratio: unset;
+      height: 100%;
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(232,116,154,0.0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      background: rgba(232,116,154,0.3);
+    }
+    .gallery-item:hover .gallery-img { transform: scale(1.06); }
+
+    .gallery-zoom {
+      width: 44px;
+      height: 44px;
+      background: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      opacity: 0;
+      transform: scale(0.7);
+      transition: var(--transition);
+    }
+
+    .gallery-item:hover .gallery-zoom {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* =============================================
+       CONTACT / CTA SECTION
+    ============================================= */
+    .cta-section {
+      padding: 96px 0;
+      background: linear-gradient(135deg, var(--pink-primary) 0%, var(--pink-dark) 100%);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+
+    .cta-section .container { position: relative; z-index: 1; }
+
+    .cta-eyebrow {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border-radius: var(--radius-pill);
+      padding: 5px 18px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .cta-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .cta-desc {
+      color: rgba(255,255,255,0.85);
+      font-size: 1rem;
+      margin-bottom: 36px;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+
+    .btn-white {
+      background: var(--white);
+      color: var(--pink-primary);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .btn-white:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+
+    .btn-wa-lg {
+      background: var(--wa-green);
+      color: white;
+      font-size: 1rem;
+      padding: 15px 36px;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    }
+    .btn-wa-lg:hover {
+      background: var(--wa-dark);
+      transform: translateY(-2px);
+    }
+
+    /* Info boxes */
+    .cta-info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .cta-info-box {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .cta-info-box .info-icon { font-size: 1.5rem; margin-bottom: 8px; }
+    .cta-info-box strong {
+      display: block;
+      color: white;
+      font-size: 0.88rem;
+      margin-bottom: 4px;
+    }
+    .cta-info-box span {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.8rem;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    .footer {
+      background: var(--text-dark);
+      color: rgba(255,255,255,0.75);
+      padding: 48px 0 24px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 36px;
+    }
+
+    .footer-brand .nav-logo-name { color: var(--pink-200); }
+    .footer-brand .nav-logo-sub { color: rgba(255,255,255,0.4); }
+    .footer-desc {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      margin-top: 16px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .footer-col h4 {
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.85rem;
+      transition: var(--transition);
+    }
+    .footer-links a:hover { color: var(--pink-200); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-bottom p { font-size: 0.8rem; }
+    .footer-bottom a { color: var(--pink-200); }
+
+    .footer-social {
+      display: flex;
+      gap: 10px;
+    }
+
+    .social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .social-btn:hover { background: var(--pink-primary); }
+
+    /* =============================================
+       FLOATING WHATSAPP BUTTON
+    ============================================= */
+    .wa-fab {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 990;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .wa-fab-btn {
+      width: 56px;
+      height: 56px;
+      background: var(--wa-green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+      transition: var(--transition);
+      animation: waPulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes waPulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.5); }
+      50% { box-shadow: 0 4px 32px rgba(37,211,102,0.75), 0 0 0 10px rgba(37,211,102,0.08); }
+    }
+
+    .wa-fab-btn:hover {
+      background: var(--wa-dark);
+      transform: scale(1.1);
+    }
+
+    .wa-fab-tooltip {
+      background: var(--text-dark);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateX(8px);
+      transition: var(--transition);
+      pointer-events: none;
+    }
+
+    .wa-fab:hover .wa-fab-tooltip {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* =============================================
+       BACK TO TOP BUTTON
+    ============================================= */
+    .back-to-top {
+      position: fixed;
+      bottom: 96px;
+      right: 28px;
+      width: 42px;
+      height: 42px;
+      background: var(--white);
+      border: 1.5px solid var(--pink-100);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: var(--transition);
+      opacity: 0;
+      transform: translateY(16px);
+      z-index: 989;
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .back-to-top:hover {
+      background: var(--pink-primary);
+      color: white;
+      border-color: var(--pink-primary);
+    }
+
+    /* =============================================
+       LIGHTBOX
+    ============================================= */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: var(--radius-md);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .lightbox-close:hover { background: var(--pink-primary); }
+
+    /* =============================================
+       ANIMATIONS ON SCROLL
+    ============================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* =============================================
+       RESPONSIVE — TABLET
+    ============================================= */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-track { grid-template-columns: repeat(2, 1fr); }
+      .cta-info-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid > .footer-brand { grid-column: 1 / -1; }
+      .about-stats-card { right: 0; bottom: -16px; }
+    }
+
+    /* =============================================
+       RESPONSIVE — MOBILE
+    ============================================= */
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding: 32px 0 48px;
+        gap: 32px;
+      }
+
+      .hero-visual { order: -1; }
+
+      .hero-rating-card {
+        right: 0;
+        top: 16px;
+      }
+
+      .hero-actions { flex-direction: column; }
+      .hero-actions .btn { width: 100%; justify-content: center; }
+
+      .hero-trust {
+        gap: 12px;
+      }
+      .trust-item { flex: 1; min-width: 110px; }
+
+      .services-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+      .about-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .about-stats-card {
+        position: static;
+        margin-top: 20px;
+        gap: 24px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .gallery-item:first-child { grid-row: span 1; }
+      .gallery-item:first-child .gallery-img { aspect-ratio: 1; }
+
+      .testimonials-track { grid-template-columns: 1fr; }
+
+      .cta-info-grid { grid-template-columns: 1fr; }
+      .cta-actions { flex-direction: column; align-items: center; }
+
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+
+      .wa-fab { bottom: 20px; right: 20px; }
+      .back-to-top { bottom: 84px; right: 20px; }
+
+      .about-checklist { gap: 10px; }
+    }
+
+    @media (max-width: 480px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .hero-trust { flex-direction: column; gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================
+       NAVBAR
+  ============================================= -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <!-- Logo -->
+      <a href="#" class="nav-logo">
+        <span class="nav-logo-name">JOVEN</span>
+        <span class="nav-logo-sub">BEAUTÉ • SOINS</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <ul class="nav-links">
+        <li><a href="#" class="active">Accueil</a></li>
+        <li class="has-dropdown"><a href="#services">Nos Soins</a></li>
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#avis">Avis</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <!-- Desktop CTA -->
+      <div class="nav-cta">
+        <a href="https://wa.me/213781088061?text=Bonjour%2C%20je%20souhaite%20r%C3%A9server%20un%20soin%20%E2%80%94%20JOVEN%20Institut"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-pink btn-sm">
+          📅 Réserver un soin
+        </a>
+      </div>
+
+      <!-- Hamburger -->
+      <button class="nav-hamburger" id="navHamburger" aria-label="Menu" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#">Accueil</a>
+    <a href="#services">Nos Soins</a>
+    <a href="#about">À propos</a>
+    <a href="#avis">Avis</a>
+    <a href="#contact">Contact</a>
+    <div class="mobile-cta">
+      <a href="https://wa.me/213781088061?text=Bonjour%2C%20je%20souhaite%20r%C3%A9server%20un%20soin%20%E2%80%94%20JOVEN%20Institut"
+         target="_blank" rel="noopener noreferrer"
+         class="btn btn-wa btn-lg">
+        💬 Réserver sur WhatsApp →
+      </a>
+    </div>
+  </div>
+
+  <!-- =============================================
+       HERO SECTION
+  ============================================= -->
+  <section class="hero" id="home">
+    <!-- Decorative SVG leaf top-right -->
+    <svg class="hero-leaf hero-leaf-1" viewBox="0 0 120 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M60 10 C10 50, 5 100, 60 170 C115 100, 110 50, 60 10Z" fill="#E8749A" opacity="0.3"/>
+      <line x1="60" y1="10" x2="60" y2="170" stroke="#E8749A" stroke-width="1.5" opacity="0.4"/>
+      <line x1="60" y1="60" x2="30" y2="40" stroke="#E8749A" stroke-width="1" opacity="0.3"/>
+      <line x1="60" y1="80" x2="90" y2="65" stroke="#E8749A" stroke-width="1" opacity="0.3"/>
+      <line x1="60" y1="100" x2="25" y2="90" stroke="#E8749A" stroke-width="1" opacity="0.3"/>
+      <line x1="60" y1="120" x2="95" y2="110" stroke="#E8749A" stroke-width="1" opacity="0.3"/>
+    </svg>
+    <svg class="hero-leaf hero-leaf-2" viewBox="0 0 120 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M60 10 C10 50, 5 100, 60 170 C115 100, 110 50, 60 10Z" fill="#E8749A" opacity="0.25"/>
+      <line x1="60" y1="10" x2="60" y2="170" stroke="#E8749A" stroke-width="1.5" opacity="0.3"/>
+    </svg>
+
+    <div class="container">
+      <div class="hero-inner">
+        <!-- Left: Content -->
+        <div class="hero-content reveal">
+          <div class="hero-eyebrow">Institut de Beauté — Hydra, Alger</div>
+
+          <h1 class="hero-title">
+            Révélez votre<br>
+            <span class="highlight">beauté</span> naturelle
+          </h1>
+
+          <p class="hero-desc">
+            Soins experts, résultats visibles,<br>
+            dans un cadre élégant et apaisant.
+          </p>
+
+          <div class="hero-actions">
+            <a href="https://wa.me/213781088061?text=Bonjour%2C%20je%20souhaite%20r%C3%A9server%20un%20soin%20%E2%80%94%20JOVEN%20Institut"
+               target="_blank" rel="noopener noreferrer"
+               class="btn btn-wa btn-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+              </svg>
+              Réserver sur WhatsApp →
+            </a>
+          </div>
+
+          <!-- Trust badges -->
+          <div class="hero-trust">
+            <div class="trust-item">
+              <div class="trust-icon">🌸</div>
+              <div class="trust-label">
+                Expertise
+                <span>+5 ans</span>
+              </div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon">🛡️</div>
+              <div class="trust-label">
+                Hygiène
+                <span>irréprochable</span>
+              </div>
+            </div>
+            <div class="trust-item">
+              <div class="trust-icon">💖</div>
+              <div class="trust-label">
+                Votre beauté,
+                <span>notre priorité</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Image -->
+        <div class="hero-visual reveal reveal-delay-2">
+          <div class="hero-img-wrap">
+            <img
+              src="/media/brand/joven-hero.webp"
+              alt="JOVEN Institut de Beauté — Soin visage"
+              onerror="this.style.background='linear-gradient(135deg,#FFD6E5,#FFB3CE)';this.style.minHeight='400px'"
+            >
+            <!-- Floating badge -->
+            <div class="hero-float-badge">
+              <div class="float-badge-icon">✨</div>
+              <div class="float-badge-text">
+                <strong>Soin du moment</strong>
+                <span>Hydrafacial Prestige</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rating card -->
+          <div class="hero-rating-card">
+            <div class="rating-stars">★★★★★</div>
+            <strong class="rating-num">4.8/5</strong>
+            <div class="rating-label">sur Google</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SERVICES SECTION
+  ============================================= -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Nos Soins</span>
+        <h2 class="section-title">Une gamme complète pour prendre soin de vous</h2>
+        <p class="section-subtitle">Des protocoles experts pour révéler votre beauté naturelle</p>
+      </div>
+
+      <div class="services-grid" id="servicesGrid">
+        <!-- Cards generated by JS from API, with fallback below -->
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-img">
+            <img src="/media/feed/ig-1.webp" alt="Hydrafacial"
+              onerror="this.src='';this.parentElement.style.background='linear-gradient(135deg,#FFD6E5,#FFB3CE)'">
+            <div class="service-icon-badge">💧</div>
+          </div>
+          <div class="service-body">
+            <h3 class="service-name">Hydrafacial</h3>
+            <p class="service-desc">Nettoyage profond et éclat immédiat</p>
+            <span class="service-price" data-service-price="hydrafacial">8 500 DA</span>
+          </div>
+        </div>
+
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-img">
+            <img src="/media/feed/ig-2.webp" alt="Manucure & Pédicure"
+              onerror="this.src='';this.parentElement.style.background='linear-gradient(135deg,#F3E5FF,#E8C8FF)'">
+            <div class="service-icon-badge">💅</div>
+          </div>
+          <div class="service-body">
+            <h3 class="service-name">Manucure & Pédicure</h3>
+            <p class="service-desc">Des mains et pieds parfaits</p>
+            <span class="service-price" data-service-price="manucure">3 500 DA</span>
+          </div>
+        </div>
+
+        <div class="service-card reveal reveal-delay-3">
+          <div class="service-img">
+            <img src="/media/feed/ig-3.webp" alt="Callus Peeling"
+              onerror="this.src='';this.parentElement.style.background='linear-gradient(135deg,#E5F9EE,#C8F0D6)'">
+            <div class="service-icon-badge">👁️</div>
+          </div>
+          <div class="service-body">
+            <h3 class="service-name">Callus Peeling</h3>
+            <p class="service-desc">Une peau douce et sans callosités</p>
+            <span class="service-price" data-service-price="callus">2 800 DA</span>
+          </div>
+        </div>
+
+        <div class="service-card reveal reveal-delay-4">
+          <div class="service-img">
+            <img src="/media/feed/ig-4.webp" alt="Soins Capillaires"
+              onerror="this.src='';this.parentElement.style.background='linear-gradient(135deg,#FFF5D6,#FFE8A0)'">
+            <div class="service-icon-badge">🌿</div>
+          </div>
+          <div class="service-body">
+            <h3 class="service-name">Soins Capillaires</h3>
+            <p class="service-desc">Force, brillance et vitalité</p>
+            <span class="service-price" data-service-price="capillaire">5 000 DA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- See all button -->
+      <div style="text-align:center; margin-top:36px;" class="reveal">
+        <a href="https://wa.me/213781088061?text=Bonjour%2C%20je%20souhaite%20conna%C3%AEtre%20tous%20vos%20soins%20disponibles" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-lg">
+          Voir tous nos soins →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       ABOUT SECTION
+  ============================================= -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-inner">
+        <!-- Left: Image -->
+        <div class="about-img-wrap reveal">
+          <div class="about-img-main">
+            <img src="/media/brand/joven-hero.webp" alt="À propos de JOVEN"
+              onerror="this.src='';this.parentElement.style.background='linear-gradient(135deg,#FFD6E5,#FFB3CE)'">
+          </div>
+          <!-- Stats overlay card -->
+          <div class="about-stats-card">
+            <div class="stat-item">
+              <strong class="stat-num">+5</strong>
+              <span class="stat-label">Ans d'expérience</span>
+            </div>
+            <div class="stat-divider" style="width:1px;background:#FFD6E5;"></div>
+            <div class="stat-item">
+              <!-- Google G icon SVG -->
+              <span style="font-size:1.5rem; display:block; margin-bottom:4px;">🔵</span>
+              <strong style="font-size:1.1rem; color:#E8749A; font-family:var(--font-serif);">4.8/5</strong>
+              <div class="google-rating-stars">★★★★★</div>
+              <span class="stat-label">sur Google</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Content -->
+        <div class="about-content reveal reveal-delay-2">
+          <span class="section-tag">À propos de JOVEN</span>
+          <h2 class="about-title">
+            L'art de prendre soin<br>
+            avec <span class="highlight">passion</span>
+          </h2>
+
+          <p class="about-text">
+            Avec plus de 5 ans d'expérience, notre institut vous propose des soins de qualité, réalisés par une experte passionnée, dans un cadre moderne et serein. Situé au cœur de Hydra, Alger.
+          </p>
+
+          <ul class="about-checklist">
+            <li>
+              <span class="check-icon">✓</span>
+              Protocoles français et japonais certifiés
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              Espace 100% féminin — hygiène irréprochable
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              Équipements professionnels de dernière génération
+            </li>
+            <li>
+              <span class="check-icon">✓</span>
+              Réservation rapide via WhatsApp
+            </li>
+          </ul>
+
+          <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+            <a href="#contact" class="btn btn-pink">En savoir plus →</a>
+            <div class="google-rating">
+              <svg class="google-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+              </svg>
+              <div class="google-rating-info">
+                <strong>4.8/5 sur Google</strong>
+                <div class="google-rating-stars">★★★★★</div>
+                <span class="google-rating-count">+264 avis vérifiés</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       GALLERY SECTION
+  ============================================= -->
+  <section class="gallery" id="gallery">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Nos Réalisations</span>
+        <h2 class="section-title">Aperçu de nos résultats</h2>
+        <p class="section-subtitle">Des transformations réelles, visibles et durables</p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item reveal" onclick="openLightbox('/media/feed/ig-1.webp')">
+          <img class="gallery-img" src="/media/feed/ig-1.webp" alt="Résultat soin"
+            onerror="this.src='';this.parentElement.style.background='linear-gradient(135deg,#FFD6E5,#FFB3CE)';this.style.display='none'">
+          <div class="gallery-overlay"><div class="gallery-zoom">🔍</div></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-1" onclick="openLightbox('/media/feed/ig-2.webp')">
+          <img class="gallery-img" src="/media/feed/ig-2.webp" alt="Résultat soin"
+            onerror="this.src='';this.parentElement.style.background='linear-gradient(135deg,#F3E5FF,#E8C8FF)';this.style.display='none'">
+          <div class="gallery-overlay"><div class="gallery-zoom">🔍</div></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2" onclick="openLightbox('/media/feed/ig-3.webp')">
+          <img class="gallery-img" src="/media/feed/ig-3.webp" alt="Résultat soin"
+            onerror="this.src='';this.parentElement.style.background='linear-gradient(135deg,#E5F9EE,#C8F0D6)';this.style.display='none'">
+          <div class="gallery-overlay"><div class="gallery-zoom">🔍</div></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3" onclick="openLightbox('/media/feed/ig-4.webp')">
+          <img class="gallery-img" src="/media/feed/ig-4.webp" alt="Résultat soin"
+            onerror="this.src='';this.parentElement.style.background='linear-gradient(135deg,#FFF5D6,#FFE8A0)';this.style.display='none'">
+          <div class="gallery-overlay"><div class="gallery-zoom">🔍</div></div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-4" onclick="openLightbox('/media/feed/ig-5.webp')">
+          <img class="gallery-img" src="/media/feed/ig-5.webp" alt="Résultat soin"
+            onerror="this.src='';this.parentElement.style.background='linear-gradient(135deg,#FFE8D6,#FFC8A0)';this.style.display='none'">
+          <div class="gallery-overlay"><div class="gallery-zoom">🔍</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       TESTIMONIALS SECTION
+  ============================================= -->
+  <section class="testimonials" id="avis">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">Nos Clientes en Parlent</span>
+        <h2 class="section-title">Une confiance partagée,<br>une beauté révélée ♥</h2>
+        <p class="section-subtitle">+264 avis authentiques sur Google Maps</p>
+      </div>
+
+      <div class="testimonials-track">
+        <div class="testimonial-card reveal reveal-delay-1">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">
+            Accueil chaleureux, cadre magnifique et résultats exceptionnels ! Mon Hydrafacial était incroyable, ma peau n'a jamais été aussi lumineuse. Je recommande vivement !
+          </p>
+          <div class="testimonial-footer">
+            <div class="testimonial-avatar">S</div>
+            <div class="testimonial-info">
+              <strong>Sarah M.</strong>
+              <span>Alger — Clientes fidèle</span>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-2">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">
+            Le meilleur institut de beauté de Hydra ! La manucure russe est parfaite, dure des semaines. L'équipe est professionnelle et très attentionnée. Je reviendrai à chaque fois !
+          </p>
+          <div class="testimonial-footer">
+            <div class="testimonial-avatar" style="background:linear-gradient(135deg,#B39DDB,#9575CD)">L</div>
+            <div class="testimonial-info">
+              <strong>Lina K.</strong>
+              <span>Hydra — Depuis 2 ans</span>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-3">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">
+            Une expérience unique et relaxante. Le Head Spa japonais m'a complètement transformée. L'atmosphère est apaisante, la propreté irréprochable. Un vrai moment de bonheur !
+          </p>
+          <div class="testimonial-footer">
+            <div class="testimonial-avatar" style="background:linear-gradient(135deg,#80DEEA,#4DD0E1)">N</div>
+            <div class="testimonial-info">
+              <strong>Nadia B.</strong>
+              <span>El Biar — Très fidèle</span>
+            </div>
+            <div class="testimonial-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       CTA / CONTACT SECTION
+  ============================================= -->
+  <section class="cta-section" id="contact">
+    <div class="container">
+      <div class="reveal">
+        <span class="cta-eyebrow">✨ Réservation rapide</span>
+        <h2 class="cta-title">Prête à révéler votre beauté ?</h2>
+        <p class="cta-desc">Contactez-nous dès maintenant et réservez votre soin sur mesure</p>
+
+        <div class="cta-actions">
+          <a href="https://wa.me/213781088061?text=Bonjour%20JOVEN%2C%20je%20souhaite%20r%C3%A9server%20un%20soin"
+             target="_blank" rel="noopener noreferrer"
+             class="btn btn-wa-lg">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+            Nous écrire sur WhatsApp
+          </a>
+          <a href="tel:+213781088061" class="btn btn-white btn-lg">
+            📞 +213 78 108 80 61
+          </a>
+        </div>
+
+        <div class="cta-info-grid">
+          <div class="cta-info-box">
+            <div class="info-icon">📍</div>
+            <strong>Notre adresse</strong>
+            <span>Chemin de la Madeleine 27,<br>Hydra, Alger</span>
+          </div>
+          <div class="cta-info-box">
+            <div class="info-icon">🕐</div>
+            <strong>Horaires d'ouverture</strong>
+            <span>Lun – Sam : 09h00 – 20h00<br>Dimanche : Sur rendez-vous</span>
+          </div>
+          <div class="cta-info-box">
+            <div class="info-icon">📱</div>
+            <strong>Réseaux sociaux</strong>
+            <span>@joven-institut.dz<br>Instagram & Facebook</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo">
+            <span class="nav-logo-name" style="color:#FFB3CE;">JOVEN</span>
+            <span class="nav-logo-sub" style="color:rgba(255,255,255,0.4);">BEAUTÉ • SOINS</span>
+          </div>
+          <p class="footer-desc">
+            Institut de beauté et soins à Hydra, Alger. Des soins experts pour révéler votre beauté naturelle dans un cadre élégant et apaisant.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#">Accueil</a></li>
+            <li><a href="#services">Nos Soins</a></li>
+            <li><a href="#about">À propos</a></li>
+            <li><a href="#avis">Avis clients</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Nos Soins</h4>
+          <ul class="footer-links">
+            <li><a href="#services">Hydrafacial</a></li>
+            <li><a href="#services">Manucure & Pédicure</a></li>
+            <li><a href="#services">Callus Peeling</a></li>
+            <li><a href="#services">Soins Capillaires</a></li>
+            <li><a href="#services">Head Spa japonais</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 <a href="#">JOVEN Institut de Beauté</a> — Tous droits réservés</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/joven-institut.dz" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">📸</a>
+          <a href="https://wa.me/213781088061" target="_blank" rel="noopener" class="social-btn" aria-label="WhatsApp">💬</a>
+          <a href="https://facebook.com" target="_blank" rel="noopener" class="social-btn" aria-label="Facebook">👍</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =============================================
+       FLOATING WHATSAPP BUTTON
+  ============================================= -->
+  <div class="wa-fab">
+    <div class="wa-fab-tooltip">Nous écrire</div>
+    <a href="https://wa.me/213781088061?text=Bonjour%20JOVEN%2C%20je%20souhaite%20r%C3%A9server%20un%20soin"
+       target="_blank" rel="noopener noreferrer"
+       class="wa-fab-btn" aria-label="WhatsApp">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="white">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop" aria-label="Retour en haut" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    ↑
+  </button>
+
+  <!-- =============================================
+       LIGHTBOX
+  ============================================= -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img class="lightbox-img" id="lightboxImg" src="" alt="Aperçu">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  </div>
+
+  <!-- =============================================
+       JAVASCRIPT
+  ============================================= -->
+  <script>
+    'use strict';
+
+    /* ---- Navbar scroll effect ---- */
+    const navbar = document.getElementById('navbar');
+    const backToTop = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      navbar.classList.toggle('scrolled', scrollY > 20);
+      backToTop.classList.toggle('visible', scrollY > 400);
+    }, { passive: true });
+
+    /* ---- Mobile menu ---- */
+    function toggleMenu() {
+      const hamburger = document.getElementById('navHamburger');
+      const menu = document.getElementById('mobileMenu');
+      const isOpen = menu.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+    }
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('mobileMenu').classList.remove('open');
+        document.getElementById('navHamburger').classList.remove('open');
+      });
+    });
+
+    /* ---- Smooth scroll for nav links ---- */
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', e => {
+        const href = anchor.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          const offset = 80;
+          const top = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+
+    /* ---- Active nav link on scroll ---- */
+    const sections = document.querySelectorAll('section[id]');
+    const navLinksDesktop = document.querySelectorAll('.nav-links a');
+
+    const observerOptions = { rootMargin: '-40% 0px -40% 0px' };
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinksDesktop.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => sectionObserver.observe(section));
+
+    /* ---- Reveal on scroll ---- */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* ---- Lightbox ---- */
+    function openLightbox(src) {
+      const lb = document.getElementById('lightbox');
+      const img = document.getElementById('lightboxImg');
+      img.src = src;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    /* ---- SERVICES ICONS MAP ---- */
+    const SERVICE_ICONS = {
+      'hydra': '💧', 'visage': '✨', 'éclat': '⭐', 'glow': '💎',
+      'micro': '🔬', 'peeling': '🌸', 'head spa': '🌊', 'spa': '🛁',
+      'lissage': '💫', 'botox': '💊', 'coloration': '🎨',
+      'manucure': '💅', 'pédicure': '🦶', 'mains': '🤝',
+      'brow': '👁️', 'cils': '👁️', 'reine': '👑', 'mariée': '👰',
+      'default': '🌿'
+    };
+
+    function getServiceIcon(title) {
+      const t = title.toLowerCase();
+      for (const [key, icon] of Object.entries(SERVICE_ICONS)) {
+        if (t.includes(key)) return icon;
+      }
+      return SERVICE_ICONS.default;
+    }
+
+    /* ---- SERVICE CATEGORY COLORS ---- */
+    const CARD_COLORS = [
+      'linear-gradient(135deg,#FFD6E5,#FFB3CE)',
+      'linear-gradient(135deg,#F3E5FF,#E0C4FF)',
+      'linear-gradient(135deg,#E5F9EE,#C0EDD4)',
+      'linear-gradient(135deg,#FFF5D6,#FFE0A0)',
+      'linear-gradient(135deg,#E5F0FF,#C0D8FF)',
+      'linear-gradient(135deg,#FFE5E5,#FFBDBD)',
+      'linear-gradient(135deg,#E5FFF5,#B0FFDB)',
+      'linear-gradient(135deg,#FFF0E5,#FFCCA0)',
+    ];
+
+    /* ---- GALLERY IMAGES ---- */
+    const FEED_IMAGES = [
+      '/media/feed/ig-1.webp', '/media/feed/ig-2.webp', '/media/feed/ig-3.webp',
+      '/media/feed/ig-4.webp', '/media/feed/ig-5.webp', '/media/feed/ig-6.webp',
+      '/media/feed/ig-7.webp', '/media/feed/ig-8.webp',
+    ];
+
+    /* ---- Load services from API ---- */
+    async function loadServicesFromAPI() {
+      try {
+        const res = await fetch('/api/bootstrap');
+        if (!res.ok) return;
+        const { data } = await res.json();
+        if (!data || !data.services || data.services.length === 0) return;
+
+        const services = data.services.slice(0, 8); // show top 8
+        const grid = document.getElementById('servicesGrid');
+        grid.innerHTML = '';
+
+        services.forEach((service, idx) => {
+          const imgSrc = FEED_IMAGES[idx % FEED_IMAGES.length];
+          const icon = getServiceIcon(service.title);
+          const color = CARD_COLORS[idx % CARD_COLORS.length];
+          const price = Number(service.price).toLocaleString('fr-FR');
+          const hasPromo = service.is_promo && service.old_price;
+          const oldPrice = hasPromo ? Number(service.old_price).toLocaleString('fr-FR') : null;
+          const delay = idx % 4;
+
+          const waText = encodeURIComponent(`Bonjour JOVEN, je souhaite réserver : ${service.title} (${price} DA) — ${service.duration || ''}`);
+
+          grid.innerHTML += `
+            <div class="service-card reveal reveal-delay-${delay}">
+              <div class="service-img" style="background:${color}">
+                <img src="${imgSrc}" alt="${service.title}"
+                  onerror="this.style.display='none'">
+                <div class="service-icon-badge">${icon}</div>
+                ${hasPromo ? `<div class="service-promo-badge">🔥 Offre</div>` : ''}
+              </div>
+              <div class="service-body">
+                <h3 class="service-name">${service.title}</h3>
+                ${service.description ? `<p class="service-desc">${service.description.substring(0, 60)}${service.description.length > 60 ? '…' : ''}</p>` : ''}
+                <div style="display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;">
+                  <span class="service-price">${price} DA</span>
+                  ${oldPrice ? `<span class="service-old-price">${oldPrice} DA</span>` : ''}
+                  ${service.duration ? `<span class="service-duration">⏱ ${service.duration}</span>` : ''}
+                </div>
+                <a href="https://wa.me/213781088061?text=${waText}" target="_blank" rel="noopener noreferrer" class="btn btn-wa btn-sm" style="width:100%;justify-content:center;">
+                  Réserver →
+                </a>
+              </div>
+            </div>`;
+        });
+
+        // Re-observe new cards for reveal animation
+        document.querySelectorAll('.service-card.reveal:not(.visible)').forEach(el => revealObserver.observe(el));
+
+        // Update Google rating if available
+        if (data.settings) {
+          const ratingKey = Object.keys(data.settings).find(k => k.includes('rating'));
+          if (ratingKey) {
+            document.querySelectorAll('.rating-num').forEach(el => el.textContent = data.settings[ratingKey] + '/5');
+          }
+        }
+
+      } catch (err) {
+        console.info('API non disponible, utilisation des prix par défaut.');
+      }
+    }
+
+    // Run on load
+    loadServicesFromAPI();
+
+    /* ---- Counter animation for stats ---- */
+    function animateCounter(el, target, duration = 1500) {
+      const start = performance.now();
+      const startVal = 0;
+
+      function step(timestamp) {
+        const elapsed = timestamp - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // ease out
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = Math.round(startVal + (target - startVal) * eased);
+        el.textContent = (el.dataset.prefix || '') + value + (el.dataset.suffix || '');
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    // Trigger counters when about section is visible
+    const statNums = document.querySelectorAll('.stat-num');
+    const counterObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Simple animation for the "+5" stat
+          const el = entry.target;
+          const text = el.textContent;
+          if (text.startsWith('+')) {
+            const num = parseInt(text.replace('+', ''));
+            let count = 0;
+            const timer = setInterval(() => {
+              count++;
+              el.textContent = '+' + count;
+              if (count >= num) clearInterval(timer);
+            }, 200);
+          }
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    statNums.forEach(el => counterObserver.observe(el));
+  </script>
+</body>
+</html>

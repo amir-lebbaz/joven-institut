@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOVEN Institut — Espace Administration</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/x-icon" href="/media/favicon.ico">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --bg-cream: #FDF9F7;
+      --bg-card: #FFFFFF;
+      --primary: #944057;
+      --primary-dark: #6C2237;
+      --primary-light: #FBEFF2;
+      --gold: #C29355;
+      --gold-dark: #9E743A;
+      --gold-light: #F7EFE5;
+      --text-main: #2A1D20;
+      --text-muted: #6E5C62;
+      --border: #EEDCD9;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 4px 15px rgba(148, 64, 87, 0.05);
+      --shadow-md: 0 10px 30px rgba(148, 64, 87, 0.08);
+      --shadow-lg: 0 20px 45px rgba(148, 64, 87, 0.12);
+      --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-ar: 'Cairo', system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Auth Gate Modal */
+    #authModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 15, 20, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-card {
+      background: #FFFFFF;
+      max-width: 420px;
+      width: 100%;
+      border-radius: var(--radius-lg);
+      padding: 36px 30px;
+      text-align: center;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+      border: 1px solid rgba(194, 147, 85, 0.3);
+      position: relative;
+    }
+
+    .auth-logo {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      color: var(--primary);
+      letter-spacing: 4px;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .auth-subtitle {
+      font-size: 0.85rem;
+      color: var(--gold-dark);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      font-weight: 600;
+    }
+
+    .auth-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 1.6rem;
+    }
+
+    .auth-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .auth-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.25s ease;
+      background: #FAFAFA;
+    }
+
+    .form-input:focus {
+      background: #FFF;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(148, 64, 87, 0.15);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #FFF;
+      width: 100%;
+      box-shadow: 0 8px 20px rgba(148, 64, 87, 0.25);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--gold-light);
+      color: var(--gold-dark);
+      border: 1px solid rgba(194, 147, 85, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: #F0E3D3;
+    }
+
+    .btn-danger {
+      background: #FFECEE;
+      color: #D32F2F;
+      border: 1px solid #FFCDD2;
+    }
+
+    .btn-danger:hover {
+      background: #FFCDD2;
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.82rem;
+      border-radius: 6px;
+    }
+
+    /* Dashboard Header */
+    .admin-header {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 2px;
+    }
+
+    .brand-badge {
+      font-size: 0.72rem;
+      background: var(--gold-light);
+      color: var(--gold-dark);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border: 1px solid rgba(194, 147, 85, 0.3);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Tabs */
+    .admin-nav {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+      padding: 0 24px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      padding: 16px 20px;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--primary);
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    /* Main Container */
+    .main-content {
+      max-width: 1200px;
+      width: 100%;
+      margin: 24px auto;
+      padding: 0 20px;
+      flex: 1;
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .pane-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .pane-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pane-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* Card Grids */
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .data-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s ease;
+    }
+
+    .data-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      border-color: rgba(148, 64, 87, 0.3);
+    }
+
+    .card-thumb {
+      height: 180px;
+      position: relative;
+      background: #F0ECE9;
+      overflow: hidden;
+    }
+
+    .card-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(148, 64, 87, 0.9);
+      color: #FFF;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      backdrop-filter: blur(4px);
+    }
+
+    .card-body {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .card-title-ar {
+      font-family: var(--font-ar);
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-bottom: 14px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+    }
+
+    .card-price {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .card-old-price {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 0.85rem;
+      margin-right: 6px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    /* Modal Form Overlay */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 15, 20, 0.65);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #FFFFFF;
+      max-width: 580px;
+      width: 100%;
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-lg);
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-header h3 {
+      font-size: 1.25rem;
+      color: var(--text-main);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      line-height: 1;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    textarea.form-input {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #2A1D20;
+      color: #FFF;
+      padding: 14px 22px;
+      border-radius: var(--radius-md);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      z-index: 999999;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.92rem;
+      border-left: 4px solid var(--gold);
+    }
+
+    #toast.show {
+      display: flex;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Gallery Grid in Admin */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .gallery-card {
+      background: #FFF;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-thumb {
+      height: 180px;
+      width: 100%;
+      background: #EEE;
+    }
+
+    .gallery-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-card-body {
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .gallery-card-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 640px) {
+      .admin-header {
+        padding: 12px 16px;
+      }
+      .brand-title {
+        font-size: 1.3rem;
+      }
+      .admin-nav {
+        padding: 0 12px;
+      }
+      .tab-btn {
+        padding: 12px 14px;
+        font-size: 0.88rem;
+      }
+      .form-grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .modal-content {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- AUTHENTICATION GATE MODAL -->
+  <div id="authModal">
+    <div class="auth-card">
+      <div class="auth-icon">🔐</div>
+      <div class="auth-logo">JOVEN</div>
+      <div class="auth-subtitle">Espace Privé • لوحة التحكم</div>
+      <h3>Accès Propriétaire</h3>
+      <p>Veuillez entrer le mot de passe secret pour gérer les soins, tarifs et photos de l'institut.</p>
+      
+      <form id="authForm" onsubmit="handleAuth(event)">
+        <div class="form-group">
+          <label for="adminPass">Mot de passe / كلمة السر</label>
+          <input type="password" id="adminPass" class="form-input" placeholder="••••••••" required autofocus>
+        </div>
+        <p id="authError" style="color: #D32F2F; font-size: 0.85rem; margin-bottom: 12px; display: none;">Mot de passe incorrect / كلمة السر غير صحيحة</p>
+        <button type="submit" class="btn btn-primary" id="loginBtn">Connexion • دخول</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADMIN HEADER -->
+  <header class="admin-header">
+    <div class="brand-wrap">
+      <div class="brand-title">JOVEN</div>
+      <span class="brand-badge">Admin Studio</span>
+    </div>
+    <div class="header-actions">
+      <a href="/" target="_blank" class="btn btn-secondary btn-sm">
+        <span>🌐</span> Voir le site en direct
+      </a>
+      <button onclick="handleLogout()" class="btn btn-danger btn-sm">
+        <span>🚪</span> Déconnexion
+      </button>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <nav class="admin-nav">
+    <button class="tab-btn active" onclick="switchTab('services')">
+      <span>💆‍♀️</span> Nos Soins & Tarifs (الخدمات والأسعار)
+    </button>
+    <button class="tab-btn" onclick="switchTab('offers')">
+      <span>🎁</span> Offres & Forfaits (العروض الترويجية)
+    </button>
+    <button class="tab-btn" onclick="switchTab('gallery')">
+      <span>📸</span> Galerie Photos (معرض الصور)
+    </button>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- TAB 1: SERVICES -->
+    <section id="pane-services" class="tab-pane active">
+      <div class="pane-header">
+        <div>
+          <h2 class="pane-title">💆‍♀️ Catalogue des Soins & Tarifs</h2>
+          <p class="pane-subtitle">Gérez en direct les soins affichés sur le site, leurs tarifs en Dinars et leur description.</p>
+        </div>
+        <button class="btn btn-primary" style="width: auto;" onclick="openServiceModal()">
+          <span>➕</span> Nouveau Soin (إضافة خدمة)
+        </button>
+      </div>
+
+      <div class="data-grid" id="servicesGrid">
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Chargement des soins depuis Supabase...</p>
+      </div>
+    </section>
+
+    <!-- TAB 2: OFFERS -->
+    <section id="pane-offers" class="tab-pane">
+      <div class="pane-header">
+        <div>
+          <h2 class="pane-title">🎁 Offres Spéciales & Forfaits Promos</h2>
+          <p class="pane-subtitle">Activez des promotions temporaires ou des packs VIP (ex: Pack Mariée, Duo Hydrafacial).</p>
+        </div>
+        <button class="btn btn-primary" style="width: auto;" onclick="openOfferModal()">
+          <span>➕</span> Nouvelle Offre (إضافة عرض)
+        </button>
+      </div>
+
+      <div class="data-grid" id="offersGrid">
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Chargement des offres depuis Supabase...</p>
+      </div>
+    </section>
+
+    <!-- TAB 3: GALLERY -->
+    <section id="pane-gallery" class="tab-pane">
+      <div class="pane-header">
+        <div>
+          <h2 class="pane-title">📸 Galerie Photos de l'Institut</h2>
+          <p class="pane-subtitle">Ajoutez de nouvelles photos réelles de cabines, résultats avant/après et soins.</p>
+        </div>
+        <button class="btn btn-primary" style="width: auto;" onclick="openGalleryModal()">
+          <span>➕</span> Ajouter une Photo (إضافة صورة)
+        </button>
+      </div>
+
+      <div class="gallery-grid" id="galleryGrid">
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Chargement des photos...</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SERVICE MODAL -->
+  <div class="modal-overlay" id="serviceModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="serviceModalTitle">Ajouter un Soin</h3>
+        <button class="modal-close" onclick="closeServiceModal()">&times;</button>
+      </div>
+      <form id="serviceForm" onsubmit="saveService(event)">
+        <input type="hidden" id="serviceId">
+        
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Nom du Soin (Français) *</label>
+            <input type="text" id="serviceTitle" class="form-input" placeholder="ex: Hydrafacial Prestige" required>
+          </div>
+          <div class="form-group">
+            <label>Nom en Arabe (العربية)</label>
+            <input type="text" id="serviceTitleAr" class="form-input" placeholder="مثال: جلسة هايدرافيشل برستيج" dir="rtl">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Catégorie *</label>
+            <select id="serviceCategory" class="form-input" required>
+              <option value="soins-visage">Soins Visage & Peau</option>
+              <option value="beaute-mains-pieds">Mains, Pieds & Onglerie</option>
+              <option value="regard">Regard, Cils & Sourcils</option>
+              <option value="soins-capillaires">Cheveux & Head Spa</option>
+              <option value="packs">Packs & Forfaits</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Durée estimée *</label>
+            <input type="text" id="serviceDuration" class="form-input" placeholder="ex: 60 min, 90 min" required>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Tarif (DZD) *</label>
+            <input type="text" id="servicePrice" class="form-input" placeholder="ex: 8,500 DA" required>
+          </div>
+          <div class="form-group">
+            <label>Ordre d'affichage</label>
+            <input type="number" id="serviceOrder" class="form-input" value="1" min="1">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Photo du soin (Fichier ou URL)</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="serviceImageUrl" class="form-input" placeholder="media/hydra_after.jpg ou https://...">
+            <label class="btn btn-secondary btn-sm" style="white-space: nowrap; cursor: pointer;">
+              <span>📁 Parcourir</span>
+              <input type="file" id="serviceFile" accept="image/*" style="display: none;" onchange="handleFileUpload(this, 'serviceImageUrl')">
+            </label>
+          </div>
+          <small style="color: var(--text-muted); font-size: 0.78rem;">Vous pouvez sélectionner une image locale ou coller un lien direct.</small>
+        </div>
+
+        <div class="form-group">
+          <label>Description (Français)</label>
+          <textarea id="serviceDesc" class="form-input" placeholder="Détails du soin, étapes, bénéfices..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Description en Arabe (العربية)</label>
+          <textarea id="serviceDescAr" class="form-input" dir="rtl" placeholder="تفاصيل الجلسة، المراحل والنتائج..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeServiceModal()">Annuler</button>
+          <button type="submit" class="btn btn-primary" style="flex: 1;">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- OFFER MODAL -->
+  <div class="modal-overlay" id="offerModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="offerModalTitle">Ajouter une Offre Spéciale</h3>
+        <button class="modal-close" onclick="closeOfferModal()">&times;</button>
+      </div>
+      <form id="offerForm" onsubmit="saveOffer(event)">
+        <input type="hidden" id="offerId">
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Titre de l'Offre (Français) *</label>
+            <input type="text" id="offerTitle" class="form-input" placeholder="ex: Duo Hydrafacial + Peeling" required>
+          </div>
+          <div class="form-group">
+            <label>Titre en Arabe (العربية)</label>
+            <input type="text" id="offerTitleAr" class="form-input" placeholder="مثال: باقة النضارة الفورية" dir="rtl">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Badge Promo (Français)</label>
+            <input type="text" id="offerBadge" class="form-input" placeholder="ex: -20% Promo, Best Seller">
+          </div>
+          <div class="form-group">
+            <label>Badge en Arabe (العربية)</label>
+            <input type="text" id="offerBadgeAr" class="form-input" placeholder="مثال: تخفيض 20%" dir="rtl">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Ancien Prix (barré)</label>
+            <input type="text" id="offerOldPrice" class="form-input" placeholder="ex: 16,000 DA">
+          </div>
+          <div class="form-group">
+            <label>Nouveau Prix Promo *</label>
+            <input type="text" id="offerNewPrice" class="form-input" placeholder="ex: 13,000 DA" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Photo de l'offre (Fichier ou URL)</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="offerImageUrl" class="form-input" placeholder="media/hydra_after.jpg ou lien web">
+            <label class="btn btn-secondary btn-sm" style="white-space: nowrap; cursor: pointer;">
+              <span>📁 Parcourir</span>
+              <input type="file" id="offerFile" accept="image/*" style="display: none;" onchange="handleFileUpload(this, 'offerImageUrl')">
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description (Français)</label>
+          <textarea id="offerDesc" class="form-input" placeholder="Ce qui est inclus dans le forfait..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Description en Arabe (العربية)</label>
+          <textarea id="offerDescAr" class="form-input" dir="rtl" placeholder="تفاصيل العرض الترويجي والباقة..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeOfferModal()">Annuler</button>
+          <button type="submit" class="btn btn-primary" style="flex: 1;">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- GALLERY MODAL -->
+  <div class="modal-overlay" id="galleryModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Ajouter une Photo à la Galerie</h3>
+        <button class="modal-close" onclick="closeGalleryModal()">&times;</button>
+      </div>
+      <form id="galleryForm" onsubmit="saveGallery(event)">
+        <div class="form-group">
+          <label>Titre / Légende *</label>
+          <input type="text" id="galTitle" class="form-input" placeholder="ex: Espace manucure & nail art" required>
+        </div>
+
+        <div class="form-group">
+          <label>Catégorie</label>
+          <select id="galCategory" class="form-input">
+            <option value="salon">Espaces de l'Institut</option>
+            <option value="soins">Soins & Traitements</option>
+            <option value="avant-apres">Résultats Avant/Après</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Image (Fichier ou URL) *</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="galImageUrl" class="form-input" placeholder="media/callus_after.jpg ou URL..." required>
+            <label class="btn btn-secondary btn-sm" style="white-space: nowrap; cursor: pointer;">
+              <span>📁 Parcourir</span>
+              <input type="file" id="galFile" accept="image/*" style="display: none;" onchange="handleFileUpload(this, 'galImageUrl')">
+            </label>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeGalleryModal()">Annuler</button>
+          <button type="submit" class="btn btn-primary" style="flex: 1;">Publier la Photo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast">
+    <span id="toastIcon">✨</span>
+    <span id="toastMsg">Opération réussie</span>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // Supabase Configuration
+    const SUPABASE_URL = 'https://mtuhuzmyhbemdfsbyhpf.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dWh1em15aGJlbWRmc2J5aHBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5MjIxNDAsImV4cCI6MjA5MjQ5ODE0MH0.Pip_Y_FfjJvnOHxnAMNUlHMBLkGefVxH2dVMsXaIQ08';
+    
+    let supabaseClient = null;
+    try {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    } catch (e) {
+      console.warn('Supabase init warning:', e);
+    }
+
+    // State
+    let servicesData = [];
+    let offersData = [];
+    let galleryData = [];
+
+    // Check Auth on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const isAuth = sessionStorage.getItem('joven_admin_auth');
+      if (isAuth === 'true') {
+        document.getElementById('authModal').style.display = 'none';
+        loadAllData();
+      } else {
+        document.getElementById('authModal').style.display = 'flex';
+      }
+    });
+
+    async function handleAuth(e) {
+      e.preventDefault();
+      const inputPass = document.getElementById('adminPass').value.trim();
+      const errEl = document.getElementById('authError');
+      const btn = document.getElementById('loginBtn');
+
+      btn.disabled = true;
+      btn.innerText = 'Vérification...';
+
+      let valid = false;
+      try {
+        if (supabaseClient) {
+          const { data, error } = await supabaseClient
+            .from('admin_config')
+            .select('value')
+            .eq('key', 'admin_password')
+            .single();
+          
+          if (!error && data && data.value) {
+            valid = (inputPass === data.value);
+          } else {
+            valid = (inputPass === 'joven2026');
+          }
+        } else {
+          valid = (inputPass === 'joven2026');
+        }
+      } catch (err) {
+        console.warn('Auth check error, using fallback:', err);
+        valid = (inputPass === 'joven2026');
+      }
+
+      btn.disabled = false;
+      btn.innerText = 'Connexion • دخول';
+
+      if (valid) {
+        sessionStorage.setItem('joven_admin_auth', 'true');
+        document.getElementById('authModal').style.display = 'none';
+        errEl.style.display = 'none';
+        showToast('Connexion réussie ! Bienvenue dans votre studio.');
+        loadAllData();
+      } else {
+        errEl.style.display = 'block';
+        document.getElementById('adminPass').focus();
+      }
+    }
+
+    function handleLogout() {
+      if (confirm('Voulez-vous vraiment vous déconnecter ? / هل تريدين تسجيل الخروج؟')) {
+        sessionStorage.removeItem('joven_admin_auth');
+        window.location.reload();
+      }
+    }
+
+    function switchTab(tab, btnEl) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+
+      if (btnEl) {
+        btnEl.classList.add('active');
+      } else if (window.event && window.event.currentTarget) {
+        window.event.currentTarget.classList.add('active');
+      } else {
+        const defaultBtn = document.querySelector(`.tab-btn[onclick*="${tab}"]`);
+        if (defaultBtn) defaultBtn.classList.add('active');
+      }
+      const pane = document.getElementById(`pane-${tab}`);
+      if (pane) pane.classList.add('active');
+    }
+
+    function showToast(msg, icon = '✨') {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastIcon').innerText = icon;
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    // Direct Image Upload to Supabase Storage
+    async function handleFileUpload(inputEl, targetInputId) {
+      const file = inputEl.files[0];
+      if (!file) return;
+
+      showToast('Téléversement de la photo en cours...', '⏳');
+
+      try {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
+        const filePath = `uploads/${fileName}`;
+
+        if (supabaseClient) {
+          const { data, error } = await supabaseClient.storage
+            .from('joven-media')
+            .upload(filePath, file);
+
+          if (error) {
+            throw error;
+          }
+
+          const { data: pubData } = supabaseClient.storage
+            .from('joven-media')
+            .getPublicUrl(filePath);
+
+          document.getElementById(targetInputId).value = pubData.publicUrl;
+          showToast('Photo uploadée avec succès sur Supabase !', '✅');
+        } else {
+          // Fallback to data URL
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            document.getElementById(targetInputId).value = e.target.result;
+            showToast('Photo prête !', '✅');
+          };
+          reader.readAsDataURL(file);
+        }
+      } catch (err) {
+        console.error('Upload failed:', err);
+        showToast('Échec de l\'envoi de la photo: ' + err.message, '⚠️');
+      }
+    }
+
+    // Load Data
+    async function loadAllData() {
+      await Promise.all([loadServices(), loadOffers(), loadGallery()]);
+    }
+
+    // SERVICES CRUD
+    async function loadServices() {
+      const container = document.getElementById('servicesGrid');
+      if (!supabaseClient) return;
+
+      const { data, error } = await supabaseClient
+        .from('services')
+        .select('*')
+        .order('display_order', { ascending: true });
+
+      if (error) {
+        container.innerHTML = `<p style="color: red;">Erreur: ${error.message}</p>`;
+        return;
+      }
+
+      servicesData = data || [];
+      if (servicesData.length === 0) {
+        container.innerHTML = `<p style="color: var(--text-muted);">Aucun soin trouvé. Cliquez sur "Nouveau Soin" pour en ajouter un.</p>`;
+        return;
+      }
+
+      container.innerHTML = servicesData.map(s => `
+        <div class="data-card">
+          <div class="card-thumb">
+            <img src="${s.image_url || 'media/hydra_after.jpg'}" alt="${s.title}" onerror="this.src='media/hydra_after.jpg'">
+            <span class="card-badge">${s.category || 'Soin'}</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">${s.title}</h3>
+            ${s.title_ar ? `<div class="card-title-ar">${s.title_ar}</div>` : ''}
+            <p class="card-desc">${s.description || s.description_ar || 'Soin expert JOVEN Institut.'}</p>
+            <div class="card-meta">
+              <span class="card-price">${s.price}</span>
+              <span style="font-size: 0.85rem; color: var(--text-muted);">⏱ ${s.duration || '60 min'}</span>
+            </div>
+            <div class="card-actions">
+              <button onclick="editService('${s.id}')" class="btn btn-secondary btn-sm" style="flex: 1;">✏️ Modifier</button>
+              <button onclick="deleteService('${s.id}', '${s.title.replace(/'/g, "\\'")}')" class="btn btn-danger btn-sm">🗑️ Supprimer</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openServiceModal() {
+      document.getElementById('serviceForm').reset();
+      document.getElementById('serviceId').value = '';
+      document.getElementById('serviceModalTitle').innerText = 'Ajouter un Soin (إضافة خدمة)';
+      document.getElementById('serviceModal').classList.add('open');
+    }
+
+    function closeServiceModal() {
+      document.getElementById('serviceModal').classList.remove('open');
+    }
+
+    function editService(id) {
+      const s = servicesData.find(item => item.id === id);
+      if (!s) return;
+
+      document.getElementById('serviceId').value = s.id;
+      document.getElementById('serviceTitle').value = s.title || '';
+      document.getElementById('serviceTitleAr').value = s.title_ar || '';
+      document.getElementById('serviceCategory').value = s.category || 'soins-visage';
+      document.getElementById('serviceDuration').value = s.duration || '';
+      document.getElementById('servicePrice').value = s.price || '';
+      document.getElementById('serviceOrder').value = s.display_order || 1;
+      document.getElementById('serviceImageUrl').value = s.image_url || '';
+      document.getElementById('serviceDesc').value = s.description || '';
+      document.getElementById('serviceDescAr').value = s.description_ar || '';
+
+      document.getElementById('serviceModalTitle').innerText = 'Modifier le Soin (تعديل الخدمة)';
+      document.getElementById('serviceModal').classList.add('open');
+    }
+
+    async function saveService(e) {
+      e.preventDefault();
+      const id = document.getElementById('serviceId').value;
+      const title = document.getElementById('serviceTitle').value.trim();
+      const title_ar = document.getElementById('serviceTitleAr').value.trim();
+      const category = document.getElementById('serviceCategory').value;
+      const duration = document.getElementById('serviceDuration').value.trim();
+      const price = document.getElementById('servicePrice').value.trim();
+      const display_order = parseInt(document.getElementById('serviceOrder').value, 10) || 1;
+      const image_url = document.getElementById('serviceImageUrl').value.trim() || 'media/hydra_after.jpg';
+      const description = document.getElementById('serviceDesc').value.trim();
+      const description_ar = document.getElementById('serviceDescAr').value.trim();
+
+      const payload = {
+        title,
+        title_ar,
+        category,
+        duration,
+        price,
+        display_order,
+        image_url,
+        description,
+        description_ar,
+        is_active: true
+      };
+
+      try {
+        if (id) {
+          const { error } = await supabaseClient.from('services').update(payload).eq('id', id);
+          if (error) throw error;
+          showToast('Soin mis à jour avec succès !');
+        } else {
+          const { error } = await supabaseClient.from('services').insert([payload]);
+          if (error) throw error;
+          showToast('Nouveau soin ajouté au catalogue !');
+        }
+        closeServiceModal();
+        loadServices();
+      } catch (err) {
+        alert('Erreur: ' + err.message);
+      }
+    }
+
+    async function deleteService(id, title) {
+      if (!confirm(`Voulez-vous vraiment supprimer "${title}" ?\nهل أنتِ متأكدة من حذف هذه الخدمة نهائياً؟`)) return;
+
+      try {
+        const { error } = await supabaseClient.from('services').delete().eq('id', id);
+        if (error) throw error;
+        showToast('Soin supprimé !', '🗑️');
+        loadServices();
+      } catch (err) {
+        alert('Erreur: ' + err.message);
+      }
+    }
+
+    // OFFERS CRUD
+    async function loadOffers() {
+      const container = document.getElementById('offersGrid');
+      if (!supabaseClient) return;
+
+      const { data, error } = await supabaseClient
+        .from('offers')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        container.innerHTML = `<p style="color: red;">Erreur: ${error.message}</p>`;
+        return;
+      }
+
+      offersData = data || [];
+      if (offersData.length === 0) {
+        container.innerHTML = `<p style="color: var(--text-muted);">Aucune offre active actuellement. Cliquez sur "Nouvelle Offre" pour en créer une.</p>`;
+        return;
+      }
+
+      container.innerHTML = offersData.map(o => `
+        <div class="data-card">
+          <div class="card-thumb">
+            <img src="${o.image_url || 'media/hydra_after.jpg'}" alt="${o.title}" onerror="this.src='media/hydra_after.jpg'">
+            ${o.badge ? `<span class="card-badge">${o.badge}</span>` : ''}
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">${o.title}</h3>
+            ${o.title_ar ? `<div class="card-title-ar">${o.title_ar}</div>` : ''}
+            <p class="card-desc">${o.description || o.description_ar || 'Offre spéciale JOVEN.'}</p>
+            <div class="card-meta">
+              <div>
+                ${o.old_price ? `<span class="card-old-price">${o.old_price}</span>` : ''}
+                <span class="card-price">${o.new_price}</span>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button onclick="editOffer('${o.id}')" class="btn btn-secondary btn-sm" style="flex: 1;">✏️ Modifier</button>
+              <button onclick="deleteOffer('${o.id}', '${o.title.replace(/'/g, "\\'")}')" class="btn btn-danger btn-sm">🗑️ Supprimer</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openOfferModal() {
+      document.getElementById('offerForm').reset();
+      document.getElementById('offerId').value = '';
+      document.getElementById('offerModalTitle').innerText = 'Ajouter une Offre (إضافة عرض)';
+      document.getElementById('offerModal').classList.add('open');
+    }
+
+    function closeOfferModal() {
+      document.getElementById('offerModal').classList.remove('open');
+    }
+
+    function editOffer(id) {
+      const o = offersData.find(item => item.id === id);
+      if (!o) return;
+
+      document.getElementById('offerId').value = o.id;
+      document.getElementById('offerTitle').value = o.title || '';
+      document.getElementById('offerTitleAr').value = o.title_ar || '';
+      document.getElementById('offerBadge').value = o.badge || '';
+      document.getElementById('offerBadgeAr').value = o.badge_ar || '';
+      document.getElementById('offerOldPrice').value = o.old_price || '';
+      document.getElementById('offerNewPrice').value = o.new_price || '';
+      document.getElementById('offerImageUrl').value = o.image_url || '';
+      document.getElementById('offerDesc').value = o.description || '';
+      document.getElementById('offerDescAr').value = o.description_ar || '';
+
+      document.getElementById('offerModalTitle').innerText = 'Modifier l\'Offre (تعديل العرض)';
+      document.getElementById('offerModal').classList.add('open');
+    }
+
+    async function saveOffer(e) {
+      e.preventDefault();
+      const id = document.getElementById('offerId').value;
+      const title = document.getElementById('offerTitle').value.trim();
+      const title_ar = document.getElementById('offerTitleAr').value.trim();
+      const badge = document.getElementById('offerBadge').value.trim();
+      const badge_ar = document.getElementById('offerBadgeAr').value.trim();
+      const old_price = document.getElementById('offerOldPrice').value.trim();
+      const new_price = document.getElementById('offerNewPrice').value.trim();
+      const image_url = document.getElementById('offerImageUrl').value.trim() || 'media/hydra_after.jpg';
+      const description = document.getElementById('offerDesc').value.trim();
+      const description_ar = document.getElementById('offerDescAr').value.trim();
+
+      const payload = {
+        title,
+        title_ar,
+        badge,
+        badge_ar,
+        old_price,
+        new_price,
+        image_url,
+        description,
+        description_ar,
+        is_active: true
+      };
+
+      try {
+        if (id) {
+          const { error } = await supabaseClient.from('offers').update(payload).eq('id', id);
+          if (error) throw error;
+          showToast('Offre mise à jour avec succès !');
+        } else {
+          const { error } = await supabaseClient.from('offers').insert([payload]);
+          if (error) throw error;
+          showToast('Nouvelle offre publiée !');
+        }
+        closeOfferModal();
+        loadOffers();
+      } catch (err) {
+        alert('Erreur: ' + err.message);
+      }
+    }
+
+    async function deleteOffer(id, title) {
+      if (!confirm(`Supprimer l'offre "${title}" ?\nهل أنتِ متأكدة من حذف هذا العرض الترويجي؟`)) return;
+
+      try {
+        const { error } = await supabaseClient.from('offers').delete().eq('id', id);
+        if (error) throw error;
+        showToast('Offre supprimée !', '🗑️');
+        loadOffers();
+      } catch (err) {
+        alert('Erreur: ' + err.message);
+      }
+    }
+
+    // GALLERY CRUD
+    async function loadGallery() {
+      const container = document.getElementById('galleryGrid');
+      if (!supabaseClient) return;
+
+      const { data, error } = await supabaseClient
+        .from('gallery_images')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        container.innerHTML = `<p style="color: red;">Erreur: ${error.message}</p>`;
+        return;
+      }
+
+      galleryData = data || [];
+      if (galleryData.length === 0) {
+        container.innerHTML = `<p style="color: var(--text-muted);">Aucune image enregistrée. Cliquez sur "Ajouter une Photo".</p>`;
+        return;
+      }
+
+      container.innerHTML = galleryData.map(g => `
+        <div class="gallery-card">
+          <div class="gallery-thumb">
+            <img src="${g.image_url}" alt="${g.title || 'Photo JOVEN'}" onerror="this.src='media/salon_real_reception.jpg'">
+          </div>
+          <div class="gallery-card-body">
+            <div class="gallery-card-title">${g.title || 'Photo'}</div>
+            <button onclick="deleteGalleryItem('${g.id}')" class="btn btn-danger btn-sm" style="padding: 4px 8px;" title="Supprimer">🗑️</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openGalleryModal() {
+      document.getElementById('galleryForm').reset();
+      document.getElementById('galleryModal').classList.add('open');
+    }
+
+    function closeGalleryModal() {
+      document.getElementById('galleryModal').classList.remove('open');
+    }
+
+    async function saveGallery(e) {
+      e.preventDefault();
+      const title = document.getElementById('galTitle').value.trim();
+      const category = document.getElementById('galCategory').value;
+      const image_url = document.getElementById('galImageUrl').value.trim();
+
+      try {
+        const { error } = await supabaseClient.from('gallery_images').insert([{
+          title,
+          category,
+          image_url
+        }]);
+        if (error) throw error;
+        showToast('Photo ajoutée à la galerie !');
+        closeGalleryModal();
+        loadGallery();
+      } catch (err) {
+        alert('Erreur: ' + err.message);
+      }
+    }
+
+    async function deleteGalleryItem(id) {
+      if (!confirm('Supprimer cette photo de la galerie ?\nهل تريدين حذف هذه الصورة؟')) return;
+
+      try {
+        const { error } = await supabaseClient.from('gallery_images').delete().eq('id', id);
+        if (error) throw error;
+        showToast('Photo supprimée !', '🗑️');
+        loadGallery();
+      } catch (err) {
+        alert('Erreur: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>

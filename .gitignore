@@ -1,0 +1,11 @@
+public/media/reels/*.mp4
+public/media/authentic/video_callus_bestseller.mp4
+public/media/authentic/video_haute_frequence.mp4
+node_modules/
+.gemini/
+data/*.db-journal
+data/*.db-shm
+data/*.db-wal
+.env
+.DS_Store
+Thumbs.db

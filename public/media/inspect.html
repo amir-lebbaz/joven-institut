@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body { font-family: sans-serif; background: #222; color: #fff; padding: 20px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+.card { background: #333; padding: 5px; border-radius: 8px; text-align: center; }
+img { width: 100%; height: 260px; object-fit: cover; border-radius: 4px; }
+h3 { margin: 8px 0; font-size: 14px; }
+</style>
+</head>
+<body>
+<h1>Callus Samples</h1>
+<div class="grid" id="callusGrid"></div>
+
+<h1>Hydra Samples</h1>
+<div class="grid" id="hydraGrid"></div>
+
+<h1>Lash & Highlight Samples</h1>
+<div class="grid" id="otherGrid"></div>
+
+<script>
+const callusFiles = [
+  'callus1_01.jpg', 'callus1_02.jpg', 'callus1_03.jpg', 'callus1_04.jpg', 'callus1_05.jpg', 'callus1_06.jpg', 'callus1_07.jpg',
+  'callus2_02.jpg', 'callus2_05.jpg', 'callus2_10.jpg', 'callus2_15.jpg', 'callus2_20.jpg', 'callus2_25.jpg', 'callus2_30.jpg', 'callus2_35.jpg', 'callus2_40.jpg'
+];
+const hydraFiles = [
+  'hydra_02.jpg', 'hydra_05.jpg', 'hydra_10.jpg', 'hydra_15.jpg', 'hydra_20.jpg', 'hydra_25.jpg', 'hydra_30.jpg', 'hydra_35.jpg', 'hydra_40.jpg', 'hydra_45.jpg', 'hydra_50.jpg'
+];
+
+const cGrid = document.getElementById('callusGrid');
+callusFiles.forEach(f => {
+  cGrid.innerHTML += `<div class="card"><img src="/media/extracted_samples/${f}"><h3>${f}</h3></div>`;
+});
+
+const hGrid = document.getElementById('hydraGrid');
+hydraFiles.forEach(f => {
+  hGrid.innerHTML += `<div class="card"><img src="/media/extracted_samples/${f}"><h3>${f}</h3></div>`;
+});
+
+const oGrid = document.getElementById('otherGrid');
+const others = [
+  '/media/authentic/cils_Slide_01.jpg',
+  '/media/authentic/cils_Slide_07.jpg',
+  '/media/authentic/lash_lift.jpg'
+];
+others.forEach(f => {
+  oGrid.innerHTML += `<div class="card"><img src="${f}"><h3>${f}</h3></div>`;
+});
+</script>
+</body>
+</html>
