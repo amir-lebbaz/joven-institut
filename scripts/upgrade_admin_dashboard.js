@@ -1,0 +1,2074 @@
+const fs = require('fs');
+
+const adminHtml = `<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOVEN Institut — Studio Administration & Gestion Complète</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/x-icon" href="/media/favicon.ico">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    :root {
+      --bg-cream: #FDF9F7;
+      --bg-card: #FFFFFF;
+      --primary: #944057;
+      --primary-dark: #6C2237;
+      --primary-light: #FBEFF2;
+      --gold: #C29355;
+      --gold-dark: #9E743A;
+      --gold-light: #F7EFE5;
+      --text-main: #2A1D20;
+      --text-muted: #6E5C62;
+      --border: #EEDCD9;
+      --danger: #DC2626;
+      --danger-light: #FEE2E2;
+      --success: #16A34A;
+      --success-light: #DCFCE7;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 4px 15px rgba(148, 64, 87, 0.05);
+      --shadow-md: 0 10px 30px rgba(148, 64, 87, 0.08);
+      --shadow-lg: 0 20px 45px rgba(148, 64, 87, 0.12);
+      --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-ar: 'Cairo', system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Auth Gate Modal */
+    #authModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 15, 20, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-card {
+      background: #FFFFFF;
+      max-width: 440px;
+      width: 100%;
+      border-radius: var(--radius-lg);
+      padding: 36px 30px;
+      text-align: center;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+      border: 1px solid rgba(194, 147, 85, 0.35);
+      position: relative;
+    }
+
+    .auth-logo {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      color: var(--primary);
+      letter-spacing: 4px;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .auth-subtitle {
+      font-size: 0.85rem;
+      color: var(--gold-dark);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      font-weight: 600;
+    }
+
+    .auth-icon {
+      width: 58px;
+      height: 58px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 1.6rem;
+      border: 1px solid rgba(148, 64, 87, 0.2);
+    }
+
+    .auth-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .auth-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.25s ease;
+      background: #FAFAFA;
+    }
+
+    .form-input:focus {
+      background: #FFF;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(148, 64, 87, 0.12);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: none;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #FFFFFF;
+      box-shadow: 0 4px 15px rgba(148, 64, 87, 0.25);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 6px 20px rgba(148, 64, 87, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--gold-light);
+      color: var(--gold-dark);
+      border: 1px solid rgba(194, 147, 85, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: #F1E5D5;
+      color: #7A5524;
+    }
+
+    .btn-danger {
+      background: var(--danger-light);
+      color: var(--danger);
+      border: 1px solid rgba(220, 38, 38, 0.2);
+    }
+
+    .btn-danger:hover {
+      background: #FCA5A5;
+      color: #991B1B;
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.82rem;
+      border-radius: 6px;
+    }
+
+    /* Dashboard Header */
+    .admin-header {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 2px;
+    }
+
+    .brand-badge {
+      font-size: 0.72rem;
+      background: var(--gold-light);
+      color: var(--gold-dark);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border: 1px solid rgba(194, 147, 85, 0.3);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Tabs Navigation */
+    .admin-nav {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 6px;
+      padding: 0 24px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    .tab-btn {
+      padding: 16px 18px;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--primary);
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    /* Main Container */
+    .main-content {
+      max-width: 1240px;
+      width: 100%;
+      margin: 24px auto;
+      padding: 0 20px 60px;
+      flex: 1;
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .pane-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 14px;
+      background: #FFFFFF;
+      padding: 18px 24px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .pane-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pane-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Search & Filter Bar */
+    .search-filter-bar {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 240px;
+      padding: 10px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      outline: none;
+      background: #FFF;
+    }
+
+    /* Card Grids */
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .data-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s ease;
+    }
+
+    .data-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .card-thumb {
+      height: 190px;
+      position: relative;
+      background: #F3EBE8;
+      overflow: hidden;
+    }
+
+    .card-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .data-card:hover .card-thumb img {
+      transform: scale(1.04);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--primary);
+      color: #FFF;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .card-body {
+      padding: 18px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .card-title-ar {
+      font-family: var(--font-ar);
+      font-size: 0.95rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      line-height: 1.45;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+      margin-top: auto;
+    }
+
+    .card-price {
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--primary);
+    }
+
+    .card-old-price {
+      text-decoration: line-through;
+      color: #9CA3AF;
+      font-size: 0.88rem;
+      margin-right: 6px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    /* Gallery Grid in Admin */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .gallery-card {
+      background: #FFF;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+
+    .gallery-thumb {
+      height: 190px;
+      width: 100%;
+      background: #EEE;
+      position: relative;
+    }
+
+    .gallery-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-card-body {
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .gallery-card-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Comparisons Dual Grid */
+    .comparison-card {
+      background: #FFF;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .comparison-thumbs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: 170px;
+      position: relative;
+      background: #000;
+    }
+
+    .comparison-thumb-box {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .comparison-thumb-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .comparison-tag {
+      position: absolute;
+      bottom: 8px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #FFF;
+      background: rgba(0,0,0,0.65);
+    }
+
+    .comparison-tag.before { left: 8px; }
+    .comparison-tag.after { right: 8px; }
+
+    /* Settings Form Box */
+    .settings-box {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      max-width: 800px;
+    }
+
+    .settings-section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 10, 15, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #FFFFFF;
+      max-width: 620px;
+      width: 100%;
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-header h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    textarea.form-input {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* Image Upload Live Preview */
+    .upload-preview-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: var(--bg-cream);
+      border-radius: var(--radius-sm);
+      border: 1px dashed var(--border);
+    }
+
+    .upload-preview-thumb {
+      width: 50px;
+      height: 50px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #DDD;
+    }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #2A1D20;
+      color: #FFF;
+      padding: 14px 22px;
+      border-radius: var(--radius-md);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      z-index: 999999;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.92rem;
+      border-left: 4px solid var(--gold);
+    }
+
+    #toast.show {
+      display: flex;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 640px) {
+      .admin-header {
+        padding: 12px 16px;
+      }
+      .brand-title {
+        font-size: 1.3rem;
+      }
+      .admin-nav {
+        padding: 0 10px;
+      }
+      .tab-btn {
+        padding: 12px 12px;
+        font-size: 0.85rem;
+      }
+      .form-grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .modal-content {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- AUTHENTICATION GATE MODAL -->
+  <div id="authModal">
+    <div class="auth-card">
+      <div class="auth-icon">🔐</div>
+      <div class="auth-logo">JOVEN</div>
+      <div class="auth-subtitle">Espace Privé • لوحة التحكم الكاملة</div>
+      <h3>Accès Propriétaire</h3>
+      <p>Veuillez entrer le mot de passe secret pour gérer les soins, tarifs, promotions et photos du salon.</p>
+      
+      <form id="authForm" onsubmit="handleAuth(event)">
+        <div class="form-group">
+          <label for="adminPass">Mot de passe / كلمة السر</label>
+          <input type="password" id="adminPass" class="form-input" placeholder="••••••••" required autofocus>
+        </div>
+        <p id="authError" style="color: #D32F2F; font-size: 0.85rem; margin-bottom: 12px; display: none;">Mot de passe incorrect / كلمة السر غير صحيحة</p>
+        <button type="submit" class="btn btn-primary" id="loginBtn" style="width: 100%;">Connexion • دخول</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADMIN HEADER -->
+  <header class="admin-header">
+    <div class="brand-wrap">
+      <div class="brand-title">JOVEN</div>
+      <span class="brand-badge">Studio Manager</span>
+    </div>
+    <div class="header-actions">
+      <a href="/" target="_blank" class="btn btn-secondary btn-sm">
+        <span>🌐</span> Voir le site en direct
+      </a>
+      <button onclick="handleLogout()" class="btn btn-danger btn-sm">
+        <span>🚪</span> Déconnexion
+      </button>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <nav class="admin-nav">
+    <button class="tab-btn active" onclick="switchTab('services', this)">
+      <span>💆‍♀️</span> Nos Soins & Tarifs (الخدمات والأسعار)
+    </button>
+    <button class="tab-btn" onclick="switchTab('offers', this)">
+      <span>🎁</span> Offres & Forfaits (العروض الترويجية)
+    </button>
+    <button class="tab-btn" onclick="switchTab('gallery', this)">
+      <span>📸</span> Galerie Photos (معرض الصور)
+    </button>
+    <button class="tab-btn" onclick="switchTab('comparisons', this)">
+      <span>🔄</span> Avant / Après (المقارنات)
+    </button>
+    <button class="tab-btn" onclick="switchTab('settings', this)">
+      <span>⚙️</span> Paramètres & Visuels (إعدادات الصالون)
+    </button>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- TAB 1: SERVICES -->
+    <section id="pane-services" class="tab-pane active">
+      <div class="pane-header">
+        <div>
+          <h2 class="pane-title">💆‍♀️ Catalogue des Soins & Tarifs</h2>
+          <p class="pane-subtitle">Gérez en direct les soins, tarifs en Dinars, descriptions et photos de chaque soin.</p>
+        </div>
+        <button class="btn btn-primary" onclick="openServiceModal()">
+          <span>➕</span> Nouveau Soin (إضافة خدمة)
+        </button>
+      </div>
+
+      <div class="search-filter-bar">
+        <input type="text" id="serviceSearch" class="search-input" placeholder="🔍 Rechercher un soin par nom... / ابحثي عن خدمة..." oninput="filterServicesList()">
+        <select id="serviceCategoryFilter" class="search-input" style="max-width: 200px;" onchange="filterServicesList()">
+          <option value="all">Toutes les catégories</option>
+          <option value="soins-visage">Visage & Hydrafacial</option>
+          <option value="beaute-mains-pieds">Mains & Pieds</option>
+          <option value="regard">Regard & Cils</option>
+          <option value="soins-capillaires">Cheveux & Head Spa</option>
+          <option value="packs">Packs & Forfaits</option>
+        </select>
+      </div>
+
+      <div class="data-grid" id="servicesGrid">
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Chargement des soins depuis Supabase...</p>
+      </div>
+    </section>
+
+    <!-- TAB 2: OFFERS -->
+    <section id="pane-offers" class="tab-pane">
+      <div class="pane-header">
+        <div>
+          <h2 class="pane-title">🎁 Offres Spéciales & Forfaits Promos</h2>
+          <p class="pane-subtitle">Publiez des réductions temporaires, des packs VIP ou des forfaits mariée.</p>
+        </div>
+        <button class="btn btn-primary" onclick="openOfferModal()">
+          <span>➕</span> Nouvelle Offre (إضافة عرض)
+        </button>
+      </div>
+
+      <div class="data-grid" id="offersGrid">
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Chargement des offres depuis Supabase...</p>
+      </div>
+    </section>
+
+    <!-- TAB 3: GALLERY -->
+    <section id="pane-gallery" class="tab-pane">
+      <div class="pane-header">
+        <div>
+          <h2 class="pane-title">📸 Galerie Photos de l'Institut</h2>
+          <p class="pane-subtitle">Ajoutez de nouvelles photos réelles de vos cabines, soins et ambiance à Hydra.</p>
+        </div>
+        <button class="btn btn-primary" onclick="openGalleryModal()">
+          <span>➕</span> Ajouter une Photo (إضافة صورة)
+        </button>
+      </div>
+
+      <div class="gallery-grid" id="galleryGrid">
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Chargement des photos...</p>
+      </div>
+    </section>
+
+    <!-- TAB 4: COMPARISONS (BEFORE / AFTER) -->
+    <section id="pane-comparisons" class="tab-pane">
+      <div class="pane-header">
+        <div>
+          <h2 class="pane-title">🔄 Résultats Avant / Après (Slider Interactif)</h2>
+          <p class="pane-subtitle">Contrôlez les cas de comparaison présentés dans le slider interactif du site.</p>
+        </div>
+        <button class="btn btn-primary" onclick="openComparisonModal()">
+          <span>➕</span> Nouveau Cas Avant/Après (إضافة حالة مقارنة)
+        </button>
+      </div>
+
+      <div class="data-grid" id="comparisonsGrid">
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Chargement des résultats avant/après...</p>
+      </div>
+    </section>
+
+    <!-- TAB 5: SETTINGS & VISUALS -->
+    <section id="pane-settings" class="tab-pane">
+      <div class="pane-header">
+        <div>
+          <h2 class="pane-title">⚙️ Paramètres du Salon & Visuels Clés</h2>
+          <p class="pane-subtitle">Mettez à jour la vidéo de la page d'accueil, le numéro WhatsApp et les coordonnées de l'institut.</p>
+        </div>
+        <button class="btn btn-primary" onclick="saveSettings()">
+          <span>💾</span> Sauvegarder les Paramètres
+        </button>
+      </div>
+
+      <div class="settings-box">
+        <form id="settingsForm" onsubmit="event.preventDefault(); saveSettings();">
+          <div class="settings-section-title">🎬 Vidéo & Image d'Accueil (Hero Showcase)</div>
+          
+          <div class="form-group">
+            <label>Lien Vidéo de l'Accueil (MP4 Réel)</label>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="setHeroVideo" class="form-input" placeholder="https://...">
+              <label class="btn btn-secondary btn-sm" style="white-space: nowrap; cursor: pointer;">
+                <span>📁 Upload Vidéo</span>
+                <input type="file" accept="video/mp4" style="display: none;" onchange="handleFileUpload(this, 'setHeroVideo', 'video')">
+              </label>
+            </div>
+            <small style="color: var(--text-muted); font-size: 0.78rem;">Vidéo verticale (format Reel 9:16) affichée dans le cadre doré à l'accueil.</small>
+          </div>
+
+          <div class="form-group">
+            <label>Image de Couverture / Poster de la Vidéo</label>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="setHeroPoster" class="form-input" placeholder="media/authentic/hero_interior.jpg">
+              <label class="btn btn-secondary btn-sm" style="white-space: nowrap; cursor: pointer;">
+                <span>📁 Upload Image</span>
+                <input type="file" accept="image/*" style="display: none;" onchange="handleFileUpload(this, 'setHeroPoster', 'image')">
+              </label>
+            </div>
+          </div>
+
+          <div class="settings-section-title" style="margin-top: 28px;">📞 Coordonnées & Réservations WhatsApp</div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Numéro WhatsApp de Réservation (International sans +)</label>
+              <input type="text" id="setWhatsapp" class="form-input" placeholder="213781088061">
+            </div>
+            <div class="form-group">
+              <label>Affichage du Téléphone (Format élégant)</label>
+              <input type="text" id="setPhoneDisplay" class="form-input" placeholder="07 81 08 80 61">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Adresse Physique du Salon</label>
+            <input type="text" id="setAddress" class="form-input" placeholder="14 Rue Ahmed Ouaked, Hydra, Alger">
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Horaires d'Ouverture</label>
+              <input type="text" id="setHours" class="form-input" placeholder="Du Lundi au Samedi (9h - 17h)">
+            </div>
+            <div class="form-group">
+              <label>Lien Instagram Officiel</label>
+              <input type="text" id="setInstagram" class="form-input" placeholder="https://www.instagram.com/joven_institut/">
+            </div>
+          </div>
+
+          <div class="settings-section-title" style="margin-top: 28px;">🔒 Sécurité & Mot de Passe Admin</div>
+
+          <div class="form-group">
+            <label>Nouveau Mot de Passe de la Page Admin</label>
+            <input type="password" id="setNewPassword" class="form-input" placeholder="Laisser vide pour ne pas modifier">
+            <small style="color: var(--text-muted); font-size: 0.78rem;">Le mot de passe actuel par défaut est <code>joven2026</code>.</small>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              <span>💾</span> Enregistrer Toutes les Modifications • حفظ التعديلات
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: SERVICE -->
+  <div class="modal-overlay" id="serviceModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="serviceModalTitle">Ajouter un Soin</h3>
+        <button class="modal-close" onclick="closeServiceModal()">&times;</button>
+      </div>
+      <form id="serviceForm" onsubmit="saveService(event)">
+        <input type="hidden" id="serviceId">
+        
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Nom du Soin (Français) *</label>
+            <input type="text" id="serviceTitle" class="form-input" placeholder="ex: Hydrafacial Prestige" required>
+          </div>
+          <div class="form-group">
+            <label>Nom en Arabe (العربية)</label>
+            <input type="text" id="serviceTitleAr" class="form-input" placeholder="مثال: جلسة هايدرافيشل برستيج" dir="rtl">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Catégorie *</label>
+            <select id="serviceCategory" class="form-input" required>
+              <option value="soins-visage">Soins Visage & Peau</option>
+              <option value="beaute-mains-pieds">Mains, Pieds & Onglerie</option>
+              <option value="regard">Regard, Cils & Sourcils</option>
+              <option value="soins-capillaires">Cheveux & Head Spa</option>
+              <option value="packs">Packs & Forfaits</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Durée estimée *</label>
+            <input type="text" id="serviceDuration" class="form-input" placeholder="ex: 60 min, 90 min" required>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Tarif (DZD) *</label>
+            <input type="text" id="servicePrice" class="form-input" placeholder="ex: 8,500 DA" required>
+          </div>
+          <div class="form-group">
+            <label>Ordre d'affichage</label>
+            <input type="number" id="serviceOrder" class="form-input" value="1" min="1">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Photo du soin (Téléversez depuis votre téléphone ou PC)</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="serviceImageUrl" class="form-input" placeholder="media/hydra_after.jpg ou https://..." oninput="updatePreview('serviceImageUrl', 'servicePreviewImg')">
+            <label class="btn btn-secondary btn-sm" style="white-space: nowrap; cursor: pointer;">
+              <span>📁 Choisir une photo</span>
+              <input type="file" accept="image/*" style="display: none;" onchange="handleFileUpload(this, 'serviceImageUrl', 'image', 'servicePreviewImg')">
+            </label>
+          </div>
+          <div class="upload-preview-box" id="servicePreviewBox" style="display: none;">
+            <img id="servicePreviewImg" class="upload-preview-thumb" src="" alt="Aperçu">
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Aperçu de la photo sélectionnée</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description (Français)</label>
+          <textarea id="serviceDesc" class="form-input" placeholder="Détails du soin, étapes, bénéfices..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Description en Arabe (العربية)</label>
+          <textarea id="serviceDescAr" class="form-input" dir="rtl" placeholder="تفاصيل الجلسة، المراحل والنتائج..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeServiceModal()">Annuler</button>
+          <button type="submit" class="btn btn-primary" style="flex: 1;">Enregistrer • حفظ</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: OFFER -->
+  <div class="modal-overlay" id="offerModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="offerModalTitle">Ajouter une Offre Spéciale</h3>
+        <button class="modal-close" onclick="closeOfferModal()">&times;</button>
+      </div>
+      <form id="offerForm" onsubmit="saveOffer(event)">
+        <input type="hidden" id="offerId">
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Titre de l'Offre (Français) *</label>
+            <input type="text" id="offerTitle" class="form-input" placeholder="ex: Duo Hydrafacial + Peeling" required>
+          </div>
+          <div class="form-group">
+            <label>Titre en Arabe (العربية)</label>
+            <input type="text" id="offerTitleAr" class="form-input" placeholder="مثال: باقة النضارة الفورية" dir="rtl">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Badge Promo (Français)</label>
+            <input type="text" id="offerBadge" class="form-input" placeholder="ex: -20% Promo, Best Seller">
+          </div>
+          <div class="form-group">
+            <label>Badge en Arabe (العربية)</label>
+            <input type="text" id="offerBadgeAr" class="form-input" placeholder="مثال: تخفيض 20%" dir="rtl">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Ancien Prix (barré)</label>
+            <input type="text" id="offerOldPrice" class="form-input" placeholder="ex: 16,000 DA">
+          </div>
+          <div class="form-group">
+            <label>Nouveau Prix Promo *</label>
+            <input type="text" id="offerNewPrice" class="form-input" placeholder="ex: 13,000 DA" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Photo de l'offre (Téléversez depuis votre appareil)</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="offerImageUrl" class="form-input" placeholder="media/hydra_after.jpg ou lien web" oninput="updatePreview('offerImageUrl', 'offerPreviewImg')">
+            <label class="btn btn-secondary btn-sm" style="white-space: nowrap; cursor: pointer;">
+              <span>📁 Choisir une photo</span>
+              <input type="file" accept="image/*" style="display: none;" onchange="handleFileUpload(this, 'offerImageUrl', 'image', 'offerPreviewImg')">
+            </label>
+          </div>
+          <div class="upload-preview-box" id="offerPreviewBox" style="display: none;">
+            <img id="offerPreviewImg" class="upload-preview-thumb" src="" alt="Aperçu">
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Aperçu de la photo de l'offre</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description (Français)</label>
+          <textarea id="offerDesc" class="form-input" placeholder="Ce qui est inclus dans le forfait..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Description en Arabe (العربية)</label>
+          <textarea id="offerDescAr" class="form-input" dir="rtl" placeholder="تفاصيل العرض الترويجي والباقة..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeOfferModal()">Annuler</button>
+          <button type="submit" class="btn btn-primary" style="flex: 1;">Publier l'Offre • نشر</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: GALLERY -->
+  <div class="modal-overlay" id="galleryModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Ajouter une Photo à la Galerie</h3>
+        <button class="modal-close" onclick="closeGalleryModal()">&times;</button>
+      </div>
+      <form id="galleryForm" onsubmit="saveGallery(event)">
+        <div class="form-group">
+          <label>Titre / Légende *</label>
+          <input type="text" id="galTitle" class="form-input" placeholder="ex: Espace manucure & nail art" required>
+        </div>
+
+        <div class="form-group">
+          <label>Catégorie</label>
+          <select id="galCategory" class="form-input">
+            <option value="salon">Espaces de l'Institut</option>
+            <option value="soins">Soins & Traitements</option>
+            <option value="avant-apres">Résultats Avant/Après</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Image (Téléversez depuis votre téléphone ou PC) *</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="galImageUrl" class="form-input" placeholder="media/callus_after.jpg ou URL..." required oninput="updatePreview('galImageUrl', 'galPreviewImg')">
+            <label class="btn btn-secondary btn-sm" style="white-space: nowrap; cursor: pointer;">
+              <span>📁 Choisir une photo</span>
+              <input type="file" accept="image/*" style="display: none;" onchange="handleFileUpload(this, 'galImageUrl', 'image', 'galPreviewImg')">
+            </label>
+          </div>
+          <div class="upload-preview-box" id="galPreviewBox" style="display: none;">
+            <img id="galPreviewImg" class="upload-preview-thumb" src="" alt="Aperçu">
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Aperçu de la photo de galerie</span>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeGalleryModal()">Annuler</button>
+          <button type="submit" class="btn btn-primary" style="flex: 1;">Publier la Photo • إضافة</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: COMPARISON (BEFORE / AFTER) -->
+  <div class="modal-overlay" id="comparisonModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="compModalTitle">Nouveau Résultat Avant / Après</h3>
+        <button class="modal-close" onclick="closeComparisonModal()">&times;</button>
+      </div>
+      <form id="comparisonForm" onsubmit="saveComparison(event)">
+        <input type="hidden" id="compId">
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Titre du Soin (Français) *</label>
+            <input type="text" id="compTitle" class="form-input" placeholder="ex: Hydrafacial Expert" required>
+          </div>
+          <div class="form-group">
+            <label>Titre en Arabe (العربية)</label>
+            <input type="text" id="compTitleAr" class="form-input" placeholder="مثال: هايدرافيشل برستيج" dir="rtl">
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Clé / Identifiant Court *</label>
+            <input type="text" id="compKey" class="form-input" placeholder="ex: hydrafacial, callus, levres" required>
+          </div>
+          <div class="form-group">
+            <label>Badge Promo / Statut</label>
+            <input type="text" id="compBadge" class="form-input" placeholder="ex: Éclat Immédiat, Best Seller">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Photo AVANT (Avant la séance) *</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="compBeforeImg" class="form-input" placeholder="media/hydra_before.jpg ou URL..." required oninput="updatePreview('compBeforeImg', 'compBeforePreview')">
+            <label class="btn btn-secondary btn-sm" style="white-space: nowrap; cursor: pointer;">
+              <span>📁 Photo Avant</span>
+              <input type="file" accept="image/*" style="display: none;" onchange="handleFileUpload(this, 'compBeforeImg', 'image', 'compBeforePreview')">
+            </label>
+          </div>
+          <div class="upload-preview-box" id="compBeforePreviewBox" style="display: none;">
+            <img id="compBeforePreview" class="upload-preview-thumb" src="" alt="Aperçu Avant">
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Photo "Avant"</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Photo APRÈS (Résultat visible) *</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="compAfterImg" class="form-input" placeholder="media/hydra_after.jpg ou URL..." required oninput="updatePreview('compAfterImg', 'compAfterPreview')">
+            <label class="btn btn-secondary btn-sm" style="white-space: nowrap; cursor: pointer;">
+              <span>📁 Photo Après</span>
+              <input type="file" accept="image/*" style="display: none;" onchange="handleFileUpload(this, 'compAfterImg', 'image', 'compAfterPreview')">
+            </label>
+          </div>
+          <div class="upload-preview-box" id="compAfterPreviewBox" style="display: none;">
+            <img id="compAfterPreview" class="upload-preview-thumb" src="" alt="Aperçu Après">
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Photo "Après"</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description du Résultat (Français)</label>
+          <textarea id="compDesc" class="form-input" placeholder="Détails du résultat obtenu dès la 1ère séance..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Description en Arabe (العربية)</label>
+          <textarea id="compDescAr" class="form-input" dir="rtl" placeholder="وصف النتيجة الملحوظة من أول جلسة..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeComparisonModal()">Annuler</button>
+          <button type="submit" class="btn btn-primary" style="flex: 1;">Enregistrer • حفظ</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast">
+    <span id="toastIcon">✨</span>
+    <span id="toastMsg">Opération réussie</span>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // Supabase Configuration
+    const SUPABASE_URL = 'https://mtuhuzmyhbemdfsbyhpf.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dWh1em15aGJlbWRmc2J5aHBmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5MjIxNDAsImV4cCI6MjA5MjQ5ODE0MH0.Pip_Y_FfjJvnOHxnAMNUlHMBLkGefVxH2dVMsXaIQ08';
+    
+    let supabaseClient = null;
+    try {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    } catch (e) {
+      console.warn('Supabase init warning:', e);
+    }
+
+    // State
+    let servicesData = [];
+    let offersData = [];
+    let galleryData = [];
+    let comparisonsData = [];
+    let settingsData = {};
+
+    // Check Auth on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const isAuth = sessionStorage.getItem('joven_admin_auth');
+      if (isAuth === 'true') {
+        document.getElementById('authModal').style.display = 'none';
+        loadAllData();
+      } else {
+        document.getElementById('authModal').style.display = 'flex';
+      }
+    });
+
+    async function handleAuth(e) {
+      e.preventDefault();
+      const inputPass = document.getElementById('adminPass').value.trim();
+      const errEl = document.getElementById('authError');
+      const btn = document.getElementById('loginBtn');
+
+      btn.disabled = true;
+      btn.innerText = 'Vérification...';
+
+      let valid = false;
+      try {
+        if (supabaseClient) {
+          const { data, error } = await supabaseClient
+            .from('admin_config')
+            .select('value')
+            .eq('key', 'admin_password')
+            .single();
+          
+          if (!error && data && data.value) {
+            valid = (inputPass === data.value);
+          } else {
+            valid = (inputPass === 'joven2026');
+          }
+        } else {
+          valid = (inputPass === 'joven2026');
+        }
+      } catch (err) {
+        console.warn('Auth check error, using fallback:', err);
+        valid = (inputPass === 'joven2026');
+      }
+
+      btn.disabled = false;
+      btn.innerText = 'Connexion • دخول';
+
+      if (valid) {
+        sessionStorage.setItem('joven_admin_auth', 'true');
+        document.getElementById('authModal').style.display = 'none';
+        errEl.style.display = 'none';
+        showToast('Connexion réussie ! Bienvenue dans votre studio.');
+        loadAllData();
+      } else {
+        errEl.style.display = 'block';
+        document.getElementById('adminPass').focus();
+      }
+    }
+
+    function handleLogout() {
+      if (confirm('Voulez-vous vraiment vous déconnecter ? / هل تريدين تسجيل الخروج؟')) {
+        sessionStorage.removeItem('joven_admin_auth');
+        window.location.reload();
+      }
+    }
+
+    function switchTab(tab, btnEl) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+
+      if (btnEl) {
+        btnEl.classList.add('active');
+      } else {
+        const defaultBtn = document.querySelector(\`.tab-btn[onclick*="\${tab}"]\`);
+        if (defaultBtn) defaultBtn.classList.add('active');
+      }
+      const pane = document.getElementById(\`pane-\${tab}\`);
+      if (pane) pane.classList.add('active');
+    }
+
+    function showToast(msg, icon = '✨') {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastIcon').innerText = icon;
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3800);
+    }
+
+    function updatePreview(inputId, imgId) {
+      const url = document.getElementById(inputId).value.trim();
+      const img = document.getElementById(imgId);
+      const box = img.parentElement;
+      if (url) {
+        img.src = url;
+        box.style.display = 'flex';
+      } else {
+        box.style.display = 'none';
+      }
+    }
+
+    // Direct File Upload to Supabase Storage
+    async function handleFileUpload(inputEl, targetInputId, fileType = 'image', previewImgId = null) {
+      const file = inputEl.files[0];
+      if (!file) return;
+
+      showToast('Téléversement du fichier en cours...', '⏳');
+
+      try {
+        const fileExt = file.name.split('.').pop();
+        const folder = fileType === 'video' ? 'videos' : 'uploads';
+        const fileName = \`\${Date.now()}_\${Math.random().toString(36).substring(2, 8)}.\${fileExt}\`;
+        const filePath = \`\${folder}/\${fileName}\`;
+
+        if (supabaseClient) {
+          const { data, error } = await supabaseClient.storage
+            .from('joven-media')
+            .upload(filePath, file, { cacheControl: '3600', upsert: false });
+
+          if (error) throw error;
+
+          const { data: pubData } = supabaseClient.storage
+            .from('joven-media')
+            .getPublicUrl(filePath);
+
+          document.getElementById(targetInputId).value = pubData.publicUrl;
+          if (previewImgId) {
+            updatePreview(targetInputId, previewImgId);
+          }
+          showToast('Fichier uploadé avec succès sur le serveur !', '✅');
+        } else {
+          showToast('Serveur Supabase non connecté', '⚠️');
+        }
+      } catch (err) {
+        console.error('Upload failed:', err);
+        showToast('Échec de l\\'upload: ' + err.message, '⚠️');
+      }
+    }
+
+    // Load All Data
+    async function loadAllData() {
+      await Promise.all([
+        loadServices(),
+        loadOffers(),
+        loadGallery(),
+        loadComparisons(),
+        loadSettings()
+      ]);
+    }
+
+    // ==========================================
+    // 1. SERVICES CRUD
+    // ==========================================
+    async function loadServices() {
+      const container = document.getElementById('servicesGrid');
+      if (!supabaseClient) return;
+
+      const { data, error } = await supabaseClient
+        .from('services')
+        .select('*')
+        .order('display_order', { ascending: true });
+
+      if (error) {
+        container.innerHTML = \`<p style="color: red;">Erreur: \${error.message}</p>\`;
+        return;
+      }
+
+      servicesData = data || [];
+      renderServicesList(servicesData);
+    }
+
+    function renderServicesList(list) {
+      const container = document.getElementById('servicesGrid');
+      if (list.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-muted); padding: 20px 0;">Aucun soin trouvé. Cliquez sur "Nouveau Soin" pour en ajouter un.</p>';
+        return;
+      }
+
+      container.innerHTML = list.map(s => \`
+        <div class="data-card" id="service-card-\${s.id}">
+          <div class="card-thumb">
+            <img src="\${s.image_url || 'media/hydra_after.jpg'}" alt="\${s.title}" onerror="this.src='media/hydra_after.jpg'">
+            <span class="card-badge">\${s.category || 'Soin'}</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">\${s.title}</h3>
+            \${s.title_ar ? \`<div class="card-title-ar">\${s.title_ar}</div>\` : ''}
+            <p class="card-desc">\${s.description || s.description_ar || 'Soin d\\'exception JOVEN Institut.'}</p>
+            <div class="card-meta">
+              <span class="card-price">\${s.price}</span>
+              <span style="font-size: 0.85rem; color: var(--text-muted);">⏱ \${s.duration || '60 min'}</span>
+            </div>
+            <div class="card-actions">
+              <button onclick="editService('\${s.id}')" class="btn btn-secondary btn-sm" style="flex: 1;">✏️ Modifier</button>
+              <button onclick="deleteService('\${s.id}', '\${s.title.replace(/'/g, "\\\\'")}')" class="btn btn-danger btn-sm">🗑️ Supprimer</button>
+            </div>
+          </div>
+        </div>
+      \`).join('');
+    }
+
+    function filterServicesList() {
+      const q = (document.getElementById('serviceSearch').value || '').toLowerCase();
+      const cat = document.getElementById('serviceCategoryFilter').value;
+
+      const filtered = servicesData.filter(s => {
+        const matchesQuery = !q || (s.title && s.title.toLowerCase().includes(q)) || (s.title_ar && s.title_ar.includes(q));
+        const matchesCat = cat === 'all' || s.category === cat;
+        return matchesQuery && matchesCat;
+      });
+
+      renderServicesList(filtered);
+    }
+
+    function openServiceModal() {
+      document.getElementById('serviceForm').reset();
+      document.getElementById('serviceId').value = '';
+      document.getElementById('servicePreviewBox').style.display = 'none';
+      document.getElementById('serviceModalTitle').innerText = 'Ajouter un Soin (إضافة خدمة)';
+      document.getElementById('serviceModal').classList.add('open');
+    }
+
+    function closeServiceModal() {
+      document.getElementById('serviceModal').classList.remove('open');
+    }
+
+    function editService(id) {
+      const s = servicesData.find(item => item.id === id);
+      if (!s) return;
+
+      document.getElementById('serviceId').value = s.id;
+      document.getElementById('serviceTitle').value = s.title || '';
+      document.getElementById('serviceTitleAr').value = s.title_ar || '';
+      document.getElementById('serviceCategory').value = s.category || 'soins-visage';
+      document.getElementById('serviceDuration').value = s.duration || '';
+      document.getElementById('servicePrice').value = s.price || '';
+      document.getElementById('serviceOrder').value = s.display_order || 1;
+      document.getElementById('serviceImageUrl').value = s.image_url || '';
+      document.getElementById('serviceDesc').value = s.description || '';
+      document.getElementById('serviceDescAr').value = s.description_ar || '';
+
+      updatePreview('serviceImageUrl', 'servicePreviewImg');
+      document.getElementById('serviceModalTitle').innerText = 'Modifier le Soin (تعديل الخدمة)';
+      document.getElementById('serviceModal').classList.add('open');
+    }
+
+    async function saveService(e) {
+      e.preventDefault();
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const origText = submitBtn ? submitBtn.innerText : 'Enregistrer';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.innerText = 'Enregistrement en cours...'; }
+
+      const id = document.getElementById('serviceId').value;
+      const title = document.getElementById('serviceTitle').value.trim();
+      const title_ar = document.getElementById('serviceTitleAr').value.trim();
+      const category = document.getElementById('serviceCategory').value;
+      const duration = document.getElementById('serviceDuration').value.trim();
+      const price = document.getElementById('servicePrice').value.trim();
+      const display_order = parseInt(document.getElementById('serviceOrder').value, 10) || 1;
+      const image_url = document.getElementById('serviceImageUrl').value.trim() || 'media/hydra_after.jpg';
+      const description = document.getElementById('serviceDesc').value.trim();
+      const description_ar = document.getElementById('serviceDescAr').value.trim();
+
+      const payload = {
+        title,
+        title_ar: title_ar || title,
+        category,
+        duration,
+        price,
+        display_order,
+        image_url,
+        description,
+        description_ar: description_ar || description,
+        is_active: true
+      };
+
+      try {
+        if (id) {
+          const { error } = await supabaseClient.from('services').update(payload).eq('id', id);
+          if (error) throw error;
+          showToast('Soin mis à jour avec succès ! / تم تعديل الخدمة بنجاح');
+        } else {
+          const { error } = await supabaseClient.from('services').insert([payload]);
+          if (error) throw error;
+          showToast('Nouveau soin ajouté au catalogue ! / تمت إضافة الخدمة بنجاح');
+        }
+        closeServiceModal();
+        await loadServices();
+      } catch (err) {
+        alert('Erreur: ' + err.message);
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.innerText = origText; }
+      }
+    }
+
+    async function deleteService(id, title) {
+      if (!confirm(\`Voulez-vous vraiment supprimer définitivement "\${title}" ?\\nهل أنتِ متأكدة من حذف هذه الخدمة نهائياً من الموقع وقاعدة البيانات؟\`)) return;
+
+      const card = document.getElementById('service-card-' + id);
+      if (card) {
+        card.style.opacity = '0.3';
+        card.style.pointerEvents = 'none';
+      }
+
+      showToast('Suppression en cours... / جاري الحذف...', '⏳');
+
+      try {
+        const { error } = await supabaseClient.from('services').delete().eq('id', id);
+        if (error) {
+          if (card) { card.style.opacity = '1'; card.style.pointerEvents = 'auto'; }
+          throw error;
+        }
+        if (card) card.remove();
+        showToast('Soin supprimé définitivement ! / تم حذف الخدمة بنجاح', '🗑️');
+        await loadServices();
+      } catch (err) {
+        alert('Erreur lors de la suppression: ' + err.message);
+      }
+    }
+
+    // ==========================================
+    // 2. OFFERS CRUD
+    // ==========================================
+    async function loadOffers() {
+      const container = document.getElementById('offersGrid');
+      if (!supabaseClient) return;
+
+      const { data, error } = await supabaseClient
+        .from('offers')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        container.innerHTML = \`<p style="color: red;">Erreur: \${error.message}</p>\`;
+        return;
+      }
+
+      offersData = data || [];
+      if (offersData.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-muted); padding: 20px 0;">Aucune offre active actuellement. Cliquez sur "Nouvelle Offre" pour en créer une.</p>';
+        return;
+      }
+
+      container.innerHTML = offersData.map(o => \`
+        <div class="data-card" id="offer-card-\${o.id}">
+          <div class="card-thumb">
+            <img src="\${o.image_url || 'media/hydra_after.jpg'}" alt="\${o.title}" onerror="this.src='media/hydra_after.jpg'">
+            \${o.badge ? \`<span class="card-badge">\${o.badge}</span>\` : ''}
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">\${o.title}</h3>
+            \${o.title_ar ? \`<div class="card-title-ar">\${o.title_ar}</div>\` : ''}
+            <p class="card-desc">\${o.description || o.description_ar || 'Offre spéciale JOVEN.'}</p>
+            <div class="card-meta">
+              <div>
+                \${o.old_price ? \`<span class="card-old-price">\${o.old_price}</span>\` : ''}
+                <span class="card-price">\${o.new_price}</span>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button onclick="editOffer('\${o.id}')" class="btn btn-secondary btn-sm" style="flex: 1;">✏️ Modifier</button>
+              <button onclick="deleteOffer('\${o.id}', '\${o.title.replace(/'/g, "\\\\'")}')" class="btn btn-danger btn-sm">🗑️ Supprimer</button>
+            </div>
+          </div>
+        </div>
+      \`).join('');
+    }
+
+    function openOfferModal() {
+      document.getElementById('offerForm').reset();
+      document.getElementById('offerId').value = '';
+      document.getElementById('offerPreviewBox').style.display = 'none';
+      document.getElementById('offerModalTitle').innerText = 'Ajouter une Offre (إضافة عرض)';
+      document.getElementById('offerModal').classList.add('open');
+    }
+
+    function closeOfferModal() {
+      document.getElementById('offerModal').classList.remove('open');
+    }
+
+    function editOffer(id) {
+      const o = offersData.find(item => item.id === id);
+      if (!o) return;
+
+      document.getElementById('offerId').value = o.id;
+      document.getElementById('offerTitle').value = o.title || '';
+      document.getElementById('offerTitleAr').value = o.title_ar || '';
+      document.getElementById('offerBadge').value = o.badge || '';
+      document.getElementById('offerBadgeAr').value = o.badge_ar || '';
+      document.getElementById('offerOldPrice').value = o.old_price || '';
+      document.getElementById('offerNewPrice').value = o.new_price || '';
+      document.getElementById('offerImageUrl').value = o.image_url || '';
+      document.getElementById('offerDesc').value = o.description || '';
+      document.getElementById('offerDescAr').value = o.description_ar || '';
+
+      updatePreview('offerImageUrl', 'offerPreviewImg');
+      document.getElementById('offerModalTitle').innerText = 'Modifier l\\'Offre (تعديل العرض)';
+      document.getElementById('offerModal').classList.add('open');
+    }
+
+    async function saveOffer(e) {
+      e.preventDefault();
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const origText = submitBtn ? submitBtn.innerText : 'Enregistrer';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.innerText = 'Enregistrement en cours...'; }
+
+      const id = document.getElementById('offerId').value;
+      const title = document.getElementById('offerTitle').value.trim();
+      const title_ar = document.getElementById('offerTitleAr').value.trim();
+      const badge = document.getElementById('offerBadge').value.trim();
+      const badge_ar = document.getElementById('offerBadgeAr').value.trim();
+      const old_price = document.getElementById('offerOldPrice').value.trim();
+      const new_price = document.getElementById('offerNewPrice').value.trim();
+      const image_url = document.getElementById('offerImageUrl').value.trim() || 'media/hydra_after.jpg';
+      const description = document.getElementById('offerDesc').value.trim();
+      const description_ar = document.getElementById('offerDescAr').value.trim();
+
+      const payload = {
+        title,
+        title_ar: title_ar || title,
+        badge: badge || '-20% Promo',
+        badge_ar: badge_ar || (badge ? badge : 'عرض خاص'),
+        old_price: old_price || null,
+        new_price,
+        image_url,
+        description,
+        description_ar: description_ar || description,
+        is_active: true
+      };
+
+      try {
+        if (id) {
+          const { error } = await supabaseClient.from('offers').update(payload).eq('id', id);
+          if (error) throw error;
+          showToast('Offre mise à jour avec succès ! / تم تعديل العرض بنجاح');
+        } else {
+          const { error } = await supabaseClient.from('offers').insert([payload]);
+          if (error) throw error;
+          showToast('Nouvelle offre publiée avec succès ! / تم نشر العرض بنجاح');
+        }
+        closeOfferModal();
+        await loadOffers();
+      } catch (err) {
+        alert('Erreur: ' + err.message);
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.innerText = origText; }
+      }
+    }
+
+    async function deleteOffer(id, title) {
+      if (!confirm(\`Supprimer l'offre "\${title}" ?\\nهل أنتِ متأكدة من حذف هذا العرض الترويجي نهائياً من الموقع؟\`)) return;
+
+      const card = document.getElementById('offer-card-' + id);
+      if (card) {
+        card.style.opacity = '0.3';
+        card.style.pointerEvents = 'none';
+      }
+
+      showToast('Suppression de l\\'offre... / جاري حذف العرض...', '⏳');
+
+      try {
+        const { error } = await supabaseClient.from('offers').delete().eq('id', id);
+        if (error) {
+          if (card) { card.style.opacity = '1'; card.style.pointerEvents = 'auto'; }
+          throw error;
+        }
+        if (card) card.remove();
+        showToast('Offre supprimée définitivement ! / تم حذف العرض بنجاح', '🗑️');
+        await loadOffers();
+      } catch (err) {
+        alert('Erreur: ' + err.message);
+      }
+    }
+
+    // ==========================================
+    // 3. GALLERY CRUD
+    // ==========================================
+    async function loadGallery() {
+      const container = document.getElementById('galleryGrid');
+      if (!supabaseClient) return;
+
+      const { data, error } = await supabaseClient
+        .from('gallery_images')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        container.innerHTML = \`<p style="color: red;">Erreur: \${error.message}</p>\`;
+        return;
+      }
+
+      galleryData = data || [];
+      if (galleryData.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-muted); padding: 20px 0;">Aucune image enregistrée. Cliquez sur "Ajouter une Photo".</p>';
+        return;
+      }
+
+      container.innerHTML = galleryData.map(g => \`
+        <div class="gallery-card" id="gallery-card-\${g.id}">
+          <div class="gallery-thumb">
+            <img src="\${g.image_url}" alt="\${g.title || 'Photo JOVEN'}" onerror="this.src='media/authentic/hero_interior.jpg'">
+          </div>
+          <div class="gallery-card-body">
+            <div class="gallery-card-title">\${g.title || 'Photo'}</div>
+            <button onclick="deleteGalleryItem('\${g.id}')" class="btn btn-danger btn-sm" style="padding: 4px 8px;" title="Supprimer">🗑️</button>
+          </div>
+        </div>
+      \`).join('');
+    }
+
+    function openGalleryModal() {
+      document.getElementById('galleryForm').reset();
+      document.getElementById('galPreviewBox').style.display = 'none';
+      document.getElementById('galleryModal').classList.add('open');
+    }
+
+    function closeGalleryModal() {
+      document.getElementById('galleryModal').classList.remove('open');
+    }
+
+    async function saveGallery(e) {
+      e.preventDefault();
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const origText = submitBtn ? submitBtn.innerText : 'Publier';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.innerText = 'Publication en cours...'; }
+
+      const title = document.getElementById('galTitle').value.trim();
+      const category = document.getElementById('galCategory').value;
+      const image_url = document.getElementById('galImageUrl').value.trim();
+
+      try {
+        const { error } = await supabaseClient.from('gallery_images').insert([{
+          title,
+          category,
+          image_url
+        }]);
+        if (error) throw error;
+        showToast('Photo ajoutée à la galerie ! / تمت إضافة الصورة بنجاح');
+        closeGalleryModal();
+        await loadGallery();
+      } catch (err) {
+        alert('Erreur: ' + err.message);
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.innerText = origText; }
+      }
+    }
+
+    async function deleteGalleryItem(id) {
+      if (!confirm('Supprimer cette photo de la galerie ?\\nهل تريدين حذف هذه الصورة نهائياً من الموقع؟')) return;
+
+      const card = document.getElementById('gallery-card-' + id);
+      if (card) {
+        card.style.opacity = '0.3';
+        card.style.pointerEvents = 'none';
+      }
+
+      showToast('Suppression de la photo... / جاري حذف الصورة...', '⏳');
+
+      try {
+        const { error } = await supabaseClient.from('gallery_images').delete().eq('id', id);
+        if (error) {
+          if (card) { card.style.opacity = '1'; card.style.pointerEvents = 'auto'; }
+          throw error;
+        }
+        if (card) card.remove();
+        showToast('Photo supprimée avec succès ! / تم حذف الصورة نهائياً', '🗑️');
+        await loadGallery();
+      } catch (err) {
+        alert('Erreur: ' + err.message);
+      }
+    }
+
+    // ==========================================
+    // 4. COMPARISONS (BEFORE / AFTER) CRUD
+    // ==========================================
+    async function loadComparisons() {
+      const container = document.getElementById('comparisonsGrid');
+      if (!supabaseClient) return;
+
+      const { data, error } = await supabaseClient
+        .from('comparisons')
+        .select('*')
+        .order('display_order', { ascending: true });
+
+      if (error) {
+        container.innerHTML = \`<p style="color: red;">Erreur: \${error.message}</p>\`;
+        return;
+      }
+
+      comparisonsData = data || [];
+      if (comparisonsData.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-muted); padding: 20px 0;">Aucune comparaison avant/après enregistrée.</p>';
+        return;
+      }
+
+      container.innerHTML = comparisonsData.map(c => \`
+        <div class="comparison-card" id="comp-card-\${c.id}">
+          <div class="comparison-thumbs">
+            <div class="comparison-thumb-box">
+              <img src="\${c.before_image}" alt="Avant" onerror="this.src='media/hydra_before.jpg'">
+              <span class="comparison-tag before">AVANT</span>
+            </div>
+            <div class="comparison-thumb-box">
+              <img src="\${c.after_image}" alt="Après" onerror="this.src='media/hydra_after.jpg'">
+              <span class="comparison-tag after">APRÈS</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">\${c.title}</h3>
+            \${c.title_ar ? \`<div class="card-title-ar">\${c.title_ar}</div>\` : ''}
+            <p class="card-desc">\${c.description || c.description_ar || 'Résultat visible immédiat.'}</p>
+            <div class="card-meta">
+              <span class="card-badge" style="position: static;">\${c.badge || 'Résultat'}</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Clé: \${c.service_key}</span>
+            </div>
+            <div class="card-actions">
+              <button onclick="editComparison('\${c.id}')" class="btn btn-secondary btn-sm" style="flex: 1;">✏️ Modifier</button>
+              <button onclick="deleteComparison('\${c.id}', '\${c.title.replace(/'/g, "\\\\'")}')" class="btn btn-danger btn-sm">🗑️ Supprimer</button>
+            </div>
+          </div>
+        </div>
+      \`).join('');
+    }
+
+    function openComparisonModal() {
+      document.getElementById('comparisonForm').reset();
+      document.getElementById('compId').value = '';
+      document.getElementById('compBeforePreviewBox').style.display = 'none';
+      document.getElementById('compAfterPreviewBox').style.display = 'none';
+      document.getElementById('compModalTitle').innerText = 'Nouveau Résultat Avant/Après (إضافة حالة مقارنة)';
+      document.getElementById('comparisonModal').classList.add('open');
+    }
+
+    function closeComparisonModal() {
+      document.getElementById('comparisonModal').classList.remove('open');
+    }
+
+    function editComparison(id) {
+      const c = comparisonsData.find(item => item.id === id);
+      if (!c) return;
+
+      document.getElementById('compId').value = c.id;
+      document.getElementById('compTitle').value = c.title || '';
+      document.getElementById('compTitleAr').value = c.title_ar || '';
+      document.getElementById('compKey').value = c.service_key || '';
+      document.getElementById('compBadge').value = c.badge || '';
+      document.getElementById('compBeforeImg').value = c.before_image || '';
+      document.getElementById('compAfterImg').value = c.after_image || '';
+      document.getElementById('compDesc').value = c.description || '';
+      document.getElementById('compDescAr').value = c.description_ar || '';
+
+      updatePreview('compBeforeImg', 'compBeforePreview');
+      updatePreview('compAfterImg', 'compAfterPreview');
+      document.getElementById('compModalTitle').innerText = 'Modifier le Résultat Avant/Après (تعديل المقارنة)';
+      document.getElementById('comparisonModal').classList.add('open');
+    }
+
+    async function saveComparison(e) {
+      e.preventDefault();
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const origText = submitBtn ? submitBtn.innerText : 'Enregistrer';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.innerText = 'Enregistrement en cours...'; }
+
+      const id = document.getElementById('compId').value;
+      const title = document.getElementById('compTitle').value.trim();
+      const title_ar = document.getElementById('compTitleAr').value.trim();
+      const service_key = document.getElementById('compKey').value.trim().toLowerCase();
+      const badge = document.getElementById('compBadge').value.trim();
+      const before_image = document.getElementById('compBeforeImg').value.trim();
+      const after_image = document.getElementById('compAfterImg').value.trim();
+      const description = document.getElementById('compDesc').value.trim();
+      const description_ar = document.getElementById('compDescAr').value.trim();
+
+      const payload = {
+        title,
+        title_ar: title_ar || title,
+        service_key,
+        badge: badge || 'Résultat Visible',
+        before_image,
+        after_image,
+        description,
+        description_ar: description_ar || description
+      };
+
+      try {
+        if (id) {
+          const { error } = await supabaseClient.from('comparisons').update(payload).eq('id', id);
+          if (error) throw error;
+          showToast('Résultat avant/après mis à jour avec succès !');
+        } else {
+          const { error } = await supabaseClient.from('comparisons').insert([payload]);
+          if (error) throw error;
+          showToast('Nouvelle comparaison enregistrée !');
+        }
+        closeComparisonModal();
+        await loadComparisons();
+      } catch (err) {
+        alert('Erreur: ' + err.message);
+      } finally {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.innerText = origText; }
+      }
+    }
+
+    async function deleteComparison(id, title) {
+      if (!confirm(\`Supprimer le résultat avant/après "\${title}" ?\\nهل أنتِ متأكدة من حذف هذا المثال من المقارنة؟\`)) return;
+
+      const card = document.getElementById('comp-card-' + id);
+      if (card) {
+        card.style.opacity = '0.3';
+        card.style.pointerEvents = 'none';
+      }
+
+      showToast('Suppression en cours...', '⏳');
+
+      try {
+        const { error } = await supabaseClient.from('comparisons').delete().eq('id', id);
+        if (error) {
+          if (card) { card.style.opacity = '1'; card.style.pointerEvents = 'auto'; }
+          throw error;
+        }
+        if (card) card.remove();
+        showToast('Résultat avant/après supprimé !', '🗑️');
+        await loadComparisons();
+      } catch (err) {
+        alert('Erreur: ' + err.message);
+      }
+    }
+
+    // ==========================================
+    // 5. SETTINGS & SALON CONFIG
+    // ==========================================
+    async function loadSettings() {
+      if (!supabaseClient) return;
+      try {
+        const { data, error } = await supabaseClient.from('admin_config').select('*');
+        if (error || !data) return;
+
+        settingsData = {};
+        data.forEach(item => {
+          settingsData[item.key] = item.value;
+        });
+
+        if (settingsData.hero_video_url) document.getElementById('setHeroVideo').value = settingsData.hero_video_url;
+        if (settingsData.hero_poster_url) document.getElementById('setHeroPoster').value = settingsData.hero_poster_url;
+        if (settingsData.whatsapp_number) document.getElementById('setWhatsapp').value = settingsData.whatsapp_number;
+        if (settingsData.phone_display) document.getElementById('setPhoneDisplay').value = settingsData.phone_display;
+        if (settingsData.salon_address) document.getElementById('setAddress').value = settingsData.salon_address;
+        if (settingsData.salon_hours) document.getElementById('setHours').value = settingsData.salon_hours;
+        if (settingsData.instagram_url) document.getElementById('setInstagram').value = settingsData.instagram_url;
+      } catch (err) {
+        console.warn('Error loading settings:', err);
+      }
+    }
+
+    async function saveSettings() {
+      showToast('Enregistrement des paramètres...', '⏳');
+
+      const hero_video_url = document.getElementById('setHeroVideo').value.trim();
+      const hero_poster_url = document.getElementById('setHeroPoster').value.trim();
+      const whatsapp_number = document.getElementById('setWhatsapp').value.trim();
+      const phone_display = document.getElementById('setPhoneDisplay').value.trim();
+      const salon_address = document.getElementById('setAddress').value.trim();
+      const salon_hours = document.getElementById('setHours').value.trim();
+      const instagram_url = document.getElementById('setInstagram').value.trim();
+      const new_password = document.getElementById('setNewPassword').value.trim();
+
+      const upserts = [
+        { key: 'hero_video_url', value: hero_video_url },
+        { key: 'hero_poster_url', value: hero_poster_url },
+        { key: 'whatsapp_number', value: whatsapp_number },
+        { key: 'phone_display', value: phone_display },
+        { key: 'salon_address', value: salon_address },
+        { key: 'salon_hours', value: salon_hours },
+        { key: 'instagram_url', value: instagram_url }
+      ];
+
+      if (new_password) {
+        upserts.push({ key: 'admin_password', value: new_password });
+      }
+
+      try {
+        for (const item of upserts) {
+          const { error } = await supabaseClient
+            .from('admin_config')
+            .upsert(item, { onConflict: 'key' });
+          if (error) throw error;
+        }
+
+        showToast('Paramètres du salon enregistrés avec succès ! / تم حفظ إعدادات الصالون بنجاح', '✅');
+        if (new_password) {
+          document.getElementById('setNewPassword').value = '';
+          alert('Le mot de passe d\\'accès a été mis à jour avec succès !\\nتم تغيير كلمة السر بنجاح.');
+        }
+      } catch (err) {
+        alert('Erreur: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>`;
+
+fs.writeFileSync('public/admin.html', adminHtml, 'utf8');
+console.log('Successfully upgraded public/admin.html with all 5 tabs, direct uploads, comparisons, and settings!');

@@ -2700,6 +2700,415 @@
   </style>
   <!-- Supabase Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style id="luxuryHeroStyles">
+/* ============================================================
+       HIGH-END LUXURY HERO VIDEO & FEMININE ANIMATIONS
+    ============================================================ */
+    .luxury-sparkles-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.75;
+    }
+
+    .hero-media {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-luxury-frame {
+      position: relative;
+      width: 100%;
+      max-width: 410px;
+      margin: 0 auto;
+    }
+
+    .hero-frame-glow {
+      position: absolute;
+      inset: -15px;
+      background: radial-gradient(circle, rgba(198, 107, 135, 0.28) 0%, rgba(194, 147, 85, 0.2) 45%, transparent 75%);
+      filter: blur(24px);
+      z-index: 1;
+      pointer-events: none;
+      border-radius: 36px;
+      animation: frameBreathe 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes frameBreathe {
+      0% { opacity: 0.6; transform: scale(0.98); }
+      100% { opacity: 0.95; transform: scale(1.02); }
+    }
+
+    .hero-video-card {
+      position: relative;
+      border-radius: 28px;
+      overflow: hidden;
+      background: #180D12;
+      box-shadow: 0 25px 60px rgba(148, 64, 87, 0.25), 0 0 0 1.5px rgba(194, 147, 85, 0.35);
+      aspect-ratio: 9 / 14;
+      max-height: 540px;
+      width: 100%;
+      z-index: 2;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    }
+
+    .hero-video-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 30px 70px rgba(148, 64, 87, 0.3), 0 0 0 2px rgba(194, 147, 85, 0.55);
+    }
+
+    .hero-video-player {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      background: #180D12;
+      cursor: pointer;
+    }
+
+    .hero-video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(20, 10, 14, 0.45) 0%, transparent 22%, transparent 60%, rgba(20, 10, 14, 0.75) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Live Top Badge */
+    .hero-live-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #944057;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      border: 1px solid rgba(194, 147, 85, 0.2);
+    }
+
+    html[dir="rtl"] .hero-live-badge {
+      left: auto;
+      right: 16px;
+    }
+
+    .live-beacon {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10B981;
+      display: inline-block;
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      animation: beaconPulse 2s infinite;
+    }
+
+    @keyframes beaconPulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .hero-quality-chip {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 3;
+      background: rgba(18, 10, 14, 0.65);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #F8E8D8;
+      border: 1px solid rgba(194, 147, 85, 0.35);
+      letter-spacing: 0.5px;
+    }
+
+    html[dir="rtl"] .hero-quality-chip {
+      right: auto;
+      left: 16px;
+    }
+
+    /* Bottom Controls */
+    .hero-video-controls {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: rgba(22, 12, 16, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 8px 12px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    }
+
+    .hero-sound-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255, 255, 255, 0.18);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 7px 14px;
+      border-radius: 18px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-family: inherit;
+    }
+
+    .hero-sound-btn:hover {
+      background: #944057;
+      border-color: #944057;
+      transform: translateY(-1px);
+    }
+
+    .hero-ctrl-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-ctrl-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.85rem;
+    }
+
+    .hero-ctrl-circle:hover {
+      background: rgba(255, 255, 255, 0.35);
+      transform: scale(1.08);
+    }
+
+    /* Floating Stat Box */
+    .hero-floating-stat {
+      position: absolute;
+      bottom: -18px;
+      right: -16px;
+      z-index: 4;
+      background: #FFFFFF;
+      padding: 12px 18px;
+      border-radius: 18px;
+      box-shadow: 0 15px 35px rgba(148, 64, 87, 0.16);
+      border: 1px solid rgba(194, 147, 85, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: floatSubtle 3.5s ease-in-out infinite alternate;
+    }
+
+    html[dir="rtl"] .hero-floating-stat {
+      right: auto;
+      left: -16px;
+    }
+
+    @keyframes floatSubtle {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
+
+    .stat-stars {
+      color: #F59E0B;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+    }
+
+    .stat-text strong {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    .stat-text span {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* FEMININE LUXURY SHIMMER & GLOW KEYFRAMES */
+    @keyframes luxuryGoldSheen {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .hero-badge-tag, .offers-badge-pill, .ba-pill {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-badge-tag::after, .offers-badge-pill::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(105deg, transparent 20%, rgba(255, 255, 255, 0.6) 45%, rgba(212, 168, 106, 0.45) 55%, transparent 75%);
+      background-size: 200% 100%;
+      animation: luxuryGoldSheen 4.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    /* Subtle Feminine CTA Pulse Glow */
+    @keyframes pulseGlowFeminine {
+      0% {
+        box-shadow: 0 10px 25px rgba(148, 64, 87, 0.28), 0 0 0 0 rgba(198, 107, 135, 0.45);
+      }
+      70% {
+        box-shadow: 0 12px 32px rgba(148, 64, 87, 0.32), 0 0 0 12px rgba(198, 107, 135, 0);
+      }
+      100% {
+        box-shadow: 0 10px 25px rgba(148, 64, 87, 0.28), 0 0 0 0 rgba(198, 107, 135, 0);
+      }
+    }
+
+    .hero-cta {
+      animation: pulseGlowFeminine 3.2s infinite;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 15px 35px rgba(148, 64, 87, 0.35);
+    }
+
+    /* RESPONSIVE HERO VIDEO TUNING */
+    @media (max-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+      .hero-content {
+        order: 2;
+        text-align: center;
+      }
+      .hero-features {
+        justify-content: center;
+      }
+      .hero-actions {
+        justify-content: center;
+      }
+      .hero-media {
+        order: 1;
+        width: 100%;
+      }
+      .hero-luxury-frame {
+        max-width: 360px;
+      }
+      .hero-video-card {
+        height: 480px;
+        aspect-ratio: 9 / 14;
+      }
+      .hero-floating-stat {
+        bottom: -14px;
+        right: 50%;
+        transform: translateX(50%);
+      }
+      html[dir="rtl"] .hero-floating-stat {
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-luxury-frame {
+        max-width: 330px;
+      }
+      .hero-video-card {
+        height: 450px;
+        border-radius: 24px;
+      }
+      .hero-live-badge {
+        top: 10px;
+        left: 10px;
+        padding: 4px 10px;
+        font-size: 0.68rem;
+        gap: 5px;
+      }
+      html[dir="rtl"] .hero-live-badge {
+        left: auto;
+        right: 10px;
+      }
+      .hero-quality-chip {
+        top: 10px;
+        right: 10px;
+        padding: 4px 8px;
+        font-size: 0.65rem;
+      }
+      html[dir="rtl"] .hero-quality-chip {
+        right: auto;
+        left: 10px;
+      }
+      .hero-video-controls {
+        bottom: 12px;
+        left: 10px;
+        right: 10px;
+        padding: 6px 10px;
+      }
+      .hero-sound-btn {
+        padding: 6px 10px;
+        font-size: 0.72rem;
+      }
+      .hero-ctrl-circle {
+        width: 28px;
+        height: 28px;
+        font-size: 0.75rem;
+      }
+      .hero-floating-stat {
+        bottom: -14px;
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+        padding: 8px 14px;
+        border-radius: 14px;
+        width: 86%;
+        max-width: 280px;
+        justify-content: center;
+        text-align: center;
+      }
+      html[dir="rtl"] .hero-floating-stat {
+        left: 50% !important;
+        right: auto !important;
+        transform: translateX(-50%) !important;
+      }
+    }
+
+</style>
 </head>
 <body>
 
@@ -2852,23 +3261,60 @@
         </div>
 
         <!-- Right Visual: Authentic Salon Interior with Video Tour Trigger -->
+        <!-- Right Visual: Luxury Portrait Video Reel Showcase -->
         <div class="hero-media">
-          <div class="hero-image-card">
-            <!-- Authentic Salon Interior Photo -->
-            <img src="media/authentic/hero_interior.jpg" alt="JOVEN Institut — Intérieur authentique du salon à Hydra">
+          <div class="hero-luxury-frame">
+            <!-- Ambient Glow behind the showcase -->
+            <div class="hero-frame-glow"></div>
 
-            <!-- Authentic Verified Pill -->
-            <div class="authentic-badge">
-              <span data-i18n="badge_authentic">Institut JOVEN • Hydra, Alger</span>
+            <!-- Luxury Video Card with 9:14 Portrait Ratio -->
+            <div class="hero-video-card" id="heroVideoCard">
+              <video id="heroSalonVideo" class="hero-video-player" playsinline webkit-playsinline muted autoplay loop preload="metadata" poster="media/authentic/hero_interior.jpg">
+                <source src="https://mtuhuzmyhbemdfsbyhpf.supabase.co/storage/v1/object/public/joven-media/videos/video_welcome.mp4" type="video/mp4">
+                Votre navigateur ne supporte pas la vidéo.
+              </video>
+
+              <!-- Luxury Vignette Overlay -->
+              <div class="hero-video-overlay"></div>
+
+              <!-- Top Left: Verified Salon Pill -->
+              <div class="hero-live-badge">
+                <span class="live-beacon"></span>
+                <span data-i18n="badge_authentic">Institut JOVEN • Hydra, Alger</span>
+              </div>
+
+              <!-- Top Right: Quality Tag -->
+              <div class="hero-quality-chip">
+                <span>✨ 4K Immersion</span>
+              </div>
+
+              <!-- Bottom Glass Controls Bar -->
+              <div class="hero-video-controls">
+                <button type="button" class="hero-sound-btn" id="heroSoundBtn" onclick="toggleHeroSound()" aria-label="Activer ou couper le son">
+                  <span id="heroSoundIcon" class="ctrl-icon">🔇</span>
+                  <span id="heroSoundText" data-i18n="btn_unmute">Activer le son</span>
+                </button>
+                <div class="hero-ctrl-group">
+                  <button type="button" class="hero-ctrl-circle" id="heroPlayBtn" onclick="toggleHeroPlay()" aria-label="Pause ou Lecture" title="Pause / Lecture">
+                    <span id="heroPlayIcon">⏸</span>
+                  </button>
+                  <button type="button" class="hero-ctrl-circle" onclick="openHeroFullscreen()" aria-label="Plein écran" title="Plein écran">
+                    <span>⛶</span>
+                  </button>
+                </div>
+              </div>
             </div>
 
-            <!-- Play Video Tour Button -->
-            <div class="hero-video-trigger" onclick="openVideoModal('https://mtuhuzmyhbemdfsbyhpf.supabase.co/storage/v1/object/public/joven-media/videos/video_welcome.mp4')">
-              <div class="play-circle">▶</div>
-              <span data-i18n="btn_video_tour">Voir la visite vidéo</span>
+            <!-- Chic Floating Badge: Social Proof -->
+            <div class="hero-floating-stat">
+              <div class="stat-stars">★★★★★</div>
+              <div class="stat-text">
+                <strong data-i18n="hero_stat_title">100% Féminin & Privatisé</strong>
+                <span data-i18n="hero_stat_sub">Cadre haut standing à Hydra</span>
+              </div>
             </div>
           </div>
-        </div>
+        </div></div>
 
       </div>
     </div>
@@ -3129,86 +3575,6 @@
        SECTION: À PROPOS DE JOVEN (Authentic Story & Space)
   ============================================================ -->
   
-  <!-- ============================================================
-       SECTION: REELS & VISITE VIDÉO RÉELLE
-  ============================================================ -->
-  <section class="video-tour-section" id="visite-video">
-    <div class="container">
-      <div class="section-header">
-        <span class="offers-badge-pill" data-i18n="reels_badge">Vidéo Authentique • ريلز الصالون الحصري</span>
-        <h2 class="section-title" data-i18n="video_tour_title">Visite Guidée & Présentation</h2>
-        <p class="section-subtitle" data-i18n="video_tour_subtitle">Découvrez l'institut en vidéo réelle : notre cadre chaleureux à Hydra, nos cabines et l'expertise de notre équipe.</p>
-      </div>
-
-      <div class="video-showcase-wrap">
-        <!-- Main Video Reel Player -->
-        <div class="video-main-card">
-          <div class="video-player-container">
-            <video id="salonMainVideo" playsinline controls loop preload="metadata" poster="media/authentic/hero_interior.jpg" src="https://mtuhuzmyhbemdfsbyhpf.supabase.co/storage/v1/object/public/joven-media/videos/video_welcome.mp4">
-              Votre navigateur ne supporte pas la lecture vidéo.
-            </video>
-          </div>
-          <div class="video-card-details">
-            <span class="video-card-tag">📍 Hydra, Alger</span>
-            <h3 class="video-card-h3" data-i18n="video_card_title">Bienvenue chez JOVEN Institut</h3>
-            <p class="video-card-desc" data-i18n="video_card_desc">
-              Découvrez en vidéo notre institut situé à Hydra : un accueil bienveillant, une hygiène clinique irréprochable et des équipements esthétiques de pointe pour sublimer votre beauté naturelle.
-            </p>
-            <div class="video-card-meta">
-              <span>🕒 Du Lundi au Samedi (9h - 17h)</span>
-              <span>🔒 100% Féminin & Privatisé</span>
-            </div>
-            <a href="https://wa.me/213781088061?text=Bonjour%20JOVEN%20Institut%2C%20j'ai%20vu%20votre%20vid%C3%A9o%20de%20pr%C3%A9sentation%20et%20je%20souhaite%20r%C3%A9server%20!" target="_blank" rel="noopener" class="offer-btn" style="margin-top: 16px;">
-              <span>💬</span> <span data-i18n="btn_book_after_video">Réserver ma séance sur WhatsApp</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- Secondary Video Cards / Highlights -->
-        <div class="video-side-grid">
-          <!-- Reel 2: Callus Peeling -->
-          <div class="video-mini-card" onclick="switchMainVideo('https://mtuhuzmyhbemdfsbyhpf.supabase.co/storage/v1/object/public/joven-media/videos/video_callus.mp4', 'Soin Callus Peeling Pieds Doux')">
-            <div class="mini-thumb">
-              <img src="media/callus_after.jpg" alt="Callus Peeling Reel">
-              <div class="mini-play">▶</div>
-            </div>
-            <div class="mini-info">
-              <h4>Callus Peeling</h4>
-              <p>Élimination des callosités en vidéo</p>
-              <span class="mini-tag">Best Seller</span>
-            </div>
-          </div>
-
-          <!-- Reel 3: Haute Fréquence & Soin Peau -->
-          <div class="video-mini-card" onclick="switchMainVideo('https://mtuhuzmyhbemdfsbyhpf.supabase.co/storage/v1/object/public/joven-media/videos/video_haute_frequence.mp4', 'Soin Haute Fréquence & Peau Nette')">
-            <div class="mini-thumb">
-              <img src="media/hydra_after.jpg" alt="Haute Fréquence Reel">
-              <div class="mini-play">▶</div>
-            </div>
-            <div class="mini-info">
-              <h4>Haute Fréquence</h4>
-              <p>Purification & éclat immédiat</p>
-              <span class="mini-tag">Soin Visage</span>
-            </div>
-          </div>
-
-          <!-- Reel 1 reset: Visite Guidée -->
-          <div class="video-mini-card" onclick="switchMainVideo('https://mtuhuzmyhbemdfsbyhpf.supabase.co/storage/v1/object/public/joven-media/videos/video_welcome.mp4', 'Bienvenue chez JOVEN Institut')">
-            <div class="mini-thumb">
-              <img src="media/authentic/hero_interior.jpg" alt="Visite guidée Reel">
-              <div class="mini-play">▶</div>
-            </div>
-            <div class="mini-info">
-              <h4>Visite du Salon</h4>
-              <p>Présentation & localisation à Hydra</p>
-              <span class="mini-tag">Le Salon</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="about-section" id="apropos">
     <!-- Right Leaf Decoration -->
     <svg class="leaf-decor-right" viewBox="0 0 100 300" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -3682,6 +4048,10 @@
     ========================================================== */
     const I18N = {
       fr: {
+      btn_unmute: "Activer le son",
+      btn_mute: "Couper le son",
+      hero_stat_title: "100% Féminin & Privatisé",
+      hero_stat_sub: "Cadre haut standing à Hydra",
         
       reels_badge: "Vidéo Authentique • Visite Réelle",
       video_tour_title: "Visite Guidée & Présentation de l'Institut",
@@ -3829,6 +4199,10 @@
       },
 
       ar: {
+      btn_unmute: "تشغيل الصوت",
+      btn_mute: "كتم الصوت",
+      hero_stat_title: "100% نسائي وخاص بالكامل",
+      hero_stat_sub: "أجواء راقية وخاصة في حيدرة",
       
       reels_badge: "فيديو الصالون الحقيقي • ريلز تعريفي",
       video_tour_title: "جولة حقيقية والتعريف بالصالون والخدمات",
@@ -3976,6 +4350,10 @@
       },
 
       en: {
+      btn_unmute: "Unmute Audio",
+      btn_mute: "Mute Audio",
+      hero_stat_title: "100% Women & Private Haven",
+      hero_stat_sub: "Luxury private haven in Hydra",
       
       reels_badge: "Authentic Video • Real Tour",
       video_tour_title: "Guided Tour & Salon Presentation",
@@ -4773,20 +5151,6 @@
     const videoModal = document.getElementById('videoModal');
     const modalVideoPlayer = document.getElementById('modalVideoPlayer');
 
-    
-    function switchMainVideo(videoUrl, title) {
-      const vid = document.getElementById('salonMainVideo');
-      if (vid) {
-        vid.src = videoUrl;
-        vid.play().catch(() => {});
-      }
-      const titleEl = document.querySelector('.video-card-h3');
-      if (titleEl && title) {
-        titleEl.textContent = title;
-      }
-      document.getElementById('visite-video')?.scrollIntoView({ behavior: 'smooth' });
-    }
-
 
     function openVideoModal(videoSrc) {
       modalVideoPlayer.src = videoSrc;
@@ -4860,6 +5224,179 @@
         }
       });
     }, { passive: true });
-  </script>
+  
+    /* ============================================================
+       HERO VIDEO CONTROLS & LUXURY FEMININE PARTICLES
+    ============================================================ */
+    function toggleHeroSound() {
+      const vid = document.getElementById('heroSalonVideo');
+      const soundBtn = document.getElementById('heroSoundBtn');
+      const soundIcon = document.getElementById('heroSoundIcon');
+      const soundText = document.getElementById('heroSoundText');
+      if (!vid) return;
+
+      const dict = I18N[currentLang] || I18N.fr;
+
+      if (vid.muted) {
+        vid.muted = false;
+        vid.volume = 0.85;
+        if (soundIcon) soundIcon.textContent = '🔊';
+        if (soundText) soundText.textContent = dict.btn_mute || 'Couper le son';
+        if (soundBtn) soundBtn.style.background = '#944057';
+      } else {
+        vid.muted = true;
+        if (soundIcon) soundIcon.textContent = '🔇';
+        if (soundText) soundText.textContent = dict.btn_unmute || 'Activer le son';
+        if (soundBtn) soundBtn.style.background = 'rgba(255, 255, 255, 0.18)';
+      }
+    }
+
+    function toggleHeroPlay() {
+      const vid = document.getElementById('heroSalonVideo');
+      const playIcon = document.getElementById('heroPlayIcon');
+      if (!vid) return;
+
+      if (vid.paused) {
+        vid.play();
+        if (playIcon) playIcon.textContent = '⏸';
+      } else {
+        vid.pause();
+        if (playIcon) playIcon.textContent = '▶';
+      }
+    }
+
+    function openHeroFullscreen() {
+      const vid = document.getElementById('heroSalonVideo');
+      if (!vid) return;
+      if (vid.requestFullscreen) {
+        vid.requestFullscreen();
+      } else if (vid.webkitRequestFullscreen) {
+        vid.webkitRequestFullscreen();
+      } else if (vid.msRequestFullscreen) {
+        vid.msRequestFullscreen();
+      }
+    }
+
+    // Touch/click directly on video to toggle play/pause
+    document.addEventListener('DOMContentLoaded', () => {
+      const vid = document.getElementById('heroSalonVideo');
+      if (vid) {
+        vid.addEventListener('click', toggleHeroPlay);
+      }
+      initLuxurySparkles();
+      syncSalonConfigLive();
+    });
+
+    // Subtle Luxury Sparkles Particles Canvas
+    function initLuxurySparkles() {
+      const canvas = document.getElementById('luxurySparklesCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      let width, height;
+      function resize() {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const particles = [];
+      const particleCount = window.innerWidth < 768 ? 16 : 28;
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: Math.random() * 2.2 + 0.8,
+          color: Math.random() > 0.5 ? 'rgba(194, 147, 85, ' : 'rgba(235, 178, 193, ',
+          opacity: Math.random() * 0.5 + 0.2,
+          speedY: Math.random() * 0.4 + 0.15,
+          speedX: (Math.random() - 0.5) * 0.25,
+          pulse: Math.random() * Math.PI,
+          pulseSpeed: Math.random() * 0.02 + 0.01
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        for (let p of particles) {
+          p.pulse += p.pulseSpeed;
+          const currentOpacity = p.opacity + Math.sin(p.pulse) * 0.2;
+          const boundedOpacity = Math.max(0.1, Math.min(0.8, currentOpacity));
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = p.color + boundedOpacity + ')';
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = p.color + '0.5)';
+          ctx.fill();
+
+          p.y -= p.speedY;
+          p.x += p.speedX;
+
+          if (p.y < -10) {
+            p.y = height + 10;
+            p.x = Math.random() * width;
+          }
+          if (p.x < -10) p.x = width + 10;
+          if (p.x > width + 10) p.x = -10;
+        }
+
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+
+    // Live Sync Salon Config (Hero video, Phone, Address, etc.) from Supabase
+    async function syncSalonConfigLive() {
+      if (typeof supabaseClient === 'undefined' || !supabaseClient) return;
+      try {
+        const { data, error } = await supabaseClient.from('admin_config').select('*');
+        if (error || !data) return;
+
+        const configMap = {};
+        data.forEach(item => { configMap[item.key] = item.value; });
+
+        // Update Hero Video if changed
+        if (configMap.hero_video_url) {
+          const heroVid = document.getElementById('heroSalonVideo');
+          if (heroVid && heroVid.src !== configMap.hero_video_url) {
+            heroVid.src = configMap.hero_video_url;
+            if (configMap.hero_poster_url) heroVid.poster = configMap.hero_poster_url;
+          }
+        }
+
+        // Update WhatsApp links
+        if (configMap.whatsapp_number) {
+          const waNum = configMap.whatsapp_number.replace(/[^0-9]/g, '');
+          document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+            const currentHref = link.getAttribute('href');
+            link.setAttribute('href', currentHref.replace(/wa\.me\/\d+/, 'wa.me/' + waNum));
+          });
+        }
+
+        // Sync Comparisons from Supabase
+        const { data: compRows } = await supabaseClient.from('comparisons').select('*');
+        if (compRows && compRows.length > 0) {
+          compRows.forEach(c => {
+            const key = c.service_key === 'hydrafacial' ? 'hydra' : c.service_key;
+            if (typeof TREATMENTS_DATA !== 'undefined' && TREATMENTS_DATA[key]) {
+              if (c.before_image) TREATMENTS_DATA[key].beforeImg = c.before_image;
+              if (c.after_image) TREATMENTS_DATA[key].afterImg = c.after_image;
+            }
+          });
+          if (typeof setComparisonTreatment === 'function' && typeof activeTreatment !== 'undefined') {
+            setComparisonTreatment(activeTreatment);
+          }
+        }
+      } catch (err) {
+        console.warn('Live config sync warning:', err);
+      }
+    }
+
+</script>
 </body>
 </html>
