@@ -950,7 +950,29 @@
       gap: 12px;
       margin: 28px auto 38px;
       flex-wrap: wrap;
-      max-width: 860px;
+      max-width: 980px;
+    }
+
+    @media (max-width: 768px) {
+      .ba-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 6px 14px 16px;
+        margin: 20px 0 28px;
+        gap: 10px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .ba-tabs::-webkit-scrollbar {
+        display: none;
+      }
+      .ba-tab {
+        flex-shrink: 0;
+        padding: 8px 16px;
+        font-size: 0.84rem;
+        gap: 8px;
+      }
     }
 
     .ba-tab {
@@ -3555,11 +3577,11 @@
         <aside class="ba-info-card" id="baInfoCard">
           <div class="ba-info-header">
             <div class="ba-info-badges">
-              <span class="ba-pill-service" id="baCardBadge" data-i18n="ba_card_callus_badge">Pédicure Médicale Russe</span>
+              <span class="ba-pill-service" id="baCardBadge">Pédicure Médicale Russe</span>
               <span class="ba-pill-verified" title="Résultat authentique vérifié">✓ 100% Réel</span>
             </div>
-            <h3 class="ba-info-title" id="baCardTitle" data-i18n="ba_card_callus_title">Callus Peeling — Pédicure Profonde</h3>
-            <p class="ba-info-desc" id="baCardDesc" data-i18n="ba_card_callus_desc">
+            <h3 class="ba-info-title" id="baCardTitle">Callus Peeling — Pédicure Profonde</h3>
+            <p class="ba-info-desc" id="baCardDesc">
               Soin signature complet de 2h : bain relaxant bouillonnant, traitement kératolytique sans lames, ponceuse russe de haute précision et bain de paraffine nutritive pour des pieds doux comme ceux d'un nouveau-né dès la 1ère séance.
             </p>
           </div>
@@ -3576,16 +3598,16 @@
           </div>
 
           <ul class="ba-protocol-points" id="baCardPoints">
-            <li><span class="check-icon">✓</span> <span data-i18n="ba_callus_pt1">100% indolore et sans bistouri (sécurité maximale)</span></li>
-            <li><span class="check-icon">✓</span> <span data-i18n="ba_callus_pt2">Élimination des callosités, crevasses et rugosités</span></li>
-            <li><span class="check-icon">✓</span> <span data-i18n="ba_callus_pt3">Ponceuse russe & hydratation intense longue durée</span></li>
-            <li><span class="check-icon">✓</span> <span data-i18n="ba_callus_pt4">Résultat spectaculaire visible immédiatement</span></li>
+            <li><span class="check-icon">✓</span> <span>100% indolore et sans bistouri (sécurité maximale)</span></li>
+            <li><span class="check-icon">✓</span> <span>Élimination des callosités, crevasses et rugosités</span></li>
+            <li><span class="check-icon">✓</span> <span>Ponceuse russe & hydratation intense longue durée</span></li>
+            <li><span class="check-icon">✓</span> <span>Résultat spectaculaire visible immédiatement</span></li>
           </ul>
 
           <a href="https://wa.me/213781088061?text=Bonjour%20JOVEN%2C%20je%20souhaite%20r%C3%A9server%20le%20soin%20Callus%20Peeling%20(6000%20DA)%20vu%20sur%20le%20site." 
              target="_blank" rel="noopener noreferrer" class="ba-whatsapp-btn" id="baWhatsAppBtn">
             <svg viewBox="0 0 24 24"><path d="M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.893c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652c1.746.943 3.71 1.44 5.71 1.44h.004c6.584 0 11.942-5.334 11.945-11.893 0-3.182-1.24-6.17-3.474-8.446zM12.045 21.785h-.003c-1.774 0-3.513-.476-5.031-1.37l-.361-.214-3.741.976.999-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.887 9.882zm5.425-7.403c-.297-.149-1.758-.867-2.03-.967-.272-.099-.47-.149-.669.148-.198.298-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.019-.458.13-.606.134-.133.297-.347.446-.521.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.077 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.123-.272-.198-.57-.347z"/></svg>
-            <span id="baCtaBtnText" data-i18n="ba_btn_book_result">Réserver ce résultat (6 000 DA)</span>
+            <span id="baCtaBtnText">Réserver ce résultat (6 000 DA)</span>
           </a>
 
           <div class="ba-guarantee-note">
@@ -4767,17 +4789,8 @@
         btn.classList.toggle('active', btn.textContent.toLowerCase().includes(lang) || (lang === 'ar' && btn.textContent.includes('عربي')));
       });
 
-      // Update dynamic comparison tabs and card
-      if (typeof renderComparisonTabs === "function") renderComparisonTabs();
-      if (typeof updateComparisonCardTexts === "function") updateComparisonCardTexts();
-      // Re-render Supabase items in new language
-      if (typeof renderSupabaseServices === 'function') renderSupabaseServices();
-      if (typeof renderSupabaseOffers === 'function') renderSupabaseOffers();
-      if (typeof updateServiceDropdown === 'function') updateServiceDropdown();
-
-
-      // Update text nodes
-      const dict = I18N[lang];
+      // Update text nodes first
+      const dict = I18N[lang] || I18N.fr;
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (dict[key]) {
@@ -4788,6 +4801,14 @@
           }
         }
       });
+
+      // Update dynamic comparison tabs and card AFTER data-i18n so database values always take precedence!
+      if (typeof renderComparisonTabs === "function") renderComparisonTabs();
+      if (typeof updateComparisonCardTexts === "function") updateComparisonCardTexts();
+      // Re-render Supabase items in new language
+      if (typeof renderSupabaseServices === 'function') renderSupabaseServices();
+      if (typeof renderSupabaseOffers === 'function') renderSupabaseOffers();
+      if (typeof updateServiceDropdown === 'function') updateServiceDropdown();
     }
 
     /* ==========================================================
@@ -4811,20 +4832,12 @@
         badge_ar: 'الأكثر طلباً',
         icon: '🦶',
         price: '6 000 DA',
-        prices: { fr: '6 000 DA', ar: '6000 دج', en: '6,000 DA' },
         duration: '⏱ 2 heures (120 min)',
-        durations: { fr: '⏱ 2 heures (120 min)', ar: '⏱ ساعتان (120 دقيقة)', en: '⏱ 2 hours (120 min)' },
+        desc: "Soin signature complet de 2h : bain relaxant bouillonnant, traitement kératolytique sans lames, ponceuse russe de haute précision et bain de paraffine nutritive pour des pieds doux comme ceux d'un nouveau-né dès la 1ère séance.",
+        desc_ar: "جلسة توقيعية كاملة لمدة ساعتين تشمل: حمام فقاعات استرخائي، تركيبة تقشير كيراتينية بدون شفرات، صقل مجهري بجهاز البوديكير الروسي وترطيب مكثف بالبرافين لاستعادة نعومة أقدام الأطفال من أول جلسة.",
         beforeImg: 'media/comparison/callus_before.jpg',
         afterImg: 'media/comparison/callus_after.jpg',
-        badgeKey: 'ba_card_callus_badge',
-        titleKey: 'ba_card_callus_title',
-        descKey: 'ba_card_callus_desc',
-        points: ['ba_callus_pt1', 'ba_callus_pt2', 'ba_callus_pt3', 'ba_callus_pt4'],
-        waMsg: {
-          fr: 'Bonjour JOVEN, je souhaite réserver le soin Callus Peeling (6 000 DA) pour retrouver des pieds tout doux.',
-          ar: 'مرحبا معهد JOVEN، أود حجز جلسة تقشير القدمين Callus Peeling (6000 دج) لتنعيم القدمين والتخلص من التشققات.',
-          en: 'Hello JOVEN, I would like to book the Callus Peeling treatment (6,000 DA).'
-        }
+        points: ['ba_callus_pt1', 'ba_callus_pt2', 'ba_callus_pt3', 'ba_callus_pt4']
       },
       cils: {
         key: 'cils',
@@ -4834,20 +4847,12 @@
         badge_ar: 'نظرة جذابة',
         icon: '👁️',
         price: '6 000 DA',
-        prices: { fr: '6 000 DA', ar: '6000 دج', en: '6,000 DA' },
         duration: '⏱ 60 min',
-        durations: { fr: '⏱ 60 min', ar: '⏱ 60 دقيقة (ساعة)', en: '⏱ 60 min' },
+        desc: "Sublimez la courbure de vos cils naturels sans faux-cils. Vos cils sont recourbés, gainés d'un soin à la kératine et intensifiés en noir pour un regard ouvert et radieux 24h/24.",
+        desc_ar: "إبراز طول وكثافة رموشكِ الطبيعية دون الحاجة لرموش اصطناعية أو ماسكارا. رفع وتقويس جذاب مع صبغ أسود مكثف وحمام كيراتين معالج لعيون ساحرة ومفتوحة طوال اليوم.",
         beforeImg: 'media/comparison/cils_before.jpg',
         afterImg: 'media/comparison/cils_after.jpg',
-        badgeKey: 'ba_card_cils_badge',
-        titleKey: 'ba_card_cils_title',
-        descKey: 'ba_card_cils_desc',
-        points: ['ba_cils_pt1', 'ba_cils_pt2', 'ba_cils_pt3', 'ba_cils_pt4'],
-        waMsg: {
-          fr: 'Bonjour JOVEN, je souhaite réserver le Rehaussement de Cils & Kératine (6 000 DA).',
-          ar: 'مرحبا معهد JOVEN، أود حجز جلسة رفع الرموش بالكيراتين Lash Lift (6000 دج).',
-          en: 'Hello JOVEN, I would like to book the Keratin Lash Lift treatment (6,000 DA).'
-        }
+        points: ['ba_cils_pt1', 'ba_cils_pt2', 'ba_cils_pt3', 'ba_cils_pt4']
       },
       hydra: {
         key: 'hydra',
@@ -4857,20 +4862,12 @@
         badge_ar: 'نضارة فورية',
         icon: '✨',
         price: '8 500 DA',
-        prices: { fr: '8 500 DA', ar: '8500 دج', en: '8,500 DA' },
         duration: '⏱ 90 min (1h30)',
-        durations: { fr: '⏱ 90 min (1h30)', ar: '⏱ 90 دقيقة (ساعة ونصف)', en: '⏱ 90 min (1h30)' },
+        desc: "Protocole médico-esthétique en 6 étapes : nettoyage vortex, peeling doux aux acides de fruits, extraction minutieuse des comédons/sébum et infusion d'antioxydants et d'acide hyaluronique pour un teint de verre éclatant.",
+        desc_ar: "بروتوكول تجميلي طبيعي متكامل في 6 مراحل: تقشير بالدوامة المائية، تنظيف لطيف بأحماض الفواكه، شفط عميق للرؤوس السوداء والبيضاء والدهون، وحقن سيرومات حمض الهيالورونيك ومضادات الأكسدة لنضارة زجاجية فورية.",
         beforeImg: 'media/comparison/hydra_before.jpg',
         afterImg: 'media/comparison/hydra_after.jpg',
-        badgeKey: 'ba_card_hydra_badge',
-        titleKey: 'ba_card_hydra_title',
-        descKey: 'ba_card_hydra_desc',
-        points: ['ba_hydra_pt1', 'ba_hydra_pt2', 'ba_hydra_pt3', 'ba_hydra_pt4'],
-        waMsg: {
-          fr: 'Bonjour JOVEN, je souhaite réserver le soin Hydrafacial Prestige (8 500 DA) pour nettoyer et illuminer ma peau.',
-          ar: 'مرحبا معهد JOVEN، أود حجز جلسة الهيدرافيشل بريستيج (8 500 دج) لتنقية البشرة وإزالة الرؤوس السوداء.',
-          en: 'Hello JOVEN, I would like to book the Hydrafacial Prestige treatment (8,500 DA).'
-        }
+        points: ['ba_hydra_pt1', 'ba_hydra_pt2', 'ba_hydra_pt3', 'ba_hydra_pt4']
       }
     };
 
@@ -4884,21 +4881,13 @@
       if (keys.length === 0) return;
 
       const isAr = (currentLang === 'ar');
-      const dict = I18N[currentLang] || I18N.fr;
 
       container.innerHTML = keys.map(key => {
         const item = TREATMENTS_DATA[key];
         const isActive = (key === activeTreatment);
 
-        let title = item.title;
-        if (isAr && item.title_ar) title = item.title_ar;
-        if (item.titleKey && dict[item.titleKey]) title = dict[item.titleKey];
-
-        let price = item.price || '6 000 DA';
-        if (item.prices) {
-          price = item.prices[currentLang] || item.prices.fr || item.price;
-        }
-
+        const title = isAr ? (item.title_ar || item.title) : (item.title || item.title_ar);
+        const price = item.price || '6 000 DA';
         const icon = item.icon || '✨';
 
         return `
@@ -4972,27 +4961,12 @@
       const dict = I18N[currentLang] || I18N.fr;
       const isAr = (currentLang === 'ar');
 
-      let title = data.title;
-      if (isAr && data.title_ar) title = data.title_ar;
-      if (data.titleKey && dict[data.titleKey]) title = dict[data.titleKey];
-
-      let badge = data.badge;
-      if (isAr && data.badge_ar) badge = data.badge_ar;
-      if (data.badgeKey && dict[data.badgeKey]) badge = dict[data.badgeKey];
-
-      let desc = data.desc;
-      if (isAr && data.desc_ar) desc = data.desc_ar;
-      if (data.descKey && dict[data.descKey]) desc = dict[data.descKey];
-
-      let price = data.price || '6 000 DA';
-      if (data.prices) price = data.prices[currentLang] || data.prices.fr || price;
-
-      let duration = data.duration || '60 min';
-      if (data.durations && data.durations[currentLang]) {
-        duration = data.durations[currentLang];
-      } else if (typeof data.duration === 'object') {
-        duration = data.duration[currentLang] || data.duration.fr;
-      }
+      // Always faithfully display the title, badge, description, and price from database
+      const title = isAr ? (data.title_ar || data.title) : (data.title || data.title_ar);
+      const badge = isAr ? (data.badge_ar || data.badge || 'نتيجة ملحوظة') : (data.badge || data.badge_ar || 'Résultat Visible');
+      const desc = isAr ? (data.desc_ar || data.desc || '') : (data.desc || data.desc_ar || '');
+      const price = data.price || '6 000 DA';
+      const duration = data.duration || '60 min';
 
       const badgeElem = document.getElementById('baCardBadge');
       const titleElem = document.getElementById('baCardTitle');
@@ -5002,7 +4976,7 @@
       const cta = document.getElementById('baCtaBtnText');
       const btn = document.getElementById('baWhatsAppBtn');
 
-      if (badgeElem) badgeElem.textContent = badge || (isAr ? 'نتيجة حقيقية' : 'Résultat Réel');
+      if (badgeElem) badgeElem.textContent = badge;
       if (titleElem) titleElem.textContent = title;
       if (descElem) descElem.textContent = desc;
       if (priceElem) priceElem.textContent = price;
@@ -5019,29 +4993,42 @@
           pointsContainer.innerHTML = data.points.map(ptKey => `
             <li><span class="check-icon">✓</span> <span>${dict[ptKey] || ptKey}</span></li>
           `).join('');
+        } else if (desc && (desc.includes('\n') || desc.includes('•') || desc.includes('-'))) {
+          const lines = desc.split(/[\n•-]/).map(s => s.trim()).filter(s => s.length > 3);
+          if (lines.length > 1) {
+            pointsContainer.innerHTML = lines.slice(0, 4).map(line => `
+              <li><span class="check-icon">✓</span> <span>${line}</span></li>
+            `).join('');
+          } else {
+            renderDefaultPoints();
+          }
         } else {
-          const defPoints = isAr ? [
-            'نتائج حقيقية وموثقة من أول جلسة',
-            'عناية فائقة وخاصة 100% للسيدات فقط',
-            'مستحضرات وتقنيات عالمية عالية الجودة',
-            'متابعة مستمرة لضمان أفضل نتيجة'
-          ] : [
-            'Résultats 100% visibles dès la 1ère séance',
-            'Cadre privatisé 100% féminin & sécurisé',
-            'Produits haut de gamme et hygiène stricte',
-            'Protocole personnalisé selon vos besoins'
-          ];
-          pointsContainer.innerHTML = defPoints.map(pt => `
-            <li><span class="check-icon">✓</span> <span>${pt}</span></li>
-          `).join('');
+          renderDefaultPoints();
         }
+      }
+
+      function renderDefaultPoints() {
+        const defPoints = isAr ? [
+          'نتائج حقيقية وموثقة من أول جلسة',
+          'عناية فائقة وخاصة 100% للسيدات فقط',
+          'مستحضرات وتقنيات عالمية عالية الجودة',
+          'متابعة مستمرة لضمان أفضل نتيجة'
+        ] : [
+          'Résultats 100% visibles dès la 1ère séance',
+          'Cadre privatisé 100% féminin & sécurisé',
+          'Produits haut de gamme et hygiène stricte',
+          'Protocole personnalisé selon vos besoins'
+        ];
+        pointsContainer.innerHTML = defPoints.map(pt => `
+          <li><span class="check-icon">✓</span> <span>${pt}</span></li>
+        `).join('');
       }
 
       if (btn) {
         const waPhone = window.SALON_WHATSAPP || '213781088061';
         let msg = '';
         if (data.waMsg) {
-          msg = data.waMsg[currentLang] || data.waMsg.fr || data.waMsg.ar;
+          msg = (typeof data.waMsg === 'object') ? (data.waMsg[currentLang] || data.waMsg.fr || data.waMsg.ar) : data.waMsg;
         }
         if (!msg) {
           msg = isAr
@@ -5067,17 +5054,12 @@
           badge: c.badge || (existing ? existing.badge : 'Résultat Visible'),
           badge_ar: c.badge_ar || c.badge || (existing ? existing.badge_ar : 'نتيجة ملحوظة'),
           icon: c.icon || (existing ? existing.icon : '✨'),
-          price: c.price || (existing && existing.prices ? existing.prices.fr : (existing ? existing.price : '6 000 DA')),
-          duration: c.duration || (existing && existing.duration ? (existing.duration.fr || existing.duration) : '60 min'),
+          price: c.price || (existing ? existing.price : '6 000 DA'),
+          duration: c.duration || (existing ? existing.duration : '60 min'),
           desc: c.description || (existing ? existing.desc : 'Résultat visible immédiatement après la séance.'),
           desc_ar: c.description_ar || c.description || (existing ? existing.desc_ar : 'نتيجة ملحوظة فورية بعد انتهاء الجلسة.'),
           beforeImg: resolveSafeImagePath(c.before_image || (existing ? existing.beforeImg : 'media/hydra_before.jpg')),
           afterImg: resolveSafeImagePath(c.after_image || (existing ? existing.afterImg : 'media/hydra_after.jpg')),
-          titleKey: existing ? existing.titleKey : null,
-          badgeKey: existing ? existing.badgeKey : null,
-          descKey: existing ? existing.descKey : null,
-          prices: existing ? existing.prices : null,
-          durations: existing ? existing.durations : null,
           points: (existing && existing.points) ? existing.points : null
         };
       });
