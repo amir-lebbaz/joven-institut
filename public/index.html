@@ -210,33 +210,47 @@
       background: rgba(108, 107, 117, 0.4);
     }
 
-    /* Navigation links */
+    /* Navigation links — Fixed Single Line & No-Wrap */
     .nav-menu {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: clamp(4px, 0.6vw, 10px);
       list-style: none;
+      flex-wrap: nowrap;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-item {
+      flex-shrink: 0;
+      white-space: nowrap;
     }
 
     .nav-item a {
-      display: inline-block;
-      padding: 8px 14px;
-      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px clamp(8px, 0.8vw, 14px);
+      font-size: 0.86rem;
       font-weight: 500;
       color: var(--text-main);
       border-radius: var(--radius-pill);
       transition: var(--transition);
+      white-space: nowrap !important;
+      text-decoration: none;
+      line-height: 1.2;
     }
 
     .nav-item.active a {
       background: var(--bg-pill);
       color: var(--rose-primary);
       font-weight: 600;
+      white-space: nowrap !important;
     }
 
     .nav-item a:hover:not(.active a) {
       color: var(--rose-primary);
-      background: rgba(242, 216, 227, 0.4);
+      background: rgba(242, 216, 227, 0.45);
     }
 
     /* Language Switcher */
@@ -2260,7 +2274,7 @@
       }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1080px) {
       :root {
         --nav-height: 64px;
       }
@@ -4366,7 +4380,7 @@
       offers_subtitle: "Experience our signature packages combining expert treatments with preferential rates.",
       btn_book_offer: "Book this offer on WhatsApp",
         nav_home: "Home",
-        nav_services: "Our Care",
+        nav_services: "Our Services",
         nav_about: "About Us",
         nav_gallery: "Gallery",
         nav_reviews: "Reviews",
