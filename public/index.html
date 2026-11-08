@@ -136,6 +136,30 @@
     }
 
     /* ============================================================
+       AMBIENT SILK MESH BACKDROP (Ultra-Luxury Boutique Glow)
+    ============================================================ */
+    .ambient-silk-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: -1;
+      background-color: #FAF5F6;
+      background-image: 
+        radial-gradient(circle at 18% 18%, rgba(247, 214, 225, 0.45) 0%, transparent 48%),
+        radial-gradient(circle at 85% 12%, rgba(254, 238, 225, 0.55) 0%, transparent 45%),
+        radial-gradient(circle at 92% 52%, rgba(242, 216, 227, 0.42) 0%, transparent 50%),
+        radial-gradient(circle at 8% 68%, rgba(253, 239, 230, 0.48) 0%, transparent 46%),
+        radial-gradient(circle at 82% 88%, rgba(247, 214, 225, 0.42) 0%, transparent 50%),
+        radial-gradient(circle at 25% 92%, rgba(254, 238, 225, 0.52) 0%, transparent 48%);
+      filter: blur(25px);
+      transform: translate3d(0, 0, 0);
+      will-change: transform;
+    }
+
+    /* ============================================================
        PETAL CANVAS ANIMATION (Feminine Romantic Falling Petals)
     ============================================================ */
     #petalCanvas {
@@ -1684,7 +1708,8 @@
     ============================================================ */
     .reviews-section {
       padding: 70px 0 90px;
-      background: var(--bg-page);
+      background: transparent;
+      position: relative;
     }
 
     .reviews-grid {
@@ -3173,6 +3198,9 @@
 </style>
 </head>
 <body>
+
+  <!-- Ambient Silk Mesh Backdrop -->
+  <div class="ambient-silk-backdrop" aria-hidden="true"></div>
 
   <!-- Floating Romantic Falling Petals Canvas -->
   <canvas id="petalCanvas"></canvas>
