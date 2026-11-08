@@ -3497,8 +3497,8 @@
         <p class="section-subtitle" data-i18n="ba_subtitle">Glissez le curseur interactif pour constater l'efficacité réelle de nos soins sur nos clientes</p>
       </div>
 
-      <!-- Treatment Switcher Tabs -->
-      <div class="ba-tabs" role="tablist">
+      <!-- Treatment Switcher Tabs (Dynamic from Supabase) -->
+      <div class="ba-tabs" role="tablist" id="baTabsContainer">
         <button type="button" class="ba-tab active" data-treatment="callus" onclick="setComparisonTreatment('callus')">
           <span class="ba-tab-icon">🦶</span>
           <span class="ba-tab-title" data-i18n="ba_tab_callus">Callus Peeling</span>
@@ -4767,7 +4767,8 @@
         btn.classList.toggle('active', btn.textContent.toLowerCase().includes(lang) || (lang === 'ar' && btn.textContent.includes('عربي')));
       });
 
-      // Update comparison card
+      // Update dynamic comparison tabs and card
+      if (typeof renderComparisonTabs === "function") renderComparisonTabs();
       if (typeof updateComparisonCardTexts === "function") updateComparisonCardTexts();
       // Re-render Supabase items in new language
       if (typeof renderSupabaseServices === 'function') renderSupabaseServices();
@@ -4790,7 +4791,7 @@
     }
 
     /* ==========================================================
-       BEFORE / AFTER COMPARISON SLIDER LOGIC
+       BEFORE / AFTER COMPARISON SLIDER LOGIC (100% Dynamic)
     ========================================================== */
     function resolveSafeImagePath(src) {
       if (!src) return '';
@@ -4801,12 +4802,20 @@
       return src.replace(/^\/+/, '');
     }
 
-    const TREATMENTS_DATA = {
+    let TREATMENTS_DATA = {
       callus: {
+        key: 'callus',
+        title: 'Callus Peeling',
+        title_ar: 'تقشير الأقدام وإزالة الكالس',
+        badge: 'Best Seller',
+        badge_ar: 'الأكثر طلباً',
+        icon: '🦶',
+        price: '6 000 DA',
+        prices: { fr: '6 000 DA', ar: '6000 دج', en: '6,000 DA' },
+        duration: '⏱ 2 heures (120 min)',
+        durations: { fr: '⏱ 2 heures (120 min)', ar: '⏱ ساعتان (120 دقيقة)', en: '⏱ 2 hours (120 min)' },
         beforeImg: 'media/comparison/callus_before.jpg',
         afterImg: 'media/comparison/callus_after.jpg',
-        prices: { fr: '6 000 DA', ar: '6000 دج', en: '6,000 DA' },
-        duration: { fr: '⏱ 2 heures (120 min)', ar: '⏱ ساعتان (120 دقيقة)', en: '⏱ 2 hours (120 min)' },
         badgeKey: 'ba_card_callus_badge',
         titleKey: 'ba_card_callus_title',
         descKey: 'ba_card_callus_desc',
@@ -4818,10 +4827,18 @@
         }
       },
       cils: {
+        key: 'cils',
+        title: 'Rehaussement Cils',
+        title_ar: 'رفع الرموش وصبغها',
+        badge: 'Regard Glamour',
+        badge_ar: 'نظرة جذابة',
+        icon: '👁️',
+        price: '6 000 DA',
+        prices: { fr: '6 000 DA', ar: '6000 دج', en: '6,000 DA' },
+        duration: '⏱ 60 min',
+        durations: { fr: '⏱ 60 min', ar: '⏱ 60 دقيقة (ساعة)', en: '⏱ 60 min' },
         beforeImg: 'media/comparison/cils_before.jpg',
         afterImg: 'media/comparison/cils_after.jpg',
-        prices: { fr: '6 000 DA', ar: '6000 دج', en: '6,000 DA' },
-        duration: { fr: '⏱ 60 min', ar: '⏱ 60 دقيقة (ساعة)', en: '⏱ 60 min' },
         badgeKey: 'ba_card_cils_badge',
         titleKey: 'ba_card_cils_title',
         descKey: 'ba_card_cils_desc',
@@ -4833,10 +4850,18 @@
         }
       },
       hydra: {
+        key: 'hydra',
+        title: 'Hydrafacial Prestige',
+        title_ar: 'هايدرافيشل برستيج',
+        badge: 'Éclat Immédiat',
+        badge_ar: 'نضارة فورية',
+        icon: '✨',
+        price: '8 500 DA',
+        prices: { fr: '8 500 DA', ar: '8500 دج', en: '8,500 DA' },
+        duration: '⏱ 90 min (1h30)',
+        durations: { fr: '⏱ 90 min (1h30)', ar: '⏱ 90 دقيقة (ساعة ونصف)', en: '⏱ 90 min (1h30)' },
         beforeImg: 'media/comparison/hydra_before.jpg',
         afterImg: 'media/comparison/hydra_after.jpg',
-        prices: { fr: '8 500 DA', ar: '8500 دج', en: '8,500 DA' },
-        duration: { fr: '⏱ 90 min (1h30)', ar: '⏱ 90 دقيقة (ساعة ونصف)', en: '⏱ 90 min (1h30)' },
         badgeKey: 'ba_card_hydra_badge',
         titleKey: 'ba_card_hydra_title',
         descKey: 'ba_card_hydra_desc',
@@ -4851,8 +4876,47 @@
 
     let activeTreatment = 'callus';
 
+    function renderComparisonTabs() {
+      const container = document.getElementById('baTabsContainer');
+      if (!container) return;
+
+      const keys = Object.keys(TREATMENTS_DATA);
+      if (keys.length === 0) return;
+
+      const isAr = (currentLang === 'ar');
+      const dict = I18N[currentLang] || I18N.fr;
+
+      container.innerHTML = keys.map(key => {
+        const item = TREATMENTS_DATA[key];
+        const isActive = (key === activeTreatment);
+
+        let title = item.title;
+        if (isAr && item.title_ar) title = item.title_ar;
+        if (item.titleKey && dict[item.titleKey]) title = dict[item.titleKey];
+
+        let price = item.price || '6 000 DA';
+        if (item.prices) {
+          price = item.prices[currentLang] || item.prices.fr || item.price;
+        }
+
+        const icon = item.icon || '✨';
+
+        return `
+          <button type="button" class="ba-tab ${isActive ? 'active' : ''}" data-treatment="${key}" onclick="setComparisonTreatment('${key}')">
+            <span class="ba-tab-icon">${icon}</span>
+            <span class="ba-tab-title">${title}</span>
+            <span class="ba-tab-price">${price}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
     function setComparisonTreatment(key) {
-      if (!TREATMENTS_DATA[key]) return;
+      if (!TREATMENTS_DATA[key]) {
+        const first = Object.keys(TREATMENTS_DATA)[0];
+        if (first) key = first;
+        else return;
+      }
       activeTreatment = key;
 
       // Update tabs UI
@@ -4906,42 +4970,126 @@
       const data = TREATMENTS_DATA[activeTreatment];
       if (!data) return;
       const dict = I18N[currentLang] || I18N.fr;
+      const isAr = (currentLang === 'ar');
 
-      // Update tab prices
-      const tabCallusPrice = document.getElementById('baTabCallusPrice');
-      const tabCilsPrice = document.getElementById('baTabCilsPrice');
-      const tabHydraPrice = document.getElementById('baTabHydraPrice');
-      if (tabCallusPrice) tabCallusPrice.textContent = TREATMENTS_DATA.callus.prices[currentLang] || TREATMENTS_DATA.callus.prices.fr;
-      if (tabCilsPrice) tabCilsPrice.textContent = TREATMENTS_DATA.cils.prices[currentLang] || TREATMENTS_DATA.cils.prices.fr;
-      if (tabHydraPrice) tabHydraPrice.textContent = TREATMENTS_DATA.hydra.prices[currentLang] || TREATMENTS_DATA.hydra.prices.fr;
+      let title = data.title;
+      if (isAr && data.title_ar) title = data.title_ar;
+      if (data.titleKey && dict[data.titleKey]) title = dict[data.titleKey];
 
-      const currentPrice = data.prices[currentLang] || data.prices.fr;
-      const badge = document.getElementById('baCardBadge');
-      const title = document.getElementById('baCardTitle');
-      const desc = document.getElementById('baCardDesc');
-      const price = document.getElementById('baCardPrice');
-      const duration = document.getElementById('baCardDuration');
+      let badge = data.badge;
+      if (isAr && data.badge_ar) badge = data.badge_ar;
+      if (data.badgeKey && dict[data.badgeKey]) badge = dict[data.badgeKey];
+
+      let desc = data.desc;
+      if (isAr && data.desc_ar) desc = data.desc_ar;
+      if (data.descKey && dict[data.descKey]) desc = dict[data.descKey];
+
+      let price = data.price || '6 000 DA';
+      if (data.prices) price = data.prices[currentLang] || data.prices.fr || price;
+
+      let duration = data.duration || '60 min';
+      if (data.durations && data.durations[currentLang]) {
+        duration = data.durations[currentLang];
+      } else if (typeof data.duration === 'object') {
+        duration = data.duration[currentLang] || data.duration.fr;
+      }
+
+      const badgeElem = document.getElementById('baCardBadge');
+      const titleElem = document.getElementById('baCardTitle');
+      const descElem = document.getElementById('baCardDesc');
+      const priceElem = document.getElementById('baCardPrice');
+      const durationElem = document.getElementById('baCardDuration');
       const cta = document.getElementById('baCtaBtnText');
       const btn = document.getElementById('baWhatsAppBtn');
 
-      if (badge && dict[data.badgeKey]) badge.textContent = dict[data.badgeKey];
-      if (title && dict[data.titleKey]) title.textContent = dict[data.titleKey];
-      if (desc && dict[data.descKey]) desc.textContent = dict[data.descKey];
-      if (price) price.textContent = currentPrice;
-      if (duration && data.duration[currentLang]) duration.textContent = data.duration[currentLang];
-      if (cta) cta.textContent = (dict.ba_btn_book_result || 'Réserver ce résultat') + ' (' + currentPrice + ')';
+      if (badgeElem) badgeElem.textContent = badge || (isAr ? 'نتيجة حقيقية' : 'Résultat Réel');
+      if (titleElem) titleElem.textContent = title;
+      if (descElem) descElem.textContent = desc;
+      if (priceElem) priceElem.textContent = price;
+      if (durationElem) durationElem.textContent = duration.startsWith('⏱') ? duration : ('⏱ ' + duration);
+
+      if (cta) {
+        const ctaPrefix = isAr ? 'حجز هذه النتيجة' : (dict.ba_btn_book_result || 'Réserver ce résultat');
+        cta.textContent = `${ctaPrefix} (${price})`;
+      }
 
       const pointsContainer = document.getElementById('baCardPoints');
-      if (pointsContainer && data.points) {
-        pointsContainer.innerHTML = data.points.map(ptKey => `
-          <li><span class="check-icon">✓</span> <span>${dict[ptKey] || ''}</span></li>
-        `).join('');
+      if (pointsContainer) {
+        if (data.points && Array.isArray(data.points) && data.points.length > 0) {
+          pointsContainer.innerHTML = data.points.map(ptKey => `
+            <li><span class="check-icon">✓</span> <span>${dict[ptKey] || ptKey}</span></li>
+          `).join('');
+        } else {
+          const defPoints = isAr ? [
+            'نتائج حقيقية وموثقة من أول جلسة',
+            'عناية فائقة وخاصة 100% للسيدات فقط',
+            'مستحضرات وتقنيات عالمية عالية الجودة',
+            'متابعة مستمرة لضمان أفضل نتيجة'
+          ] : [
+            'Résultats 100% visibles dès la 1ère séance',
+            'Cadre privatisé 100% féminin & sécurisé',
+            'Produits haut de gamme et hygiène stricte',
+            'Protocole personnalisé selon vos besoins'
+          ];
+          pointsContainer.innerHTML = defPoints.map(pt => `
+            <li><span class="check-icon">✓</span> <span>${pt}</span></li>
+          `).join('');
+        }
       }
 
       if (btn) {
-        const msg = data.waMsg[currentLang] || data.waMsg.fr;
-        btn.href = 'https://wa.me/213781088061?text=' + encodeURIComponent(msg);
+        const waPhone = window.SALON_WHATSAPP || '213781088061';
+        let msg = '';
+        if (data.waMsg) {
+          msg = data.waMsg[currentLang] || data.waMsg.fr || data.waMsg.ar;
+        }
+        if (!msg) {
+          msg = isAr
+            ? `مرحبا معهد JOVEN، أود حجز جلسة ${title} (${price}) المعروضة في قسم قبل وبعد.`
+            : `Bonjour JOVEN, je souhaite réserver le soin ${title} (${price}) vu sur le comparateur avant/après du site.`;
+        }
+        btn.href = `https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`;
       }
+    }
+
+    function applyDynamicComparisons(compRows) {
+      if (!compRows || compRows.length === 0) return;
+
+      const newTreatments = {};
+      compRows.forEach(c => {
+        const key = (c.service_key || 'item_' + c.id).toLowerCase().trim();
+        const existing = TREATMENTS_DATA[key] || TREATMENTS_DATA[key === 'hydrafacial' ? 'hydra' : key];
+
+        newTreatments[key] = {
+          key: key,
+          title: c.title || (existing ? existing.title : 'Soin Beauté'),
+          title_ar: c.title_ar || c.title || (existing ? existing.title_ar : 'علاج تجميلي'),
+          badge: c.badge || (existing ? existing.badge : 'Résultat Visible'),
+          badge_ar: c.badge_ar || c.badge || (existing ? existing.badge_ar : 'نتيجة ملحوظة'),
+          icon: c.icon || (existing ? existing.icon : '✨'),
+          price: c.price || (existing && existing.prices ? existing.prices.fr : (existing ? existing.price : '6 000 DA')),
+          duration: c.duration || (existing && existing.duration ? (existing.duration.fr || existing.duration) : '60 min'),
+          desc: c.description || (existing ? existing.desc : 'Résultat visible immédiatement après la séance.'),
+          desc_ar: c.description_ar || c.description || (existing ? existing.desc_ar : 'نتيجة ملحوظة فورية بعد انتهاء الجلسة.'),
+          beforeImg: resolveSafeImagePath(c.before_image || (existing ? existing.beforeImg : 'media/hydra_before.jpg')),
+          afterImg: resolveSafeImagePath(c.after_image || (existing ? existing.afterImg : 'media/hydra_after.jpg')),
+          titleKey: existing ? existing.titleKey : null,
+          badgeKey: existing ? existing.badgeKey : null,
+          descKey: existing ? existing.descKey : null,
+          prices: existing ? existing.prices : null,
+          durations: existing ? existing.durations : null,
+          points: (existing && existing.points) ? existing.points : null
+        };
+      });
+
+      TREATMENTS_DATA = newTreatments;
+      renderComparisonTabs();
+
+      const keys = Object.keys(TREATMENTS_DATA);
+      if (!TREATMENTS_DATA[activeTreatment]) {
+        activeTreatment = keys[0];
+      }
+      setComparisonTreatment(activeTreatment);
     }
 
     // Initialize Language
@@ -5462,18 +5610,12 @@
           }
         }
 
-        // Sync Comparisons from Supabase with safe relative paths
-        const { data: compRows } = await client.from('comparisons').select('*');
+        // Sync Comparisons from Supabase with full dynamic support
+        const { data: compRows } = await client.from('comparisons').select('*').order('display_order', { ascending: true }).order('created_at', { ascending: true });
         if (compRows && compRows.length > 0) {
-          compRows.forEach(c => {
-            const key = c.service_key === 'hydrafacial' ? 'hydra' : c.service_key;
-            if (typeof TREATMENTS_DATA !== 'undefined' && TREATMENTS_DATA[key]) {
-              if (c.before_image) TREATMENTS_DATA[key].beforeImg = resolveSafeImagePath(c.before_image);
-              if (c.after_image) TREATMENTS_DATA[key].afterImg = resolveSafeImagePath(c.after_image);
-            }
-          });
-          if (typeof setComparisonTreatment === 'function' && typeof activeTreatment !== 'undefined') {
-            setComparisonTreatment(activeTreatment);
+          window.DYNAMIC_COMPARISONS = compRows;
+          if (typeof applyDynamicComparisons === 'function') {
+            applyDynamicComparisons(compRows);
           }
         }
       } catch (err) {
