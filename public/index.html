@@ -2,6 +2,7 @@
 <html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8">
+  <base href="./">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>JOVEN • Institut de Beauté & Soins — Hydra, Alger</title>
   <meta name="description" content="JOVEN Institut à Hydra, Alger. Soins experts authentiques : Hydrafacial, Callus Peeling, Soins Sothys, Manucure Russe, Rehaussement de Cils dans un cadre 100% féminin et serein.">
@@ -2540,6 +2541,162 @@
       box-shadow: 0 6px 16px rgba(37, 211, 102, 0.35);
     }
 
+  
+    /* ==========================================================
+       VIDEO TOUR & REELS SHOWCASE STYLES
+    ========================================================== */
+    .video-tour-section {
+      padding: 70px 0 80px;
+      background: linear-gradient(180deg, #FDF9F7 0%, #FFF5F7 100%);
+      position: relative;
+    }
+    .video-showcase-wrap {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: center;
+      margin-top: 36px;
+    }
+    .video-main-card {
+      background: #FFFFFF;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 15px 45px rgba(148, 64, 87, 0.08);
+      border: 1px solid rgba(194, 147, 85, 0.25);
+      display: flex;
+      flex-direction: column;
+    }
+    .video-player-container {
+      position: relative;
+      background: #000;
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .video-player-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .video-card-details {
+      padding: 26px 28px;
+    }
+    .video-card-tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #944057;
+      background: #FBEFF2;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+    .video-card-h3 {
+      font-family: var(--font-serif);
+      font-size: 1.55rem;
+      color: #2A1D20;
+      margin-bottom: 10px;
+    }
+    [dir="rtl"] .video-card-h3 {
+      font-family: 'Cairo', sans-serif;
+    }
+    .video-card-desc {
+      font-size: 0.92rem;
+      color: #6E5C62;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .video-card-meta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 0.82rem;
+      color: #9E743A;
+      font-weight: 600;
+      padding-top: 12px;
+      border-top: 1px dashed #EEDCD9;
+    }
+    .video-side-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .video-mini-card {
+      background: #FFFFFF;
+      border-radius: 18px;
+      border: 1px solid #EEDCD9;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 15px rgba(148, 64, 87, 0.04);
+    }
+    .video-mini-card:hover {
+      transform: translateX(4px);
+      box-shadow: 0 8px 25px rgba(148, 64, 87, 0.1);
+      border-color: #944057;
+    }
+    [dir="rtl"] .video-mini-card:hover {
+      transform: translateX(-4px);
+    }
+    .mini-thumb {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+      background: #F0ECE9;
+    }
+    .mini-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .mini-play {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: background 0.2s ease;
+    }
+    .video-mini-card:hover .mini-play {
+      background: rgba(148, 64, 87, 0.75);
+    }
+    .mini-info h4 {
+      font-size: 1rem;
+      color: #2A1D20;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+    .mini-info p {
+      font-size: 0.82rem;
+      color: #6E5C62;
+      margin-bottom: 6px;
+    }
+    .mini-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #9E743A;
+      background: #F7EFE5;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+    @media (max-width: 900px) {
+      .video-showcase-wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+
   </style>
   <!-- Supabase Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -2698,7 +2855,7 @@
         <div class="hero-media">
           <div class="hero-image-card">
             <!-- Authentic Salon Interior Photo -->
-            <img src="/media/authentic/hero_interior.jpg" alt="JOVEN Institut — Intérieur authentique du salon à Hydra">
+            <img src="media/authentic/hero_interior.jpg" alt="JOVEN Institut — Intérieur authentique du salon à Hydra">
 
             <!-- Authentic Verified Pill -->
             <div class="authentic-badge">
@@ -2706,7 +2863,7 @@
             </div>
 
             <!-- Play Video Tour Button -->
-            <div class="hero-video-trigger" onclick="openVideoModal('/media/authentic/video_welcome.mp4')">
+            <div class="hero-video-trigger" onclick="openVideoModal('https://mtuhuzmyhbemdfsbyhpf.supabase.co/storage/v1/object/public/joven-media/videos/video_welcome.mp4')">
               <div class="play-circle">▶</div>
               <span data-i18n="btn_video_tour">Voir la visite vidéo</span>
             </div>
@@ -2719,7 +2876,7 @@
 
   <!-- ============================================================
        SECTION: NOS SOINS (Full Catalog & Filters)
-  ============================================================ */
+  ============================================================ -->
   <section class="soins-section" id="soins">
     <div class="container">
       <div class="section-header">
@@ -2742,7 +2899,7 @@
         <!-- Card 1: Hydrafacial Prestige (Authentic Skin Devices) -->
         <article class="soin-card" data-category="visage" onclick="bookSpecificService('Hydrafacial Prestige')">
           <div class="soin-media">
-            <img src="/media/authentic/hydrafacial_treatment.jpg" alt="Appareils Hydrafacial à JOVEN Institut">
+            <img src="media/authentic/hydrafacial_treatment.jpg" alt="Appareils Hydrafacial à JOVEN Institut">
             <div class="soin-floating-icon" title="Hydrafacial">
               <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
             </div>
@@ -2765,7 +2922,7 @@
         <!-- Card 2: Manucure Russe & Pédicure (Authentic Nail Colors) -->
         <article class="soin-card" data-category="ongles" onclick="bookSpecificService('Manucure Russe & Gel BIAB')">
           <div class="soin-media">
-            <img src="/media/gmaps_sample/Photo_11.jpg" alt="Pose d'ongles et manucure russe de précision à JOVEN Institut">
+            <img src="media/gmaps_sample/Photo_11.jpg" alt="Pose d'ongles et manucure russe de précision à JOVEN Institut">
             <div class="soin-floating-icon" title="Manucure & Pédicure">
               <svg viewBox="0 0 24 24"><path d="M9 4h6v4H9zM8 8h8v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V8zM11 2h2v2h-2z"/></svg>
             </div>
@@ -2788,7 +2945,7 @@
         <!-- Card 3: Callus Peeling & Pédicure Profonde (Authentic Foot Result) -->
         <article class="soin-card" data-category="pieds" onclick="bookSpecificService('Callus Peeling — Pédicure Profonde')">
           <div class="soin-media">
-            <img src="/media/comparison/callus_after.jpg" alt="Résultat réel Callus Peeling pieds doux à JOVEN Institut">
+            <img src="media/comparison/callus_after.jpg" alt="Résultat réel Callus Peeling pieds doux à JOVEN Institut">
             <div class="soin-floating-icon" title="Callus Peeling">
               <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-6h2zm0-8h-2V7h2z"/></svg>
             </div>
@@ -2811,7 +2968,7 @@
         <!-- Card 4: Soin Sothys Paris & Capillaires (Authentic Luxury Products) -->
         <article class="soin-card" data-category="cheveux" onclick="bookSpecificService('Soin Sothys & Head Spa')">
           <div class="soin-media">
-            <img src="/media/authentic/shiny_hair.jpg" alt="Gamme de soins Sothys et capillaire à JOVEN">
+            <img src="media/authentic/shiny_hair.jpg" alt="Gamme de soins Sothys et capillaire à JOVEN">
             <div class="soin-floating-icon" title="Soins Capillaires">
               <svg viewBox="0 0 24 24"><path d="M7 4c-1 3-1 6 1 8s1 5-1 8M12 4c-1 3-1 6 1 8s1 5-1 8M17 4c-1 3-1 6 1 8s1 5-1 8"/></svg>
             </div>
@@ -2896,10 +3053,10 @@
         <div class="ba-viewer-wrap" id="baViewer">
           <div class="ba-slider-stage" id="baStage" aria-label="Comparateur Avant Après">
             <!-- After Image (Background layer) -->
-            <img src="/media/comparison/callus_after.jpg" id="baImgAfter" class="ba-img ba-img-after" alt="Après le soin" draggable="false">
+            <img src="media/comparison/callus_after.jpg" id="baImgAfter" class="ba-img ba-img-after" alt="Après le soin" draggable="false">
 
             <!-- Before Image (Clipped layer) -->
-            <img src="/media/comparison/callus_before.jpg" id="baImgBefore" class="ba-img ba-img-before" alt="Avant le soin" draggable="false">
+            <img src="media/comparison/callus_before.jpg" id="baImgBefore" class="ba-img ba-img-before" alt="Avant le soin" draggable="false">
 
             <!-- Floating Badges on Images -->
             <span class="ba-tag ba-tag-before" data-i18n="ba_label_before">Avant</span>
@@ -2971,6 +3128,87 @@
   <!-- ============================================================
        SECTION: À PROPOS DE JOVEN (Authentic Story & Space)
   ============================================================ -->
+  
+  <!-- ============================================================
+       SECTION: REELS & VISITE VIDÉO RÉELLE
+  ============================================================ -->
+  <section class="video-tour-section" id="visite-video">
+    <div class="container">
+      <div class="section-header">
+        <span class="offers-badge-pill" data-i18n="reels_badge">Vidéo Authentique • ريلز الصالون الحصري</span>
+        <h2 class="section-title" data-i18n="video_tour_title">Visite Guidée & Présentation</h2>
+        <p class="section-subtitle" data-i18n="video_tour_subtitle">Découvrez l'institut en vidéo réelle : notre cadre chaleureux à Hydra, nos cabines et l'expertise de notre équipe.</p>
+      </div>
+
+      <div class="video-showcase-wrap">
+        <!-- Main Video Reel Player -->
+        <div class="video-main-card">
+          <div class="video-player-container">
+            <video id="salonMainVideo" playsinline controls loop preload="metadata" poster="media/authentic/hero_interior.jpg" src="https://mtuhuzmyhbemdfsbyhpf.supabase.co/storage/v1/object/public/joven-media/videos/video_welcome.mp4">
+              Votre navigateur ne supporte pas la lecture vidéo.
+            </video>
+          </div>
+          <div class="video-card-details">
+            <span class="video-card-tag">📍 Hydra, Alger</span>
+            <h3 class="video-card-h3" data-i18n="video_card_title">Bienvenue chez JOVEN Institut</h3>
+            <p class="video-card-desc" data-i18n="video_card_desc">
+              Découvrez en vidéo notre institut situé à Hydra : un accueil bienveillant, une hygiène clinique irréprochable et des équipements esthétiques de pointe pour sublimer votre beauté naturelle.
+            </p>
+            <div class="video-card-meta">
+              <span>🕒 Du Lundi au Samedi (9h - 17h)</span>
+              <span>🔒 100% Féminin & Privatisé</span>
+            </div>
+            <a href="https://wa.me/213781088061?text=Bonjour%20JOVEN%20Institut%2C%20j'ai%20vu%20votre%20vid%C3%A9o%20de%20pr%C3%A9sentation%20et%20je%20souhaite%20r%C3%A9server%20!" target="_blank" rel="noopener" class="offer-btn" style="margin-top: 16px;">
+              <span>💬</span> <span data-i18n="btn_book_after_video">Réserver ma séance sur WhatsApp</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Secondary Video Cards / Highlights -->
+        <div class="video-side-grid">
+          <!-- Reel 2: Callus Peeling -->
+          <div class="video-mini-card" onclick="switchMainVideo('https://mtuhuzmyhbemdfsbyhpf.supabase.co/storage/v1/object/public/joven-media/videos/video_callus.mp4', 'Soin Callus Peeling Pieds Doux')">
+            <div class="mini-thumb">
+              <img src="media/callus_after.jpg" alt="Callus Peeling Reel">
+              <div class="mini-play">▶</div>
+            </div>
+            <div class="mini-info">
+              <h4>Callus Peeling</h4>
+              <p>Élimination des callosités en vidéo</p>
+              <span class="mini-tag">Best Seller</span>
+            </div>
+          </div>
+
+          <!-- Reel 3: Haute Fréquence & Soin Peau -->
+          <div class="video-mini-card" onclick="switchMainVideo('https://mtuhuzmyhbemdfsbyhpf.supabase.co/storage/v1/object/public/joven-media/videos/video_haute_frequence.mp4', 'Soin Haute Fréquence & Peau Nette')">
+            <div class="mini-thumb">
+              <img src="media/hydra_after.jpg" alt="Haute Fréquence Reel">
+              <div class="mini-play">▶</div>
+            </div>
+            <div class="mini-info">
+              <h4>Haute Fréquence</h4>
+              <p>Purification & éclat immédiat</p>
+              <span class="mini-tag">Soin Visage</span>
+            </div>
+          </div>
+
+          <!-- Reel 1 reset: Visite Guidée -->
+          <div class="video-mini-card" onclick="switchMainVideo('https://mtuhuzmyhbemdfsbyhpf.supabase.co/storage/v1/object/public/joven-media/videos/video_welcome.mp4', 'Bienvenue chez JOVEN Institut')">
+            <div class="mini-thumb">
+              <img src="media/authentic/hero_interior.jpg" alt="Visite guidée Reel">
+              <div class="mini-play">▶</div>
+            </div>
+            <div class="mini-info">
+              <h4>Visite du Salon</h4>
+              <p>Présentation & localisation à Hydra</p>
+              <span class="mini-tag">Le Salon</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="about-section" id="apropos">
     <!-- Right Leaf Decoration -->
     <svg class="leaf-decor-right" viewBox="0 0 100 300" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -2989,10 +3227,10 @@
         <div class="about-media-stack">
           <div class="about-media-main">
             <!-- Authentic Salon Reception Photo -->
-            <img src="/media/authentic/salon_lounge_interior.jpg" alt="Réception réelle de l'Institut JOVEN à Hydra">
+            <img src="media/authentic/salon_lounge_interior.jpg" alt="Réception réelle de l'Institut JOVEN à Hydra">
           </div>
           <div class="about-media-corner">
-            <img src="/media/authentic/facade_exterior.jpg" alt="Façade extérieure de JOVEN à Chemin de la Madeleine">
+            <img src="media/authentic/facade_exterior.jpg" alt="Façade extérieure de JOVEN à Chemin de la Madeleine">
           </div>
         </div>
 
@@ -3068,8 +3306,8 @@
 
       <div class="galerie-grid">
         <!-- Item 1: Real Lash Lift Before & After -->
-        <div class="galerie-item" onclick="openImageModal('/media/authentic/lash_lift.jpg', 'Rehaussement de Cils Naturels (Lash Lift)')">
-          <img src="/media/authentic/lash_lift_before_after.jpg" alt="Résultats Rehaussement de Cils Lash Lift">
+        <div class="galerie-item" onclick="openImageModal('media/authentic/lash_lift.jpg', 'Rehaussement de Cils Naturels (Lash Lift)')">
+          <img src="media/authentic/lash_lift_before_after.jpg" alt="Résultats Rehaussement de Cils Lash Lift">
           <div class="galerie-overlay">
             <strong data-i18n="gal_1_title">Rehaussement de Cils (Lash Lift)</strong>
             <span data-i18n="gal_1_sub">Résultat naturel avant/après</span>
@@ -3077,8 +3315,8 @@
         </div>
 
         <!-- Item 2: Real Pedicure Suite -->
-        <div class="galerie-item" onclick="openImageModal('/media/authentic/pedicure_station.jpg', 'Espace Pédicure Spa & Callus Peeling')">
-          <img src="/media/authentic/pedicure_chair.jpg" alt="Espace Pédicure et Callus Peeling JOVEN">
+        <div class="galerie-item" onclick="openImageModal('media/authentic/pedicure_station.jpg', 'Espace Pédicure Spa & Callus Peeling')">
+          <img src="media/authentic/pedicure_chair.jpg" alt="Espace Pédicure et Callus Peeling JOVEN">
           <div class="galerie-overlay">
             <strong data-i18n="gal_2_title">Pédicure Spa Médicale</strong>
             <span data-i18n="gal_2_sub">Confort absolu et hygiène clinique</span>
@@ -3086,8 +3324,8 @@
         </div>
 
         <!-- Item 3: Real Luxury Skin Line -->
-        <div class="galerie-item" onclick="openImageModal('/media/authentic/sothys_products.jpg', 'Gamme de soins Sothys Paris')">
-          <img src="/media/authentic/skin_products.jpg" alt="Produits Sothys Paris à JOVEN">
+        <div class="galerie-item" onclick="openImageModal('media/authentic/sothys_products.jpg', 'Gamme de soins Sothys Paris')">
+          <img src="media/authentic/skin_products.jpg" alt="Produits Sothys Paris à JOVEN">
           <div class="galerie-overlay">
             <strong data-i18n="gal_3_title">Protocoles Sothys Paris</strong>
             <span data-i18n="gal_3_sub">Produits certifiés d'exception</span>
@@ -3095,8 +3333,8 @@
         </div>
 
         <!-- Item 4: Real Salon Treatment Room -->
-        <div class="galerie-item" onclick="openImageModal('/media/authentic/insta_work_1.jpg', 'Salle de soin esthétique intime')">
-          <img src="/media/authentic/salon_interior_3.jpg" alt="Cabine de soin JOVEN Hydra">
+        <div class="galerie-item" onclick="openImageModal('media/authentic/insta_work_1.jpg', 'Salle de soin esthétique intime')">
+          <img src="media/authentic/salon_interior_3.jpg" alt="Cabine de soin JOVEN Hydra">
           <div class="galerie-overlay">
             <strong data-i18n="gal_4_title">Cabine de Soin Privative</strong>
             <span data-i18n="gal_4_sub">Espace calme et 100% sécurisé</span>
@@ -3257,7 +3495,7 @@
         <!-- Facade & Direct Quick Booking -->
         <div>
           <div class="facade-card">
-            <img src="/media/authentic/street_hydra.jpg" alt="Façade extérieure de l'Institut JOVEN à Hydra">
+            <img src="media/authentic/street_hydra.jpg" alt="Façade extérieure de l'Institut JOVEN à Hydra">
             <div class="facade-caption">
               <strong data-i18n="facade_title">Chemin de la Madeleine, Hydra</strong>
               <span data-i18n="facade_sub">Un quartier résidentiel calme, discret et sécurisé</span>
@@ -3444,7 +3682,14 @@
     ========================================================== */
     const I18N = {
       fr: {
-        offers_pill: "Édition Limitée",
+        
+      reels_badge: "Vidéo Authentique • Visite Réelle",
+      video_tour_title: "Visite Guidée & Présentation de l'Institut",
+      video_tour_subtitle: "Découvrez notre institut en vidéo réelle : notre cadre chaleureux à Hydra, nos cabines et l'expertise de notre équipe.",
+      video_card_title: "Bienvenue chez JOVEN Institut",
+      video_card_desc: "Découvrez en vidéo notre institut situé à Hydra : un accueil bienveillant, une hygiène clinique irréprochable et des équipements esthétiques de pointe pour sublimer votre beauté naturelle.",
+      btn_book_after_video: "Réserver ma séance sur WhatsApp",
+      offers_pill: "Édition Limitée",
         offers_title: "Forfaits & Offres Spéciales",
         offers_subtitle: "Profitez de nos formules signatures combinant soins d'exception et tarifs avantageux.",
         btn_book_offer: "Réserver cette offre sur WhatsApp",
@@ -3584,6 +3829,13 @@
       },
 
       ar: {
+      
+      reels_badge: "فيديو الصالون الحقيقي • ريلز تعريفي",
+      video_tour_title: "جولة حقيقية والتعريف بالصالون والخدمات",
+      video_tour_subtitle: "فيديو حصري لصاحبة الصالون تعرّف فيه بالموقع في حيدرة، وأجواء الراحة، وأحدث أجهزة العناية بالبشرة والأقدام.",
+      video_card_title: "أهلاً بكِ في معهد جفان (JOVEN Institut)",
+      video_card_desc: "شاهدي بالفيديو جولة داخل صالون جفان في حيدرة بالجزائر العاصمة: استقبال راقٍ ومريح، تعقيم ونظافة طبية، وأحدث التقنيات التجميلية لخدمتكِ بكل عناية.",
+      btn_book_after_video: "حجز موعدي عبر واتساب",
       offers_pill: "لفترة محدودة",
       offers_title: "باقات وعروض حصرية",
       offers_subtitle: "استمتعي بباقاتنا المتكاملة التي تجمع بين جلسات العناية الفاخرة وأسعار تفضيلية.",
@@ -3724,6 +3976,13 @@
       },
 
       en: {
+      
+      reels_badge: "Authentic Video • Real Tour",
+      video_tour_title: "Guided Tour & Salon Presentation",
+      video_tour_subtitle: "Experience our institute in real video: our serene sanctuary in Hydra, our modern treatment suites and expert care.",
+      video_card_title: "Welcome to JOVEN Institut",
+      video_card_desc: "Watch the video walkthrough of our private sanctuary in Hydra, Algiers: clinical hygiene, soothing atmosphere, and cutting-edge aesthetic care.",
+      btn_book_after_video: "Book my session on WhatsApp",
       offers_pill: "Limited Edition",
       offers_title: "Special Packages & Offers",
       offers_subtitle: "Experience our signature packages combining expert treatments with preferential rates.",
@@ -4371,6 +4630,25 @@
     }
 
     const mainHeader = document.getElementById('mainHeader');
+    
+    // Bulletproof smooth scroll handler
+    document.addEventListener('click', (e) => {
+      const anchor = e.target.closest('a[href^="#"]');
+      if (!anchor) return;
+      const targetId = anchor.getAttribute('href').substring(1);
+      if (!targetId) return;
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        e.preventDefault();
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+        // Update URL hash without jumping
+        history.pushState(null, '', '#' + targetId);
+        // If mobile drawer open, close it
+        if (typeof closeDrawer === 'function') closeDrawer();
+      }
+    });
+
+
     window.addEventListener('scroll', () => {
       if (window.scrollY > 20) {
         mainHeader.classList.add('scrolled');
@@ -4440,6 +4718,21 @@
     // Video modal
     const videoModal = document.getElementById('videoModal');
     const modalVideoPlayer = document.getElementById('modalVideoPlayer');
+
+    
+    function switchMainVideo(videoUrl, title) {
+      const vid = document.getElementById('salonMainVideo');
+      if (vid) {
+        vid.src = videoUrl;
+        vid.play().catch(() => {});
+      }
+      const titleEl = document.querySelector('.video-card-h3');
+      if (titleEl && title) {
+        titleEl.textContent = title;
+      }
+      document.getElementById('visite-video')?.scrollIntoView({ behavior: 'smooth' });
+    }
+
 
     function openVideoModal(videoSrc) {
       modalVideoPlayer.src = videoSrc;
