@@ -4032,7 +4032,7 @@
   <div class="modal-backdrop" id="imageModal" onclick="handleImageBackdropClick(event)">
     <div class="modal-window" style="max-width:600px; padding:16px;">
       <button type="button" class="modal-close" onclick="closeImageModal()">✕</button>
-      <img id="modalImageViewer" src="" alt="" style="width:100%; border-radius:var(--radius-md);">
+      <img id="modalImageViewer" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" alt="Aperçu photo" style="width:100%; border-radius:var(--radius-md);">
       <h4 id="modalImageCaption" style="margin-top:12px; font-size:0.95rem; text-align:center; color:var(--text-main);"></h4>
     </div>
   </div>
@@ -4687,7 +4687,7 @@
     }
 
     function updateServiceDropdown() {
-      const select = document.getElementById('serviceSelect');
+      const select = document.getElementById('selectedService');
       if (!select || !window.DYNAMIC_SERVICES || window.DYNAMIC_SERVICES.length === 0) return;
 
       const isAr = (currentLang === 'ar');
@@ -5028,19 +5028,33 @@
     ========================================================== */
     function filterServices(category) {
       document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-      const activeBtn = Array.from(document.querySelectorAll('.filter-btn')).find(b => b.getAttribute('onclick').includes(category));
+      const activeBtn = Array.from(document.querySelectorAll('.filter-btn')).find(b => {
+        const oc = b.getAttribute('onclick') || '';
+        return oc.includes("'" + category + "'");
+      });
       if (activeBtn) activeBtn.classList.add('active');
 
-      const cards = document.querySelectorAll('.soin-card');
-      cards.forEach(card => {
-        if (category === 'all' || card.getAttribute('data-category') === category) {
-          card.style.display = 'flex';
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
-        } else {
-          card.style.display = 'none';
-        }
-      });
+      if (window.DYNAMIC_SERVICES && window.DYNAMIC_SERVICES.length > 0) {
+        renderSupabaseServices(category);
+      } else {
+        const cards = document.querySelectorAll('.soin-card');
+        cards.forEach(card => {
+          const cardCat = (card.getAttribute('data-category') || '').toLowerCase();
+          let match = (category === 'all');
+          if (category === 'visage') match = cardCat.includes('visage');
+          if (category === 'pieds') match = cardCat.includes('pied') || cardCat.includes('callus');
+          if (category === 'ongles') match = cardCat.includes('ongle') || cardCat.includes('main') || cardCat.includes('cils') || cardCat.includes('regard');
+          if (category === 'cheveux') match = cardCat.includes('cheveu') || cardCat.includes('capill') || cardCat.includes('spa');
+
+          if (match) {
+            card.style.display = 'flex';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
     }
 
     /* ==========================================================
@@ -5142,7 +5156,8 @@
       }
       msg += (currentLang === 'ar') ? `. شكراً لكم.` : `. Merci beaucoup !`;
 
-      const waUrl = `https://wa.me/213781088061?text=${encodeURIComponent(msg)}`;
+      const waPhone = (window.SALON_WHATSAPP || '213781088061').replace(/[^0-9]/g, '');
+      const waUrl = `https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`;
       window.open(waUrl, '_blank', 'noopener,noreferrer');
       closeBookingModal();
     }
@@ -5372,6 +5387,7 @@
         // Update WhatsApp links
         if (configMap.whatsapp_number) {
           const waNum = configMap.whatsapp_number.replace(/[^0-9]/g, '');
+          window.SALON_WHATSAPP = waNum;
           document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
             const currentHref = link.getAttribute('href');
             link.setAttribute('href', currentHref.replace(/wa\.me\/\d+/, 'wa.me/' + waNum));
